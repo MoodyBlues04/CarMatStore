@@ -8,18 +8,6 @@
                 <li>
                     <a href="{{ route('public.index') }}">Главная</a>
                 </li>
-                <li>
-                    <a href="{{ route('public.about_us') }}">О нас</a>
-                </li>
-                <li>
-                    <a href="{{ route('public.clients') }}">Наши клиенты</a>
-                </li>
-                <li>
-                    <a href="{{ route('public.feedback') }}">Отзывы</a>
-                </li>
-                <li>
-                    <a href="{{ route('public.contacts') }}">Контакты</a>
-                </li>
             </ul>
             <div class="header-container-right">
                 <a href="{{ route('auth.login_page') }}" type="button" class="btn-sign-in">Войти</a>
@@ -36,16 +24,6 @@
                             <li>
                                 <a href="{{ route('public.index') }}">
                                     Главная
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('public.about_us') }}">
-                                    БЛОГ
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('public.contacts') }}">
-                                    КОНТАКТЫ
                                 </a>
                             </li>
                         </ul>

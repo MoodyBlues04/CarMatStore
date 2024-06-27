@@ -36,6 +36,11 @@ abstract class Repository
         return $this->query->get()->all();
     }
 
+    public function exists(array $conditions): bool
+    {
+        return $this->getBy($conditions)->exists();
+    }
+
     public function firstBy(array $conditions): ?Model
     {
         return $this->getBy($conditions)->first();

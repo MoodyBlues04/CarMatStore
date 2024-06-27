@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -21,15 +22,14 @@ class AuthService
 
     public function register(RegisterRequest $request): bool
     {
+        /** @var User $user */
         $user = $this->userRepository->create([
             'name' => $request->name,
             'email' => $request->email,
-            'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
 
-//        MailSender::sendVerificationEmail($user);
-        event(new Registered($user));
+        $user->sendEmailVerificationNotification();
 
         $credentials = $request->only('email', 'password');
         return Auth::attempt($credentials);
