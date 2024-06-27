@@ -25,6 +25,9 @@ jobs:
         run: |
           cp .env.example .env
           php artisan key:generate
+        
+      - name: Set up sqlite
+        run: touch database/database.sqlite
 
       - name: Prepare Database
         run: |
