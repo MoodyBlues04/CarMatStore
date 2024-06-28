@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Settings;
 use App\Repositories\SettingsRepository;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class SettingsSeeder extends Seeder

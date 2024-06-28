@@ -10,14 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 abstract class Repository
 {
     private Builder $query;
+    private string $modelClass;
 
-    public function __construct(Builder|Model|string $model)
+    public function __construct(string $modelClass)
     {
-        if (is_string($model) || is_subclass_of($model, Model::class)) {
-            $this->query = $model::query();
-        } else {
-            $this->query = $model;
-        }
+        $this->modelClass = $modelClass;
+        $this->updateQueryInstance();
     }
 
     public function create(array $attributes): Builder|Model
@@ -69,6 +67,13 @@ abstract class Repository
 
     public function getBy(array $conditions): ?Builder
     {
-        return $this->query->where($conditions);
+        $res = $this->query->where($conditions);
+        $this->updateQueryInstance();
+        return $res;
+    }
+
+    private function updateQueryInstance(): void
+    {
+        $this->query = $this->modelClass::query();
     }
 }
