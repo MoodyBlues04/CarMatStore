@@ -5,35 +5,32 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
- * @property int $image_id
  * @property string $name
  * @property string $created_at
  * @property string $updated_at
  *
- * @property Image $image
+ * @property Collection $placeInfos
  * @property Collection $mats
  */
-class Brand extends Model
+class MatPlaceTemplate extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'image_id',
         'name',
     ];
 
-    public function image(): BelongsTo
+    public function placeInfos(): HasMany
     {
-        return $this->belongsTo(Image::class, 'image_id');
+        return $this->hasMany(MatPlaceInfo::class, 'mat_place_template_id');
     }
 
     public function mats(): HasMany
     {
-        return $this->hasMany(Mat::class, 'brand_id');
+        return $this->hasMany(Mat::class, 'mat_place_template_id');
     }
 }
