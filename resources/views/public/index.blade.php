@@ -613,53 +613,16 @@
                         <button class="modal-close"><img src="/img/gallery-close.svg" alt="close"></button>
                         <div class="modal-content" id="modalContent">
                             <div class="gallery__image-row">
-                                <div class="gallery__image-wrap">
-                                    <a href="/img/byd-champion-carpet.webp" data-pswp-width="3000"
-                                       data-pswp-height="1640" target="_blank">
-                                        <img class="gallery__image" src="/img/gallery-image-1-thumb.webp" loading="lazy"
-                                             alt=""/>
-                                    </a>
-                                </div>
                                 <div class="gallery__images-group">
                                     <div class="gallery__image-wrap">
-                                        <a href="/img/gallery-image-2.webp" data-pswp-width="2700"
+                                        <a href="/img/gallery-image-1-thumb.webp" data-pswp-width="2700"
                                            data-pswp-height="2952" target="_blank">
-                                            <img class="gallery__image" src="/img/gallery-image-2-thumb.webp"
+                                            <img class="gallery__image" src="/img/gallery-image-1-thumb.webp"
+                                                 width="300"
+                                                 height="328"
                                                  loading="lazy" alt=""/>
                                         </a>
                                     </div>
-                                    <div class="gallery__image-wrap">
-                                        <a href="/img/gallery-image-3.webp" data-pswp-width="2700"
-                                           data-pswp-height="2952" target="_blank">
-                                            <img class="gallery__image" src="/img/gallery-image-3-thumb.webp"
-                                                 loading="lazy" alt=""/>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="gallery__image-row">
-                                <div class="gallery__images-group">
-                                    <div class="gallery__image-wrap">
-                                        <a href="/img/gallery-image-4.webp" data-pswp-width="2700"
-                                           data-pswp-height="2952" target="_blank">
-                                            <img class="gallery__image" src="/img/gallery-image-4-thumb.webp"
-                                                 loading="lazy" alt=""/>
-                                        </a>
-                                    </div>
-                                    <div class="gallery__image-wrap">
-                                        <a href="/img/gallery-image-5.webp" data-pswp-width="2700"
-                                           data-pswp-height="2952" target="_blank">
-                                            <img class="gallery__image" src="/img/gallery-image-5-thumb.webp"
-                                                 loading="lazy" alt=""/>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="gallery__image-wrap">
-                                    <a href="/img/gallery-image-6.webp" data-pswp-width="3000" data-pswp-height="1640"
-                                       target="_blank">
-                                        <img class="gallery__image" src="/img/gallery-image-6-thumb.webp" loading="lazy"
-                                             alt=""/>
-                                    </a>
                                 </div>
                             </div>
                         </div>

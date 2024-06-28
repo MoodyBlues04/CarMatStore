@@ -21,9 +21,7 @@
                 @foreach($galleryImages as $galleryImage)
                     <tr>
                         <th scope="row">{{ $galleryImage->id }}</th>
-                        <td>
-                            <img src="{{ $galleryImage->image->getPublicUrl() }}" alt="image">
-                        </td>
+                        <td><img src="{{ $galleryImage->image->getPublicUrl() }}" alt="image"></td>
                         <td>
                             <x-delete-button :model="$galleryImage" routeName="admin.gallery.destroy"/>
                         </td>

@@ -18,6 +18,10 @@ class IndexController extends Controller
             return redirect()->route('admin.index');
         }
 
+//        $arr = [1, 2, 3, 4, 5];
+//        $collection = collect($arr)->chunk(4)->map(fn (\Illuminate\Support\Collection $c) => $c->all())->all();
+//        dd($collection);
+
         $articles = $this->articleRepository->getAll();
         return view('public.index', compact('articles'));
     }
