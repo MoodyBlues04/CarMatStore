@@ -31,8 +31,10 @@
 <header class="header">
     <div class="container">
         <div class="header-top">
-            <img src="/img/logo.png" loading="lazy" alt="Logo" class="logo"/>
-            @if(auth()->hasUser() && auth()->user()->is_admin)
+            <a href="/">
+                <img src="/img/logo.png" loading="lazy" alt="Logo" class="logo"/>
+            </a>
+            @if(!auth()->guest() && auth()->user()->is_admin)
                 <x-admin-nav-bar/>
             @else
                 <x-user-nav-bar/>

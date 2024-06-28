@@ -53,8 +53,7 @@ class AuthController extends Controller
         if (!$this->authService->login($request)) {
             return redirect()->back()->with('error', 'Login fail');
         }
-        return redirect()->route('user.profile.index');
-
+        return redirect()->route('public.index');
     }
 
     public function logout(Request $request): RedirectResponse

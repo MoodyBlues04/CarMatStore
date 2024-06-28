@@ -24,6 +24,13 @@ Route::prefix('user')
     ->group(__DIR__ . '/web/user.php');
 
 Route::as('public.')->group(function () {
-    Route::view('/', 'public.index')->name('index');
+//    TODO rewrite all public (to controller)
+    Route::get('/', function () {
+        if (!auth()->guest() && auth()->user()->is_admin) {
+            return redirect()->route('admin.index');
+        } else {
+            return view('public.index');
+        }
+    })->name('index');
     Route::view('/product', 'public.product')->name('product');
 });
