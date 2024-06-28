@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Public\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,14 +25,6 @@ Route::prefix('user')
     ->group(__DIR__ . '/web/user.php');
 
 Route::as('public.')->group(function () {
-//    TODO rewrite all public (to controller)
-    Route::get('/', function () {
-        if (!auth()->guest() && auth()->user()->is_admin) {
-            return redirect()->route('admin.index');
-        } else {
-            $articles = \App\Models\Article::get()->all();
-            return view('public.index', compact('articles'));
-        }
-    })->name('index');
-    Route::view('/product', 'public.product')->name('product');
+    Route::get('/', IndexController::class . '@index')->name('index');
+    Route::get('/product', IndexController::class . '@product')->name('product');
 });
