@@ -1,38 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>{{env('APP_NAME', 'Laravel')}}</title>
-    {{--  styles  --}}
-    <link rel="stylesheet" href="{{ asset('styles/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('styles/adaptive.css') }}">
-    <link rel="icon" href="{{ asset('img/icon.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    {{--  fonts  --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{{asset('css/style.css')}}"/>
+    <link rel="stylesheet" href="css/photoswipe.css"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="manifest" href="img/site.webmanifest">
+    <link rel="mask-icon" href="img/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>Evacor</title>
 
     @yield('styles')
-</head>
-<body>
-    @yield('header', App\View\Components\PublicHeader::resolve([])->render())
-
-{{--    TODO normal config modal window - doesnt work outside a 'section' --}}
-    <x-session-messages-alert/>
-{{--    <x-modal/>--}}
-
-    @yield('content')
-
-    @yield('footer', App\View\Components\PublicFooter::resolve([])->render())
-
     @yield('scripts')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="{{ asset('scripts/app.js') }}"></script>
+</head>
+
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header-top">
+            <img src="img/logo.png" loading="lazy" alt="Logo" class="logo"/>
+            <div class="nav">
+                <button class="nav__search">
+                    <img src="img/search-icon.svg" class="nav__search-icon" alt="search icon"/>
+                </button>
+                <button class="nav__order button-text--orange">Заказать</button>
+                <div class="nav__lang button-text">Ру</div>
+            </div>
+        </div>
+    </div>
+</header>
+<main>
+    <x-session-messages-alert/>
+    @yield('content')
+</main>
+<footer class="footer">
+    <div class="container">
+        <div class="footer__top footer__top-main">
+            <div class="footer__contacts">
+                <div class="footer__title title-25">Контакты</div>
+                <a class="footer__phone" href="tel:998901262266">998 90 126-22-66</a>
+                <div class="social">
+                    <a href="#" class="social__group">
+                        <img src="./img/instagram.svg" loading="lazy" alt="Instagram" class="social__icon"/>
+                        <span class="social__name">Instagram</span>
+                    </a>
+                    <a href="#" class="social__group">
+                        <img src="./img/facebook.svg" loading="lazy" alt="Facebook" class="social__icon"/>
+                        <span class="social__name">Facebook</span>
+                    </a>
+                    <a href="#" class="social__group">
+                        <img src="./img/telegram.svg" loading="lazy" alt="Telegram" class="social__icon"/>
+                        <span class="social__name">Telegram</span>
+                    </a>
+                </div>
+            </div>
+            <nav class="footer__menu">
+                <div class="footer__title title-25">Меню</div>
+                <ul class="footer__list">
+                    <li>
+                        <a href="./about.php">О компании</a>
+                    </li>
+                    <li>
+                        <a href="./order.php">Оформление заказа</a>
+                    </li>
+                    <li>
+                        <a href="./contacts.php">Контакты</a>
+                    </li>
+                </ul>
+            </nav>
+            <img src="./img/footer_logo.png" loading="lazy" alt="evacor" class="footer__logo"/>
+        </div>
+        <div class="footer__seporator"></div>
+        <div class="footer__bottom">
+            <p class="footer__copyright">© Evakor, 2011 - 2023 г.</p>
+            <a class="footer__policy" href="#">Политика конфиденциальности</a>
+            <div class="footer__author">Разработка сайта</div>
+        </div>
+        <div class="footer__bottom-mob">
+            <div class="footer__bottom-left">
+                <p class="footer__copyright">© Evakor, 2011 - 2023 г.</p>
+                <a class="footer__policy" href="#">Политика конфиденциальности</a>
+                <div class="footer__author">Разработка сайта</div>
+            </div>
+            <img src="./img/footer_logo-mob.png" alt="footer logo mobile" class="footer__logo-mob"/>
+        </div>
+    </div>
+</footer>
+
+<script type="module">
+    import PhotoSwipeLightbox from "./js/photoswipe-lightbox.esm.js";
+
+    const lightbox = new PhotoSwipeLightbox({
+        gallery: "#my-gallery",
+        children: "a",
+        pswpModule: () => import("./js/photoswipe.esm.js"),
+    });
+    lightbox.init();
+</script>
+<script>
+    var popup = document.getElementById("pop-up");
+    var overlay = document.getElementById("overlay");
+    var closePopupButton = document.getElementById("closePopupButton");
+
+    function togglePopup(event) {
+        if (popup.style.display === "block") {
+            closePopup();
+        } else {
+            openPopup();
+        }
+        event.stopPropagation(); // Предотвращаем всплытие события
+    }
+
+    function openPopup() {
+        popup.style.display = "block";
+        overlay.style.display = "block";
+
+        setTimeout(function () {
+            popup.style.opacity = 1;
+        }, 0);
+
+        document.body.classList.add("no-scroll"); // Запрещаем прокрутку для body
+        document.addEventListener("click", closePopupOutside);
+    }
+
+    function closePopup() {
+        popup.style.opacity = 0;
+        overlay.style.display = "none";
+
+        setTimeout(function () {
+            popup.style.display = "none";
+
+        }, 500);
+
+        document.body.classList.remove("no-scroll"); // Разрешаем прокрутку для body
+        document.removeEventListener("click", closePopupOutside);
+    }
+
+    function closePopupOutside(event) {
+        var brandLogo = document.getElementById("brandLogo");
+
+        if (
+            !popup.contains(event.target) &&
+            !overlay.contains(event.target) &&
+            event.target !== brandLogo
+        ) {
+            closePopup();
+        }
+    }
+
+    document.getElementById("brandLogo").addEventListener("click", togglePopup);
+
+    closePopupButton.addEventListener("click", function (event) {
+        closePopup();
+        event.stopPropagation(); // Предотвращаем всплытие события
+    });
+</script>
+<script src="js/main.js"></script>
 </body>
 </html>

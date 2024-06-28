@@ -16,9 +16,6 @@
     </style>
 @endsection
 
-@section('header')
-@endsection
-
 @section('content')
     <section class="section-register">
         <div class="container">

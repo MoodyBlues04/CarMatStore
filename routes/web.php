@@ -25,4 +25,5 @@ Route::prefix('user')
 
 Route::as('public.')->group(function () {
     Route::view('/', 'public.index')->name('index');
+    Route::view('/product', 'public.product')->name('product');
 });
