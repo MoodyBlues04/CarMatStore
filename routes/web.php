@@ -29,7 +29,8 @@ Route::as('public.')->group(function () {
         if (!auth()->guest() && auth()->user()->is_admin) {
             return redirect()->route('admin.index');
         } else {
-            return view('public.index');
+            $articles = \App\Models\Article::get()->all();
+            return view('public.index', compact('articles'));
         }
     })->name('index');
     Route::view('/product', 'public.product')->name('product');

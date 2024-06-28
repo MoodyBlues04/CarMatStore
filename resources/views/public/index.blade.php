@@ -1,3 +1,7 @@
+<?php
+/** @var \App\Models\Article[] $articles */
+?>
+
 @extends('layout')
 
 @section('content')
@@ -11,23 +15,13 @@
     </div>
     <section class="features">
         <div class="container">
-            <div class="features__wrap">
-                <div class="features__card">
-                    <div class="features__title">Пошив для любого авто</div>
-                    <div class="features__subtitle">
-                        Большой выбор цвета и окантовки
+            <div class="row justify-content-center">
+                @foreach($articles as $article)
+                    <div class="features__card col-md-4 mx-1 my-1">
+                        <div class="features__title">{{$article->title}}</div>
+                        <div class="features__subtitle">{{$article->content}}</div>
                     </div>
-                </div>
-                <div class="features__card">
-                    <div class="features__title">Доставка по узбекистану</div>
-                    <div class="features__subtitle">
-                        Доставим в удобное для вас место
-                    </div>
-                </div>
-                <div class="features__card">
-                    <div class="features__title">Гарантия качества</div>
-                    <div class="features__subtitle">Гарантия 1 год</div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
