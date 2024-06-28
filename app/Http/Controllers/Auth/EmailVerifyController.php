@@ -29,7 +29,7 @@ class EmailVerifyController extends Controller
     public function notice(Request $request): RedirectResponse|View
     {
         return $request->user()->hasVerifiedEmail()
-            ? redirect()->route('user.profile.index')
+            ? redirect()->route('public.index')
             : view('auth.verify_email_notice');
     }
 
@@ -42,7 +42,7 @@ class EmailVerifyController extends Controller
     public function verify(EmailVerificationRequest $request): RedirectResponse
     {
         $request->fulfill();
-        return redirect()->route('user.profile.index');
+        return redirect()->route('public.index');
     }
 
     /**

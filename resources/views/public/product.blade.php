@@ -1,4 +1,4 @@
-@extends('layouts.public-layout')
+@extends('layout')
 
 @section('content')
     <section class="product">

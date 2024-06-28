@@ -8,13 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property string $key
- * @property string $value
+ * @property ?string $value
+ * @property ?string $title
+ * @property boolean $hidden
  * @property string $created_at
  * @property string $updated_at
  */
 class Settings extends Model
 {
     use HasFactory;
+
+    public const GSHEETS_URL_KEY = 'gsheets_url';
+    public const TG_CHANNEL_KEY = 'tg_channel_id';
 
     protected $table = 'settings';
 

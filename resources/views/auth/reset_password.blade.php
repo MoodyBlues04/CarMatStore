@@ -1,7 +1,7 @@
 <?php
 /** @var string $token */
 ?>
-@extends('layouts.public-layout')
+@extends('layout')
 
 @section('content')
     <section class="section-register">

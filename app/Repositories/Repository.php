@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\CreateRequest;
+use App\Http\Requests\UpdateRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,6 +28,16 @@ abstract class Repository
     public function update(array $attributes, Model $model): bool
     {
         return $model->update($attributes);
+    }
+
+    public function updateFromRequest(UpdateRequest $request, Model $model): bool
+    {
+        return $this->update($request->getDataToUpdate(), $model);
+    }
+
+    public function createFromRequest(CreateRequest $request): Builder|Model
+    {
+        return $this->create($request->getDataToCreate());
     }
 
     /**

@@ -22,7 +22,7 @@ class IsAdmin
         if (!$request->user() || !$request->user()->is_admin) {
             return $request->expectsJson()
                 ? abort(403, 'You should be admin.')
-                : Redirect::route('user.profile.index');
+                : Redirect::route('public.index');
         }
 
         return $next($request);

@@ -1,15 +1,17 @@
-@extends('layouts.public-layout')
+@extends('layout')
 
 @section('styles')
     <style>
-        footer{
+        footer {
             margin-top: 210px;
         }
-        body{
+
+        body {
             background: #F5F7FA;
         }
-        @media(max-width: 970px){
-            footer{
+
+        @media (max-width: 970px) {
+            footer {
                 margin-top: 80px;
             }
         }
@@ -27,7 +29,8 @@
                     <div class="section-register-container-left-text">
                         <h2>Восстановление</h2>
                         <p>
-                            Мы вынуждены отталкиваться от того, что перспективное планирование требует анализа экспериментов.
+                            Мы вынуждены отталкиваться от того, что перспективное планирование требует анализа
+                            экспериментов.
                         </p>
                     </div>
                     <form action="{{ route('password.email') }}" method="POST">
