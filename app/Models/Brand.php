@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property Image $image
  */
-class Emblem extends Model
+class Brand extends Model
 {
     use HasFactory;
 
