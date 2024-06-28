@@ -5,7 +5,7 @@
 @extends('layout')
 
 @section('content')
-    <section class="settings">
+    <section class="article">
         <div class="container">
             <h3>Articles</h3>
             <a href="{{route('admin.article.create')}}" class="btn btn-primary">Create</a>

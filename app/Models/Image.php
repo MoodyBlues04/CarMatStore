@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
@@ -20,6 +21,14 @@ class Image extends Model
         'path',
     ];
 
+    protected static function boot(): void
+    {
+        parent::boot();
+        static::deleting(function(Image $image) {
+            Storage::delete($image->path);
+      });
+    }
+
     /**
      * @param UploadedFile $file
      * @param string $storagePath path from /storage/app/ folder
@@ -34,7 +43,7 @@ class Image extends Model
             throw new \Exception("File saving failed");
         }
 
-        return self::createFromPath("app/$storagePath/$originalName");
+        return self::createFromPath("$storagePath/$originalName");
     }
 
     public static function createFromPath(string $path): Image
@@ -45,6 +54,6 @@ class Image extends Model
 
     public function getPublicUrl(): string
     {
-        return str_replace('app/public', 'storage', asset($this->path));
+        return str_replace('public', 'storage', asset($this->path));
     }
 }

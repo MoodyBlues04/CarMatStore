@@ -2,7 +2,12 @@
     <a class="nav__lang button-text"
        href="{{ route('admin.article.index') }}"
        style="text-decoration: none; color: black">
-        Articles
+        Текст
+    </a>
+    <a class="nav__lang button-text"
+       href="{{ route('admin.gallery.index') }}"
+       style="text-decoration: none; color: black">
+        Галерея
     </a>
     <a class="nav__lang button-text"
        href="{{ route('admin.settings.index') }}"

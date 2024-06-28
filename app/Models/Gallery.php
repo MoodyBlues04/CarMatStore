@@ -22,6 +22,14 @@ class Gallery extends Model
         'image_id',
     ];
 
+    protected static function boot(): void
+    {
+        parent::boot();
+        static::deleting(function(Gallery $gallery) {
+            $gallery->image->delete();
+        });
+    }
+
     public function image(): BelongsTo
     {
         return $this->belongsTo(Image::class, 'image_id');
