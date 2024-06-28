@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             SettingsSeeder::class,
             ArticleSeeder::class,
+            GallerySeeder::class,
         ]);
     }
 }

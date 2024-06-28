@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Gallery;
 use App\Repositories\ArticleRepository;
+use App\Repositories\GalleryRepository;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class IndexController extends Controller
 {
-    public function __construct(private readonly ArticleRepository $articleRepository)
-    {
+    public function __construct(
+        private readonly ArticleRepository $articleRepository,
+        private readonly GalleryRepository $galleryRepository
+    ) {
     }
 
     public function index(): View|\Illuminate\Http\RedirectResponse
@@ -18,12 +23,16 @@ class IndexController extends Controller
             return redirect()->route('admin.index');
         }
 
-//        $arr = [1, 2, 3, 4, 5];
-//        $collection = collect($arr)->chunk(4)->map(fn (\Illuminate\Support\Collection $c) => $c->all())->all();
-//        dd($collection);
-
         $articles = $this->articleRepository->getAll();
-        return view('public.index', compact('articles'));
+        $galleryImages = $this->galleryRepository->getAll();
+        $imageUrlsChunks = collect($galleryImages)
+            ->map(fn (Gallery $gallery) => $gallery->image->getPublicUrl())
+            ->chunk(4)
+            ->map(fn (Collection $collection) => $collection->all())
+            ->all();
+
+//        dd($imageUrlsChunks);
+        return view('public.index', compact('articles', 'imageUrlsChunks'));
     }
 
     public function product(): View

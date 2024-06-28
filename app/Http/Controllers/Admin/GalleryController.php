@@ -26,8 +26,6 @@ class GalleryController extends Controller
 
     public function create(): View
     {
-//        TODO seeder for default images
-//        TODO set size of gallery images ???
         return view('admin.gallery.create');
     }
 

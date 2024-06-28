@@ -1,5 +1,8 @@
 <?php
-/** @var \App\Models\Article[] $articles */
+/**
+ * @var \App\Models\Article[] $articles
+ * @var string[][] $imageUrlsChunks
+ */
 ?>
 
 @extends('layout')
@@ -612,19 +615,23 @@
                     <div class="pswp-gallery" id="my-gallery">
                         <button class="modal-close"><img src="/img/gallery-close.svg" alt="close"></button>
                         <div class="modal-content" id="modalContent">
-                            <div class="gallery__image-row">
-                                <div class="gallery__images-group">
-                                    <div class="gallery__image-wrap">
-                                        <a href="/img/gallery-image-1-thumb.webp" data-pswp-width="2700"
-                                           data-pswp-height="2952" target="_blank">
-                                            <img class="gallery__image" src="/img/gallery-image-1-thumb.webp"
-                                                 width="300"
-                                                 height="328"
-                                                 loading="lazy" alt=""/>
-                                        </a>
+                            @foreach($imageUrlsChunks as $urlChunk)
+                                <div class="gallery__image-row">
+                                    <div class="gallery__images-group">
+                                        @foreach($urlChunk as $imageUrl)
+                                            <div class="gallery__image-wrap">
+                                                <a href="{{ $imageUrl }}" data-pswp-width="2700"
+                                                   data-pswp-height="2952" target="_blank">
+                                                    <img class="gallery__image" src="{{ $imageUrl }}"
+                                                         width="300"
+                                                         height="328"
+                                                         loading="lazy" alt=""/>
+                                                </a>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
