@@ -1,49 +1,34 @@
 @extends('layout')
 
-@section('styles')
-    <style>
-        footer {
-            margin-top: 80px;
-        }
-
-        body {
-            background: #F5F7FA;
-        }
-    </style>
-@endsection
-
 @section('content')
-    <section class="section-register">
+    <section class="login">
         <div class="container">
-            <div class="section-register-container">
-                <div class="section-register-container-left">
-                    <a href="" class="register-logo">
-                        Logo
-                    </a>
-                    <div class="section-register-container-left-text">
-                        <h2>Зарегистрируйтесь</h2>
-                        <p>
-                            Мы вынуждены отталкиваться от того, что перспективное планирование требует анализа
-                            экспериментов.
-                        </p>
-                    </div>
-                    <form action="{{ route('auth.register') }}" method="POST">
-                        @csrf
-                        <div class="section-register-container-left-input">
-                            <input name="name" type="text" placeholder="Введите ваше имя">
-                            <input name="email" type="email" placeholder="Введите вашу почту">
-                            <input name="phone" type="tel" placeholder="Введите ваш телефон">
-                            <input name="password" type="password" placeholder="Придумайте пароль">
-                            <input name="password_confirmation" type="password" placeholder="Повторите пароль">
-                            <button type="submit">Регистрация</button>
-                            <a href="{{ route('auth.login') }}">У меня есть аккаунт</a>
+            <div class="row justify-content-center">
+                <div class="col-md-8" style="margin-top: 30px; margin-bottom: 30px">
+                    <div class="card">
+                        <div class="card-header">{{ __('Settings') }}</div>
+
+                        <div class="card-body">
+                            <form action="{{ route('auth.register') }}" method="POST">
+                                @csrf
+                                <div class="section-register-container-left-input">
+                                    <x-input-text field="name" type="text" placeholder="Введите ваше имя"/>
+                                    <x-input-email field="email" placeholder="Введите вашу почту"/>
+                                    <x-input-text field="phone" type="tel" placeholder="Введите ваш телефон"/>
+                                    <x-input-password field="password" placeholder="Придумайте пароль"/>
+                                    <x-input-password field="password_confirmation" placeholder="Повторите пароль"/>
+                                    <x-submit-button name="Регистрация"/>
+                                    <div class="row mt-4 mb-3 justify-content-center">
+                                        <div class="col-md-6">
+                                            <a href="{{ route('auth.login') }}">У меня есть аккаунт</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="section-register-container-right">
-            <img src="{{ asset('img/register-img.png') }}" alt="">
         </div>
     </section>
 @endsection

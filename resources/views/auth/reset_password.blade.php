@@ -4,31 +4,33 @@
 @extends('layout')
 
 @section('content')
-    <section class="section-register">
+    <section class="login">
         <div class="container">
-            <div class="section-register-container">
-                <div class="section-register-container-left">
-                    <div class="section-register-container-left-text">
-                        <h2>Новый пароль</h2>
-                    </div>
-                    <form action="{{ route('password.update') }}" method="POST">
-                        @csrf
-                        <div class="section-register-container-left-input">
-                            <input type="email" name="email" placeholder="Введите вашу почту">
-                            <input type="password" name="password" placeholder="Придумайте пароль">
-                            <input type="password" name="password_confirmation" placeholder="Повторите пароль">
-                            <input type="hidden" name="token" value="{{$token}}" required>
-                            <button type="submit">Восстановить</button>
-                            <div class="section-register-container-left-input-bottom">
-                                <a href="">Войти в аккаунт</a>
-                            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-8" style="margin-top: 30px; margin-bottom: 30px">
+                    <div class="card">
+                        <div class="card-header">{{ __('Новый пароль') }}</div>
+
+                        <div class="card-body">
+                            <form action="{{ route('password.update') }}" method="POST">
+                                @csrf
+                                <div class="section-register-container-left-input">
+                                    <x-input-email name="email" placeholder="Введите вашу почту"/>
+                                    <x-input-password name="password" placeholder="Придумайте пароль"/>
+                                    <x-input-password name="password_confirmation" placeholder="Повторите пароль"/>
+                                    <input type="hidden" name="token" value="{{$token}}" required>
+                                    <x-submit-button name="Восстановить"/>
+                                    <div class="row mt-4 mb-3 justify-content-center">
+                                        <div class="col-md-6">
+                                            <a href="/">Войти в аккаунт</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="section-register-container-right">
-            <img src="{{ asset('img/rcovery.png') }}" alt="">
         </div>
     </section>
 @endsection

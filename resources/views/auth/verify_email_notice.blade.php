@@ -1,27 +1,28 @@
 @extends('layout')
 
 @section('content')
-    <section class="section-register">
+    <section class="login">
         <div class="container">
-            <div class="section-register-container">
-                <div class="section-register-container-left">
-                    <div class="section-register-container-left-text">
-                        <h2>Верификация почты</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8" style="margin-top: 30px; margin-bottom: 30px">
+                    <div class="card">
+                        <div class="card-header">{{ __('Верификация почты') }}</div>
+
                         <p>Для того, чтобы продолжить, пожалуйста проверьте вашу почту (возможно наше письмо находится в
                             папке спам) и перейдите по ссылке для подтверждения вашей почты. Если письмо не пришло,
                             нажмите кнопку - отправить заново.</p>
-                    </div>
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <div class="section-register-container-left-input">
-                            <button type="submit">Отправить заново</button>
+
+                        <div class="card-body">
+                            <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                                @csrf
+                                <div class="section-register-container-left-input">
+                                    <x-submit-button name="Отправить заново"/>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="section-register-container-right">
-            <img src="{{ asset('img/rcovery.png') }}" alt="">
         </div>
     </section>
 @endsection

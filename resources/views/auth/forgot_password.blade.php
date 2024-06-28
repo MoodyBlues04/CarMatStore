@@ -1,53 +1,30 @@
 @extends('layout')
 
-@section('styles')
-    <style>
-        footer {
-            margin-top: 210px;
-        }
-
-        body {
-            background: #F5F7FA;
-        }
-
-        @media (max-width: 970px) {
-            footer {
-                margin-top: 80px;
-            }
-        }
-    </style>
-@endsection
-
 @section('content')
-    <section class="section-register">
+    <section class="login">
         <div class="container">
-            <div class="section-register-container">
-                <div class="section-register-container-left">
-                    <a href="" class="register-logo">
-                        Logo
-                    </a>
-                    <div class="section-register-container-left-text">
-                        <h2>Восстановление</h2>
-                        <p>
-                            Мы вынуждены отталкиваться от того, что перспективное планирование требует анализа
-                            экспериментов.
-                        </p>
-                    </div>
-                    <form action="{{ route('password.email') }}" method="POST">
-                        @csrf
-                        <div class="section-register-container-left-input">
-                            <input name="email" type="email" placeholder="Введите вашу почту">
-                            <button type="submit">Восстановить</button>
-                            <div class="section-register-container-left-input-bottom">
-                                <a href="{{ route('auth.login') }}">Войти в аккаунт</a>
-                            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-8" style="margin-top: 30px; margin-bottom: 30px">
+                    <div class="card">
+                        <div class="card-header">{{ __('Password recover') }}</div>
+
+                        <div class="card-body">
+                            <form action="{{ route('password.email') }}" method="POST">
+                                @csrf
+                                <div class="section-register-container-left-input">
+                                    <x-input-text field="email" type="email" placeholder="Введите вашу почту"/>
+                                    <x-submit-button name="Восстановить"/>
+                                    <div class="row mt-4 mb-3 justify-content-center">
+                                        <div class="col-md-6">
+                                            <a href="{{ route('auth.login') }}">Войти в аккаунт</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="section-register-container-right">
-            <img src="{{ asset('img/rcovery.png') }}" alt="">
         </div>
     </section>
 @endsection
