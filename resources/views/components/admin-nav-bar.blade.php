@@ -1,5 +1,10 @@
 <div class="nav">
     <a class="nav__lang button-text"
+       href="{{ route('admin.article.index') }}"
+       style="text-decoration: none; color: black">
+        Articles
+    </a>
+    <a class="nav__lang button-text"
        href="{{ route('admin.settings.index') }}"
        style="text-decoration: none; color: black">
         Настройки
@@ -9,7 +14,6 @@
        style="text-decoration: none">
         Обновить данные
     </a>
-    <div class="nav__lang button-text">Ру</div>
     <a href="{{ route('auth.logout') }}"
        class="nav__lang button-text"
        style="text-decoration: none; color: black">

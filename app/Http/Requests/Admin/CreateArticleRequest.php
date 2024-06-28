@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin\Settings;
+namespace App\Http\Requests\Admin;
 
+use App\Http\Requests\CreateRequest;
+use App\Http\Requests\UpdateRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest implements \App\Http\Requests\UpdateRequest
+class CreateArticleRequest extends FormRequest implements CreateRequest, UpdateRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +25,13 @@ class UpdateRequest extends FormRequest implements \App\Http\Requests\UpdateRequ
     {
         return [
             'title' => 'required|string',
-            'value' => 'nullable|string',
+            'content' => 'required|string',
         ];
+    }
+
+    public function getDataToCreate(): array
+    {
+        return $this->validated();
     }
 
     public function getDataToUpdate(): array

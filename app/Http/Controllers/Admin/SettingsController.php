@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Settings\UpdateRequest;
+use App\Http\Requests\Admin\CreateSettingsRequest;
 use App\Models\Settings;
 use App\Repositories\SettingsRepository;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class SettingsController extends Controller
@@ -23,7 +21,7 @@ class SettingsController extends Controller
         return view('admin.settings.index', compact('settings'));
     }
 
-    public function update(Settings $settings, UpdateRequest $request): \Illuminate\Http\RedirectResponse
+    public function update(Settings $settings, CreateSettingsRequest $request): \Illuminate\Http\RedirectResponse
     {
         if (!$this->settingsRepository->updateFromRequest($request, $settings)) {
             throw new \Exception('Cannot update setting');
