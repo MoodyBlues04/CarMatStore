@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('accessories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->unsignedInteger('price');
             $table->unsignedInteger('max_count')->default(10);
             $table->timestamps();

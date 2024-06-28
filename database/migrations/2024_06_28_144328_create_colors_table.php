@@ -11,13 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('emblems', function (Blueprint $table) {
+        Schema::create('colors', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
+            $table->enum('type', \App\Models\Color::TYPES);
             $table->foreignId('image_id');
             $table->foreign('image_id')
                 ->references('id')
                 ->on('images')
+                ->onDelete('cascade');
+            $table->foreignId('mat_tariff_id');
+            $table->foreign('mat_tariff_id')
+                ->references('id')
+                ->on('mat_tariffs')
                 ->onDelete('cascade');
             $table->timestamps();
         });
@@ -28,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('emblems');
+        Schema::dropIfExists('colors');
     }
 };
