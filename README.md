@@ -7,3 +7,6 @@
 4. run ```php artisan storage:link```
 5. run ```php artisan migrate``` and ```php artisan db:seed``` to seed test data
 6. enjoy
+
+## Dev env
++ run ```php artisan db:seed --class=DevMatSeeder``` to seed mats for each existing brand (without mat place template)
