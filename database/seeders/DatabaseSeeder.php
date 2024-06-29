@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             SettingsSeeder::class,
             ArticleSeeder::class,
             GallerySeeder::class,
+            BrandSeeder::class,
         ]);
     }
 }

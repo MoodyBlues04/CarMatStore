@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Public\ConsultationRequest;
 use App\Models\Gallery;
 use App\Repositories\ArticleRepository;
+use App\Repositories\BrandRepository;
 use App\Repositories\GalleryRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,7 +17,8 @@ class IndexController extends Controller
 {
     public function __construct(
         private readonly ArticleRepository $articleRepository,
-        private readonly GalleryRepository $galleryRepository
+        private readonly GalleryRepository $galleryRepository,
+        private readonly BrandRepository $brandRepository
     ) {
     }
 
@@ -26,6 +28,7 @@ class IndexController extends Controller
             return redirect()->route('admin.index');
         }
 
+        $brands = $this->brandRepository->getAll();
         $articles = $this->articleRepository->getAll();
         $galleryImages = $this->galleryRepository->getAll();
         $imageUrlsChunks = collect($galleryImages)
@@ -34,7 +37,11 @@ class IndexController extends Controller
             ->map(fn (Collection $collection) => $collection->all())
             ->all();
 
-        return view('public.index', compact('articles', 'imageUrlsChunks'));
+        return view('public.index', compact(
+            'articles',
+            'imageUrlsChunks',
+            'brands'
+        ));
     }
 
     public function product(): View
