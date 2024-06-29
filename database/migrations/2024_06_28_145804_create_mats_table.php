@@ -16,13 +16,13 @@ return new class extends Migration
             $table->string('model');
             $table->foreignId('mat_place_template_id');
             $table->foreign('mat_place_template_id')
-                ->references('mat_place_templates')
-                ->on('id')
+                ->references('id')
+                ->on('mat_place_templates')
                 ->onDelete('cascade');
             $table->foreignId('brand_id');
             $table->foreign('brand_id')
-                ->references('brands')
-                ->on('id')
+                ->references('id')
+                ->on('brands')
                 ->onDelete('cascade');
             $table->timestamps();
         });
