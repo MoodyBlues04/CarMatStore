@@ -47,7 +47,7 @@
             }, 0);
 
             document.body.classList.add("no-scroll");
-            document.addEventListener("click", outsudeClose(brandId));
+            document.addEventListener("click", outsideClose(brandId));
         }
 
         function closePopup(brandId) {
@@ -62,10 +62,10 @@
             }, 1);
 
             document.body.classList.remove("no-scroll");
-            document.removeEventListener("click", outsudeClose(brandId));
+            document.removeEventListener("click", outsideClose(brandId));
         }
 
-        function outsudeClose(brandId) {
+        function outsideClose(brandId) {
             return (event) => closePopupOutside(event, brandId);
         }
 
