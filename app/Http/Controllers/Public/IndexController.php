@@ -43,9 +43,19 @@ class IndexController extends Controller
         ));
     }
 
+    public function search()
+    {
+        dd('search');
+    }
+
     public function about(): View
     {
         return view('public.about');
+    }
+
+    public function orderInstruction(): View
+    {
+        return view('public.order_instruction');
     }
 
     public function consultation(ConsultationRequest $request): View|RedirectResponse

@@ -74,8 +74,7 @@
                         <a href="{{ route('public.about') }}">О компании</a>
                     </li>
                     <li>
-{{--                        TODO ??? --}}
-                        <a href="/">Оформление заказа</a>
+                        <a href="{{ route('public.order_instruction') }}">Оформление заказа</a>
                     </li>
                     <li>
                         <a href="{{ route('public.contacts') }}">Контакты</a>
