@@ -7,6 +7,83 @@
 
 @extends('layout')
 
+@section('scripts')
+    <script type="module">
+        import PhotoSwipeLightbox from "/js/photoswipe-lightbox.esm.js";
+
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: "#my-gallery",
+            children: "a",
+            pswpModule: () => import("/js/photoswipe.esm.js"),
+        });
+        lightbox.init();
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function (e) {
+
+            let popup = document.getElementById("pop-up");
+            let overlay = document.getElementById("overlay");
+            let closePopupButton = document.getElementById("closePopupButton");
+
+            function togglePopup(event) {
+                if (popup.style.display === "block") {
+                    closePopup();
+                } else {
+                    openPopup();
+                }
+                event.stopPropagation();
+            }
+
+            function openPopup() {
+                popup.style.display = "block";
+                overlay.style.display = "block";
+
+                setTimeout(function () {
+                    popup.style.opacity = 1;
+                }, 0);
+
+                document.body.classList.add("no-scroll");
+                document.addEventListener("click", closePopupOutside);
+            }
+
+            function closePopup() {
+                popup.style.opacity = 0;
+                overlay.style.display = "none";
+
+                setTimeout(function () {
+                    popup.style.display = "none";
+
+                }, 500);
+
+                document.body.classList.remove("no-scroll");
+                document.removeEventListener("click", closePopupOutside);
+            }
+
+            function closePopupOutside(event) {
+                let brandLogo = document.getElementById("brandLogo");
+
+                if (
+                    !popup.contains(event.target) &&
+                    !overlay.contains(event.target) &&
+                    event.target !== brandLogo
+                ) {
+                    closePopup();
+                }
+            }
+
+            const logos = document.getElementsByClassName("brand-logo");
+            for (const logo of logos) {
+                logo.addEventListener("click", togglePopup);
+            }
+
+            closePopupButton.addEventListener("click", function (event) {
+                closePopup();
+                event.stopPropagation();
+            });
+        });
+    </script>
+@endsection
+
 @section('content')
     <div class="hero-section">
         <div class="container">
@@ -85,7 +162,7 @@
                     </svg>
                     <p class="brand-logo_text">chery</p>
                 </div>
-                <div class="brand-logo" id="brandLogo">
+                <div class="brand-logo">
                     <svg class="brand-logo_image" width="114" height="30">
                         <use href="/img/sprite.svg#chevrolet"></use>
                     </svg>
