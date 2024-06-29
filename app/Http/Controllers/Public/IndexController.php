@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Public\ConsultationRequest;
+use App\Http\Requests\Public\SearchRequest;
 use App\Models\Gallery;
+use App\Models\Mat;
 use App\Repositories\ArticleRepository;
 use App\Repositories\BrandRepository;
 use App\Repositories\GalleryRepository;
+use App\Repositories\MatRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
@@ -17,7 +21,8 @@ class IndexController extends Controller
     public function __construct(
         private readonly ArticleRepository $articleRepository,
         private readonly GalleryRepository $galleryRepository,
-        private readonly BrandRepository $brandRepository
+        private readonly BrandRepository $brandRepository,
+        private readonly MatRepository $matRepository
     ) {
     }
 
@@ -43,9 +48,23 @@ class IndexController extends Controller
         ));
     }
 
-    public function search()
+    /**
+     * For ajax searching, if more ajax - create special controller
+     * @param SearchRequest $request
+     * @return JsonResponse
+     */
+    public function search(SearchRequest $request): JsonResponse
     {
-        dd('search');
+        $mats = [];
+        if ($request->has('search')) {
+            $mats = $this->matRepository->query()
+                ->where('model', 'like', "%$request->search%")
+                ->limit(10)
+                ->get()
+                ->map(fn (Mat $mat) => ['model' => $mat->model, 'id' => $mat->id])
+                ->all();
+        }
+        return response()->json(['status' => true, 'data' => $mats]);
     }
 
     public function about(): View
