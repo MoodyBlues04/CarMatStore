@@ -1,5 +1,10 @@
 <div class="nav">
     <a class="nav__lang button-text"
+       href="{{ route('admin.brand.index') }}"
+       style="text-decoration: none; color: black">
+        Бренды
+    </a>
+    <a class="nav__lang button-text"
        href="{{ route('admin.article.index') }}"
        style="text-decoration: none; color: black">
         Текст
