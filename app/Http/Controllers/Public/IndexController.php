@@ -9,7 +9,6 @@ use App\Repositories\ArticleRepository;
 use App\Repositories\BrandRepository;
 use App\Repositories\GalleryRepository;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
@@ -28,7 +27,7 @@ class IndexController extends Controller
             return redirect()->route('admin.index');
         }
 
-        $brands = $this->brandRepository->getAll();
+        $brands = $this->brandRepository->query()->with('mats')->get()->all();
         $articles = $this->articleRepository->getAll();
         $galleryImages = $this->galleryRepository->getAll();
         $imageUrlsChunks = collect($galleryImages)
@@ -42,12 +41,6 @@ class IndexController extends Controller
             'imageUrlsChunks',
             'brands'
         ));
-    }
-
-    public function product(): View
-    {
-//        TODO temporary
-        return view('public.product');
     }
 
     public function about(): View

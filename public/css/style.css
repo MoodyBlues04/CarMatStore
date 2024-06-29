@@ -329,7 +329,7 @@ main {
   font-size: 0.9375rem;
 }
 
-#pop-up {
+.pop-up {
   position: fixed;
   top: 0;
   left: 0;

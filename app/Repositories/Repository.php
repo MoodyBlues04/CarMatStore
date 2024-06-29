@@ -18,6 +18,11 @@ abstract class Repository
         $this->updateQueryInstance();
     }
 
+    public function query(): Builder
+    {
+        return $this->query;
+    }
+
     public function create(array $attributes): Builder|Model
     {
         return $this->query->create($attributes);

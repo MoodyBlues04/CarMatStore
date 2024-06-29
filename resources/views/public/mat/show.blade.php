@@ -14,8 +14,8 @@
             <div class="product_wrap">
                 <div class="product_media">
                     <h1 class="product_title">Chevrolet spark</h1>
-                    <img class="product_gallery" src="img/gallery.png" alt="auto mat"/>
-                    <img class="product_gallery-mob" src="img/prodict-image-mob.png" alt="auto mat"/>
+                    <img class="product_gallery" src="/img/gallery.png" alt="auto mat"/>
+                    <img class="product_gallery-mob" src="/img/prodict-image-mob.png" alt="auto mat"/>
                 </div>
                 <div class="product-info">
                     <div class="product-type">
@@ -154,9 +154,9 @@
                                 <div class="product-option_accs-item button-text">
                                     <div class="product-option_accs-item-name">клипсы</div>
                                     <div class="product-option_accs-item-wr">
-                                        <img class="product-option_accs-item-btn" src="img/minus.svg" alt="minus"/>
+                                        <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
                                         <div class="product-option_accs-item-number">0</div>
-                                        <img class="product-option_accs-item-btn" src="img/plus.svg" alt="minus"/>
+                                        <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
                                     </div>
                                 </div>
                                 <div class="product-option_accs-item button-text">
@@ -164,9 +164,9 @@
                                         клипсы универсаьные
                                     </div>
                                     <div class="product-option_accs-item-wr">
-                                        <img class="product-option_accs-item-btn" src="img/minus.svg" alt="minus"/>
+                                        <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
                                         <div class="product-option_accs-item-number">0</div>
-                                        <img class="product-option_accs-item-btn" src="img/plus.svg" alt="minus"/>
+                                        <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
                                     </div>
                                 </div>
                                 <div class="product-option_accs-item button-text">
@@ -179,9 +179,9 @@
                                 <div class="product-option_logo-text">Эмблема</div>
                                 <p class="option-title product-option_logo-title">Эмблема</p>
                                 <div class="product-option_logo-qty">
-                                    <img class="product-option_accs-item-btn" src="img/minus.svg" alt="minus"/>
+                                    <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
                                     <div class="product-option_logo-number">0</div>
-                                    <img class="product-option_accs-item-btn" src="img/plus.svg" alt="minus"/>
+                                    <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
                                 </div>
                             </div>
                             <div class="product-option_logo-images">
@@ -277,9 +277,9 @@
                                 </div>
                             </div>
                             <div class="product-option_logo-qty-mob">
-                                <img class="product-option_accs-item-btn" src="img/minus.svg" alt="minus"/>
+                                <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
                                 <div class="product-option_logo-number">12</div>
-                                <img class="product-option_accs-item-btn" src="img/plus.svg" alt="minus"/>
+                                <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
                             </div>
                         </div>
                     </div>
@@ -295,9 +295,9 @@
                         </div>
                         <div class="item_qty">
                             <div class="item_qty-control">
-                                <img class="item_btn" src="img/minus.svg" alt="minus"/>
+                                <img class="item_btn" src="/img/minus.svg" alt="minus"/>
                                 <div class="item_number">7</div>
-                                <img class="item_btn" src="img/plus.svg" alt="minus"/>
+                                <img class="item_btn" src="/img/plus.svg" alt="minus"/>
                             </div>
                             <div class="item_price">100.000 сум</div>
                         </div>
@@ -309,9 +309,9 @@
                         </div>
                         <div class="item_qty">
                             <div class="item_qty-control">
-                                <img class="item_btn" src="img/minus.svg" alt="minus"/>
+                                <img class="item_btn" src="/img/minus.svg" alt="minus"/>
                                 <div class="item_number">7</div>
-                                <img class="item_btn" src="img/plus.svg" alt="minus"/>
+                                <img class="item_btn" src="/img/plus.svg" alt="minus"/>
                             </div>
                             <div class="item_price">100.000 сум</div>
                         </div>
@@ -323,9 +323,9 @@
                         </div>
                         <div class="item_qty">
                             <div class="item_qty-control">
-                                <img class="item_btn" src="img/minus.svg" alt="minus"/>
+                                <img class="item_btn" src="/img/minus.svg" alt="minus"/>
                                 <div class="item_number">7</div>
-                                <img class="item_btn" src="img/plus.svg" alt="minus"/>
+                                <img class="item_btn" src="/img/plus.svg" alt="minus"/>
                             </div>
                             <div class="item_price">10.000 сум</div>
                         </div>
@@ -337,9 +337,9 @@
                         </div>
                         <div class="item_qty">
                             <div class="item_qty-control">
-                                <img class="item_btn" src="img/minus.svg" alt="minus"/>
+                                <img class="item_btn" src="/img/minus.svg" alt="minus"/>
                                 <div class="item_number">7</div>
-                                <img class="item_btn" src="img/plus.svg" alt="minus"/>
+                                <img class="item_btn" src="/img/plus.svg" alt="minus"/>
                             </div>
                             <div class="item_price">10.000 сум</div>
                         </div>
@@ -351,9 +351,9 @@
                         </div>
                         <div class="item_qty">
                             <div class="item_qty-control">
-                                <img class="item_btn" src="img/minus.svg" alt="minus"/>
+                                <img class="item_btn" src="/img/minus.svg" alt="minus"/>
                                 <div class="item_number">7</div>
-                                <img class="item_btn" src="img/plus.svg" alt="minus"/>
+                                <img class="item_btn" src="/img/plus.svg" alt="minus"/>
                             </div>
                             <div class="item_price">10.000 сум</div>
                         </div>

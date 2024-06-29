@@ -20,68 +20,64 @@
         lightbox.init();
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function (e) {
+        function handleClose(event, brandId) {
+            closePopup(brandId);
+            event.stopPropagation();
+        }
 
-            let popup = document.getElementById("pop-up");
-            let overlay = document.getElementById("overlay");
-            let closePopupButton = document.getElementById("closePopupButton");
-
-            function togglePopup(event) {
-                if (popup.style.display === "block") {
-                    closePopup();
-                } else {
-                    openPopup();
-                }
-                event.stopPropagation();
+        function togglePopup(event, brandId) {
+            const popup = document.getElementById(`pop-up-${brandId}`);
+            if (popup.style.display === "block") {
+                closePopup(brandId);
+            } else {
+                openPopup(brandId);
             }
+            event.stopPropagation();
+        }
 
-            function openPopup() {
-                popup.style.display = "block";
-                overlay.style.display = "block";
+        function openPopup(brandId) {
+            const popup = document.getElementById(`pop-up-${brandId}`);
+            const overlay = document.getElementById(`overlay-${brandId}`);
 
-                setTimeout(function () {
-                    popup.style.opacity = 1;
-                }, 0);
+            popup.style.display = "block";
+            overlay.style.display = "block";
 
-                document.body.classList.add("no-scroll");
-                document.addEventListener("click", closePopupOutside);
+            setTimeout(function () {
+                popup.style.opacity = 1;
+            }, 0);
+
+            document.body.classList.add("no-scroll");
+            document.addEventListener("click", outsudeClose(brandId));
+        }
+
+        function closePopup(brandId) {
+            const popup = document.getElementById(`pop-up-${brandId}`);
+            const overlay = document.getElementById(`overlay-${brandId}`);
+
+            popup.style.opacity = 0;
+            overlay.style.display = "none";
+
+            setTimeout(function () {
+                popup.style.display = "none";
+            }, 1);
+
+            document.body.classList.remove("no-scroll");
+            document.removeEventListener("click", outsudeClose(brandId));
+        }
+
+        function outsudeClose(brandId) {
+            return (event) => closePopupOutside(event, brandId);
+        }
+
+        function closePopupOutside(event, brandId) {
+            const popup = document.getElementById(`pop-up-${brandId}`);
+            const overlay = document.getElementById(`overlay-${brandId}`);
+            const brandLogo = document.getElementById(`brandLogo-${brandId}`);
+
+            if (!popup.contains(event.target) && !overlay.contains(event.target) && event.target !== brandLogo) {
+                closePopup(brandId);
             }
-
-            function closePopup() {
-                popup.style.opacity = 0;
-                overlay.style.display = "none";
-
-                setTimeout(function () {
-                    popup.style.display = "none";
-
-                }, 500);
-
-                document.body.classList.remove("no-scroll");
-                document.removeEventListener("click", closePopupOutside);
-            }
-
-            function closePopupOutside(event) {
-                let brandLogo = document.getElementById("brandLogo");
-
-                if (
-                    !popup.contains(event.target) &&
-                    !overlay.contains(event.target) &&
-                    event.target !== brandLogo
-                ) {
-                    closePopup();
-                }
-            }
-
-            const logos = document.getElementsByClassName("brand-logo");
-            for (const logo of logos) {
-                logo.addEventListener("click", togglePopup);
-            }
-
-            closePopupButton.addEventListener("click", function (event) {
-                closePopup();
-                event.stopPropagation();
-            });
-        });
+        }
     </script>
 @endsection
 
@@ -110,7 +106,7 @@
         <div class="container">
             <div class="brands-wrap">
                 @foreach($brands as $brand)
-                    <div class="brand-logo">
+                    <div class="brand-logo" onclick="togglePopup(event, {{$brand->id}})">
                         <svg class="brand-logo_image" width="100" height="100">
                             <use href="{{ $brand->image->path }}"></use>
                         </svg>
@@ -119,166 +115,40 @@
                 @endforeach
             </div>
         </div>
-        <div id="overlay" onclick="closePopup()"></div>
-        <div id="pop-up" class="pop-up">
-            <div class="pop-up__wr">
-                <div class="pop-up_top">
-                    <svg class="pop-up_logo" width="128" height="30">
-                        <use href="/img/sprite.svg#chevrolet"></use>
-                    </svg>
-                    <p class="pop-up_text">chevrolet</p>
-                    <button id="closePopupButton">
-                        <img src="/img/close-pop-up.svg" alt="close">
-                    </button>
-                </div>
-                <div class="pop-up_main">
-                    <a href="product.html" class="model">
-                        <div class="model_main">
-                            <img class="model_image" src="/img/spark.png" loading="lazy" alt="spark"/>
-                        </div>
-                        <div class="model_bottom">
-                            <div class="model_info">
-                                <p class="model_name">Spark</p>
-                                <p class="model_price">520.000<span>сум</span></p>
-                            </div>
-                            <div class="model_button button">Купить</div>
-                        </div>
-                    </a>
-                    <a href="product.html" class="model">
-                        <div class="model_main">
-                            <img class="model_image" src="/img/spark.png" loading="lazy" alt="spark"/>
-                        </div>
-                        <div class="model_bottom">
-                            <div class="model_info">
-                                <p class="model_name">Spark</p>
-                                <p class="model_price">520.000<span>сум</span></p>
-                            </div>
-                            <div class="model_button button">Купить</div>
-                        </div>
-                    </a>
-                    <a href="product.html" class="model">
-                        <div class="model_main">
-                            <img class="model_image" src="/img/spark.png" loading="lazy" alt="spark"/>
-                        </div>
-                        <div class="model_bottom">
-                            <div class="model_info">
-                                <p class="model_name">Spark</p>
-                                <p class="model_price">520.000<span>сум</span></p>
-                            </div>
-                            <div class="model_button button">Купить</div>
-                        </div>
-                    </a>
-                    <a href="product.html" class="model">
-                        <div class="model_main">
-                            <img class="model_image" src="/img/spark.png" loading="lazy" alt="spark"/>
-                        </div>
-                        <div class="model_bottom">
-                            <div class="model_info">
-                                <p class="model_name">Spark</p>
-                                <p class="model_price">520.000<span>сум</span></p>
-                            </div>
-                            <div class="model_button button">Купить</div>
-                        </div>
-                    </a>
-                    <a href="product.html" class="model">
-                        <div class="model_main">
-                            <img class="model_image" src="/img/spark.png" loading="lazy" alt="spark"/>
-                        </div>
-                        <div class="model_bottom">
-                            <div class="model_info">
-                                <p class="model_name">Spark</p>
-                                <p class="model_price">520.000<span>сум</span></p>
-                            </div>
-                            <div class="model_button button">Купить</div>
-                        </div>
-                    </a>
-                    <a href="product.html" class="model">
-                        <div class="model_main">
-                            <img class="model_image" src="/img/spark.png" loading="lazy" alt="spark"/>
-                        </div>
-                        <div class="model_bottom">
-                            <div class="model_info">
-                                <p class="model_name">Spark</p>
-                                <p class="model_price">520.000<span>сум</span></p>
-                            </div>
-                            <div class="model_button button">Купить</div>
-                        </div>
-                    </a>
-                    <a href="product.html" class="model">
-                        <div class="model_main">
-                            <img class="model_image" src="/img/spark.png" loading="lazy" alt="spark"/>
-                        </div>
-                        <div class="model_bottom">
-                            <div class="model_info">
-                                <p class="model_name">Spark</p>
-                                <p class="model_price">520.000<span>сум</span></p>
-                            </div>
-                            <div class="model_button button">Купить</div>
-                        </div>
-                    </a>
-                    <a href="product.html" class="model">
-                        <div class="model_main">
-                            <img class="model_image" src="/img/spark.png" loading="lazy" alt="spark"/>
-                        </div>
-                        <div class="model_bottom">
-                            <div class="model_info">
-                                <p class="model_name">Spark</p>
-                                <p class="model_price">520.000<span>сум</span></p>
-                            </div>
-                            <div class="model_button button">Купить</div>
-                        </div>
-                    </a>
-                    <a href="product.html" class="model">
-                        <div class="model_main">
-                            <img class="model_image" src="/img/spark.png" loading="lazy" alt="spark"/>
-                        </div>
-                        <div class="model_bottom">
-                            <div class="model_info">
-                                <p class="model_name">Spark</p>
-                                <p class="model_price">520.000<span>сум</span></p>
-                            </div>
-                            <div class="model_button button">Купить</div>
-                        </div>
-                    </a>
-                    <a href="product.html" class="model">
-                        <div class="model_main">
-                            <img class="model_image" src="/img/spark.png" loading="lazy" alt="spark"/>
-                        </div>
-                        <div class="model_bottom">
-                            <div class="model_info">
-                                <p class="model_name">Spark</p>
-                                <p class="model_price">520.000<span>сум</span></p>
-                            </div>
-                            <div class="model_button button">Купить</div>
-                        </div>
-                    </a>
-                    <a href="product.html" class="model">
-                        <div class="model_main">
-                            <img class="model_image" src="/img/spark.png" loading="lazy" alt="spark"/>
-                        </div>
-                        <div class="model_bottom">
-                            <div class="model_info">
-                                <p class="model_name">Spark</p>
-                                <p class="model_price">520.000<span>сум</span></p>
-                            </div>
-                            <div class="model_button button">Купить</div>
-                        </div>
-                    </a>
-                    <div href="product.html" class="model">
-                        <div class="model_main">
-                            <img class="model_image" src="/img/spark.png" loading="lazy" alt="spark"/>
-                        </div>
-                        <div class="model_bottom">
-                            <div class="model_info">
-                                <p class="model_name">Spark</p>
-                                <p class="model_price">520.000<span>сум</span></p>
-                            </div>
-                            <div class="model_button button">Купить</div>
-                        </div>
+        @foreach($brands as $brand)
+            <div id="overlay-{{ $brand->id }}" onclick="closePopup({{ $brand->id }})"></div>
+            <div id="pop-up-{{ $brand->id }}" class="pop-up">
+                <div class="pop-up__wr">
+                    <div class="pop-up_top">
+                        <svg class="pop-up_logo" width="128" height="30">
+                            <use href="{{ $brand->image->path }}"></use>
+                        </svg>
+                        <p class="pop-up_text">{{ $brand->name }}</p>
+                        <button id="closePopupButton" onclick="handleClose(event, {{$brand->id}})">
+                            <img src="/img/close-pop-up.svg" alt="close">
+                        </button>
+                    </div>
+                    <div class="pop-up_main">
+                        @foreach($brand->mats as $mat)
+                            <a href="{{ route('public.mat.show', $mat) }}" class="model">
+                                <div class="model_main">
+                                    <img class="model_image" src="{{ $mat->carImage->getPublicUrl() }}" loading="lazy" alt="spark"/>
+                                </div>
+                                <div class="model_bottom">
+                                    <div class="model_info">
+                                        <p class="model_name">{{ $mat->model }}</p>
+                                        <p class="model_price">TODO<span>сум</span></p>
+                                    </div>
+                                    <div class="model_button button">
+                                        Купить
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
-        </div>
+        @endforeach
     </section>
     <section class="gallery">
         <div class="container">
