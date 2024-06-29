@@ -4,6 +4,8 @@
             const target = $(event.target);
             if(!target.closest('#searchInput').length) {
                 $('#searchRes').css('display', 'none');
+            } else {
+                $('#searchRes').css('display', 'block');
             }
         });
         $(document).ready(function () {
@@ -33,10 +35,8 @@
     <div>
         <div class="d-flex">
             <input class="form-control"
-                   type="search"
                    placeholder="Search"
                    aria-label="Search"
-                   name="search"
                    id="searchInput">
             <button class="btn btn-default" type="button">
                 <img src="/img/search-icon.svg" class="nav__search-icon" alt="search icon"/>
