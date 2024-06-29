@@ -19,13 +19,25 @@ class SettingsSeeder extends Seeder
     {
         $defaultSettingsList = [
             [
-                'key' => Settings::GSHEETS_URL_KEY,
+                'key' => Settings::GSHEETS_URL,
                 'title' => 'URL гугл таблиц',
             ],
             [
-                'key' => Settings::TG_CHANNEL_KEY,
-                'title' => 'ТГ канал для отправки данных',
-            ]
+                'key' => Settings::TG_CHAT_ID,
+                'title' => 'ID ТГ канала для отправки данных',
+            ],
+            [
+                'key' => Settings::TG_CHAT_TOKEN,
+                'title' => 'Токен для ТГ канала отправки данных',
+            ],
+            [
+                'key' => Settings::TG_CONSULTATION_CHAT_TOKEN,
+                'title' => 'Токен для ТГ канала кончультаций',
+            ],
+            [
+                'key' => Settings::TG_CONSULTATION_CHAT_ID,
+                'title' => 'ID ТГ канала консультаций',
+            ],
         ];
 
         foreach ($defaultSettingsList as $settingData) {
