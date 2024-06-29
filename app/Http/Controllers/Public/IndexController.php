@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Public\ConsultationRequest;
 use App\Models\Gallery;
 use App\Repositories\ArticleRepository;
 use App\Repositories\GalleryRepository;
@@ -47,9 +48,10 @@ class IndexController extends Controller
         return view('public.about');
     }
 
-    public function consultation(Request $request): View
+    public function consultation(ConsultationRequest $request): View|RedirectResponse
     {
-        dd($request->post());
+        return redirect()->route('public.index')
+            ->with('error', 'Consultation not implemented yet');
     }
 
     public function contacts(): View

@@ -644,12 +644,13 @@
                 <h2 class="contact__title title-35">
                     Оставьте заявку на консультацию и мы свяжемся с вами
                 </h2>
-                <form class="contact__form" name="feedback" method="POST" action="/feedback.php">
+                <form class="contact__form" method="POST" action="{{ route('public.consultation') }}">
+                    @csrf
                     <input type="text" name="name" required="required" placeholder="Имя"/>
-
-                    <input type="phone" name="phone" required="required" placeholder="+998 99 000 33 00"/>
-
-                    <input class="contact__btn" type="submit" name="submit_btn" value="Отправить"/>
+                    <input type="tel" name="phone" required="required" placeholder="+998 99 000 33 00"/>
+                    <button class="contact__btn" type="submit" name="submit_btn">
+                        Отправить
+                    </button>
                 </form>
                 <p class="notify">
                     Нажимая кнопку «Отправить», вы соглашаетесь с условиями политики
