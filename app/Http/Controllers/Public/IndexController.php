@@ -31,7 +31,6 @@ class IndexController extends Controller
             ->map(fn (Collection $collection) => $collection->all())
             ->all();
 
-//        dd($imageUrlsChunks);
         return view('public.index', compact('articles', 'imageUrlsChunks'));
     }
 
