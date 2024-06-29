@@ -71,22 +71,27 @@
                 <div class="footer__title title-25">Меню</div>
                 <ul class="footer__list">
                     <li>
-                        <a href="./about.php">О компании</a>
+                        <a href="{{ route('public.about') }}">О компании</a>
                     </li>
                     <li>
-                        <a href="./order.php">Оформление заказа</a>
+{{--                        TODO ??? --}}
+                        <a href="/">Оформление заказа</a>
                     </li>
                     <li>
-                        <a href="./contacts.php">Контакты</a>
+                        <a href="{{ route('public.contacts') }}">Контакты</a>
                     </li>
                 </ul>
             </nav>
-            <img src="/img/footer_logo.png" loading="lazy" alt="evacor" class="footer__logo"/>
+            <a href="/">
+                <img src="/img/footer_logo.png" loading="lazy" alt="evacor" class="footer__logo"/>
+            </a>
         </div>
         <div class="footer__seporator"></div>
         <div class="footer__bottom">
             <p class="footer__copyright">© Evakor, 2011 - 2023 г.</p>
-            <a class="footer__policy" href="#">Политика конфиденциальности</a>
+            <a class="footer__policy" href="{{ route('public.privacy_policy') }}">
+                Политика конфиденциальности
+            </a>
             <div class="footer__author">Разработка сайта</div>
         </div>
         <div class="footer__bottom-mob">

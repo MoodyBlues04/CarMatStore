@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Public\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +22,5 @@ Route::prefix('user')
     ->as('user.')
     ->middleware(['auth', 'verified', 'user'])
     ->group(__DIR__ . '/web/user.php');
-
-Route::as('public.')->group(function () {
-    Route::get('/', IndexController::class . '@index')->name('index');
-    Route::get('/product', IndexController::class . '@product')->name('product');
-});
+Route::as('public.')
+    ->group(__DIR__ . '/web/public.php');

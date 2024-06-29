@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use App\Repositories\ArticleRepository;
 use App\Repositories\GalleryRepository;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
@@ -17,7 +19,7 @@ class IndexController extends Controller
     ) {
     }
 
-    public function index(): View|\Illuminate\Http\RedirectResponse
+    public function index(): View|RedirectResponse
     {
         if (!auth()->guest() && auth()->user()->is_admin) {
             return redirect()->route('admin.index');
@@ -36,6 +38,27 @@ class IndexController extends Controller
 
     public function product(): View
     {
+//        TODO temporary
         return view('public.product');
+    }
+
+    public function about(): View
+    {
+        return view('public.about');
+    }
+
+    public function consultation(Request $request): View
+    {
+        dd($request->post());
+    }
+
+    public function contacts(): View
+    {
+        return view('public.contacts');
+    }
+
+    public function privacyPolicy(): View
+    {
+        return view('public.privacy_policy');
     }
 }
