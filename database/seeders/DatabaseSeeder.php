@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             GallerySeeder::class,
             BrandSeeder::class,
+            TariffSeeder::class,
         ]);
     }
 }
