@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -25,14 +26,14 @@ class MatTariff extends Model
         'name',
     ];
 
-    public function colors(): HasMany
+    public function colors(): BelongsToMany
     {
-        return $this->hasMany(Color::class, 'mat_tariff_id');
+        return $this->belongsToMany(Color::class, 'tariffs_colors', 'mat_tariff_id', 'color_id');
     }
 
-    public function materials(): HasMany
+    public function materials(): BelongsToMany
     {
-        return $this->hasMany(MatMaterial::class, 'mat_tariff_id');
+        return $this->belongsToMany(MatMaterial::class, 'tariffs_materials', 'mat_tariff_id', 'mat_material_id');
     }
 
     public function matPlaces(): HasMany

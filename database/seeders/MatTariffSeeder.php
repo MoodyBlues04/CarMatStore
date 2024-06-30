@@ -3,10 +3,9 @@
 namespace Database\Seeders;
 
 use App\Repositories\MatTariffRepository;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TariffSeeder extends Seeder
+class MatTariffSeeder extends Seeder
 {
     public function __construct(private readonly MatTariffRepository $matTariffRepository)
     {
@@ -20,7 +19,7 @@ class TariffSeeder extends Seeder
         $defaultTariffs = [
             'light',
             'classic',
-            'premiun-basic',
+            'premium-basic',
             'premium-pro',
         ];
 

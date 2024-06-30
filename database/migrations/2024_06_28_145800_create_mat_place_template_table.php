@@ -41,7 +41,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('template_price');
+        Schema::dropIfExists('template_prices');
         Schema::dropIfExists('mat_place_templates');
     }
 };

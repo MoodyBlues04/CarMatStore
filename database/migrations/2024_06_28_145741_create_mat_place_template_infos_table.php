@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mat_place_templates');
+        Schema::dropIfExists('mat_place_template_infos');
     }
 };

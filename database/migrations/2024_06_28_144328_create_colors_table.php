@@ -20,12 +20,20 @@ return new class extends Migration
                 ->references('id')
                 ->on('images')
                 ->onDelete('cascade');
+            $table->timestamps();
+        });
+
+        Schema::create('tariffs_colors', function (Blueprint $table) {
+            $table->foreignId('color_id');
+            $table->foreign('color_id')
+                ->references('id')
+                ->on('colors')
+                ->onDelete('cascade');
             $table->foreignId('mat_tariff_id');
             $table->foreign('mat_tariff_id')
                 ->references('id')
                 ->on('mat_tariffs')
                 ->onDelete('cascade');
-            $table->timestamps();
         });
     }
 
@@ -34,6 +42,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('tariffs_colors');
         Schema::dropIfExists('colors');
     }
 };
