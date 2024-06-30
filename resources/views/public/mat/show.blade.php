@@ -37,115 +37,85 @@
                         <div class="product-option_one product-option_item">
                             <label>
                                 <input class="product-option_all button-text button" type="button" name="option"
-                                       value="комплект" id="All" onclick="toggleAllOrange()"/>
+                                       value="комплект" id="All"/>
                             </label>
                             <label>
                                 <input class="product-info_option_single button-text button" type="button" name="option"
-                                       id="single" value="По отдельности" onclick="changeColor('single', null, true)"/>
+                                       id="single" value="По отдельности" />
                             </label>
                         </div>
                         <div class="product-option_two product-option_item">
                             <div class="product-option_zone-image">
-                                <input type="button" class="button product-option_btn-img" id="zone1" value=""
-                                       onclick="changeColor('zone1', 'zone5')"/>
-                                <input type="button" class="button product-option_btn-img" id="zone2" value=""
-                                       onclick="changeColor('zone2', 'zone6')"/>
-                                <input type="button" class="button product-option_btn-img" id="zone3" value=""
-                                       onclick="changeColor('zone3', 'zone7')"/>
-                                <input type="button" class="button product-option_btn-img" id="zone4" value=""
-                                       onclick="changeColor('zone4', 'zone8')"/>
-                                <input type="button" class="button product-option_btn-img" id="zone55" value=""
-                                       onclick="changeColor('zone55', 'zone9')"/>
+                                <input type="button" class="button product-option_btn-img" id="zone1" value=""/>
+                                <input type="button" class="button product-option_btn-img" id="zone2" value=""/>
+                                <input type="button" class="button product-option_btn-img" id="zone3" value=""/>
+                                <input type="button" class="button product-option_btn-img" id="zone4" value=""/>
+                                <input type="button" class="button product-option_btn-img" id="zone55" value=""/>
                             </div>
                             <div class="product-option_zone-name">
                                 <input type="button" class="button product-option_btn-text button-text" id="zone5"
-                                       value="Водительский" onclick="changeColor('zone1', 'zone5')"/>
+                                       value="Водительский"/>
                                 <input type="button" class="button product-option_btn-text button-text" id="zone6"
-                                       value="Пассажирский" onclick="changeColor('zone2', 'zone6')"/>
+                                       value="Пассажирский"/>
                                 <input type="button" class="button product-option_btn-text button-text" id="zone7"
-                                       value="Задний левый" onclick="changeColor('zone3', 'zone7')"/>
+                                       value="Задний левый"/>
                                 <input type="button" class="button product-option_btn-text button-text" id="zone8"
-                                       value="Задний правый" onclick="changeColor('zone4', 'zone8')"/>
+                                       value="Задний правый"/>
                                 <div class="product-option_btn-info-text">
                                     <input type="button"
                                            class="button product-option_btn-text product-option_btn-bag button-text"
-                                           id="zone9" value="багажник" onclick="changeColor('zone55', 'zone9')"/>
+                                           id="zone9" value="багажник"/>
                                 </div>
                             </div>
                         </div>
                         <p class="option-title">Материал коврика</p>
                         <div class="product-option_three product-option_item">
                             <input type="button" class="button product-option_btn-text button-text" id="zone77"
-                                   value="Eva ромб" onclick="changeColor('zone77')"/>
+                                   value="Eva ромб"/>
                             <input type="button" class="button product-option_btn-text button-text" id="zone3-1"
-                                   value="eva соты" onclick="changeColor('zone3-1')"/>
+                                   value="eva соты"/>
                         </div>
                         <p class="option-title">цвет коврика</p>
                         <div class="product-option_four product-option_item">
                             <div class="product-option_color-main">
-                                <input type="button" class="button product-option_btn-color button-text" id="zone77"
-                                       value="" onclick="changeColor('zone77')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone77" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
                             </div>
                             <div class="product-option_carpet-color">
                                 <input type="button" class="button product-option_carpet-color-btn button-text"
-                                       id="zone77" value="Синий" onclick="changeColor('zone77')"/>
+                                       id="zone77" value="Синий"/>
                             </div>
                         </div>
                         <p class="option-title">цвет окантовки</p>
                         <div class="product-option_five product-option_item">
                             <div class="product-option_border-color">
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1"
-                                       value="" onclick="changeColor('zone3-1')"/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
+                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
                             </div>
                             <div class="product-option_carpet-border-color">
                                 <input type="button" class="button product-option_carpet-border-color-btn button-text"
-                                       id="zone77" value="Синий" onclick="changeColor('zone77')"/>
+                                       id="zone77" value="Синий"/>
                             </div>
                         </div>
                         <p class="option-title">аксессуары</p>
