@@ -5,32 +5,42 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
- * @property string $name
+ * @property int $mat_place_template_info_id
  * @property string $created_at
  * @property string $updated_at
  *
- * @property Collection $placeInfos
- * @property Collection $mats
+ * @property MatPlaceTemplateInfo $templateInfo
+ * @property Mat $mat
+ * @property Collection $tariffs
  */
 class MatPlaceTemplate extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'mat_place_template_info_id',
     ];
 
-    public function placeInfos(): HasMany
+    public function templateInfo(): BelongsTo
     {
-        return $this->hasMany(MatPlaceInfo::class, 'mat_place_template_id');
+        return $this->belongsTo(MatPlaceTemplateInfo::class, 'mat_place_template_info_id');
     }
 
-    public function mats(): HasMany
+    public function mats(): HasOne
     {
-        return $this->hasMany(Mat::class, 'mat_place_template_id');
+        return $this->hasOne(Mat::class, 'mat_place_template_id');
+    }
+
+    public function tariffs(): BelongsToMany
+    {
+        return $this->belongsToMany(MatTariff::class, 'template_prices', 'mat_place_template_id', 'mat_tariff_id')
+            ->withPivot('price');
     }
 }

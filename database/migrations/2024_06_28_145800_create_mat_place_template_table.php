@@ -11,33 +11,28 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mat_places', function (Blueprint $table) {
+        Schema::create('mat_place_templates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mat_place_info_id');
-            $table->foreign('mat_place_info_id')
+            $table->foreignId('mat_place_template_info_id');
+            $table->foreign('mat_place_template_info_id')
                 ->references('id')
-                ->on('mat_place_infos')
+                ->on('mat_place_template_infos')
                 ->onDelete('cascade');
+            $table->timestamps();
+        });
+        Schema::create('template_prices', function (Blueprint $table) {
+            $table->unsignedInteger('price');
             $table->foreignId('mat_place_template_id');
             $table->foreign('mat_place_template_id')
                 ->references('id')
                 ->on('mat_place_templates')
-                ->onDelete('cascade');
-            $table->timestamps();
-        });
-
-        Schema::create('place_prices', function (Blueprint $table) {
-            $table->unsignedInteger('price');
-            $table->foreignId('mat_place_id');
-            $table->foreign('mat_place_id')
-                ->references('id')
-                ->on('mat_places')
                 ->onDelete('cascade');
             $table->foreignId('mat_tariff_id');
             $table->foreign('mat_tariff_id')
                 ->references('id')
                 ->on('mat_tariffs')
                 ->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -46,7 +41,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('place_prices');
-        Schema::dropIfExists('mat_places');
+        Schema::dropIfExists('template_price');
+        Schema::dropIfExists('mat_place_templates');
     }
 };

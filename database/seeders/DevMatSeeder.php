@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\MatPlaceTemplateInfo;
 use App\Repositories\BrandRepository;
+use App\Repositories\MatPlaceTemplateInfoRepository;
 use App\Repositories\MatPlaceTemplateRepository;
 use App\Repositories\MatRepository;
 use Illuminate\Database\Seeder;
@@ -12,7 +14,8 @@ class DevMatSeeder extends Seeder
     public function __construct(
         private readonly MatRepository              $matRepository,
         private readonly BrandRepository            $brandRepository,
-        private readonly MatPlaceTemplateRepository $matPlaceTemplateRepository
+        private readonly MatPlaceTemplateRepository $matPlaceTemplateRepository,
+        private readonly MatPlaceTemplateInfoRepository $matPlaceTemplateInfoRepository
     ) {
     }
 
@@ -21,10 +24,9 @@ class DevMatSeeder extends Seeder
      */
     public function run(): void
     {
-        if (!$this->matPlaceTemplateRepository->exists(['name' => 'test_templ'])) {
-            $this->matPlaceTemplateRepository->create(['name' => 'test_templ']);
-        }
-        $template = $this->matPlaceTemplateRepository->firstBy(['name' => 'test_templ']);
+        /** @var MatPlaceTemplateInfo $templateInfo */
+        $templateInfo = $this->matPlaceTemplateInfoRepository->firstOrCreate(['name' => 'test_templ']);
+        $template = $this->matPlaceTemplateRepository->createFromTemplateInfo($templateInfo);
         $brands = $this->brandRepository->getAll();
 
         foreach ($brands as $idx => $brand) {

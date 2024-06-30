@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('mat_place_infos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('mat_place_template_id');
-            $table->foreign('mat_place_template_id')
+            $table->foreignId('mat_place_template_info_id');
+            $table->foreign('mat_place_template_info_id')
                 ->references('id')
-                ->on('mat_place_templates')
+                ->on('mat_place_template_infos')
                 ->onDelete('cascade');
 
             $table->timestamps();
 
-            $table->unique(['name', 'mat_place_template_id']);
+            $table->unique(['name', 'mat_place_template_info_id']);
         });
     }
 

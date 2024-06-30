@@ -23,6 +23,11 @@ abstract class Repository
         return $this->query;
     }
 
+    public function firstOrCreate(array $attributes): Builder|Model
+    {
+        return $this->query->firstOrCreate($attributes);
+    }
+
     public function create(array $attributes): Builder|Model
     {
         return $this->query->create($attributes);

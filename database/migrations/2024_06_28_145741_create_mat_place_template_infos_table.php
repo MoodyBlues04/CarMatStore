@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mat_place_templates', function (Blueprint $table) {
+        Schema::create('mat_place_template_infos', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->timestamps();

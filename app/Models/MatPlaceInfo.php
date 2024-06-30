@@ -11,11 +11,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property string $name
- * @property int $mat_place_template_id
+ * @property int $mat_place_template_info_id
  * @property string $created_at
  * @property string $updated_at
  *
- * @property MatPlaceTemplate $template
+ * @property MatPlaceTemplateInfo $templateInfo
  * @property Collection $matPlaces
  */
 class MatPlaceInfo extends Model
@@ -24,12 +24,12 @@ class MatPlaceInfo extends Model
 
     protected $fillable = [
         'name',
-        'mat_place_template_id',
+        'mat_place_template_info_id',
     ];
 
-    public function template(): BelongsTo
+    public function templateInfo(): BelongsTo
     {
-        return $this->belongsTo(MatPlaceTemplate::class, 'mat_place_template_id');
+        return $this->belongsTo(MatPlaceTemplateInfo::class, 'mat_place_template_info_id');
     }
 
     public function matPlaces(): HasMany

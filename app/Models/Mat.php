@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property MatPlaceTemplate $template
  * @property Brand $brand
  * @property Image $carImage
- * @property Collection $matPlaces
  * @property Collection $images
  */
 class Mat extends Model
@@ -48,11 +47,6 @@ class Mat extends Model
     public function carImage(): BelongsTo
     {
         return $this->belongsTo(Image::class, 'car_image_id');
-    }
-
-    public function matPlaces(): HasMany
-    {
-        return $this->hasMany(MatPlace::class, 'mat_id');
     }
 
     public function images(): BelongsToMany
