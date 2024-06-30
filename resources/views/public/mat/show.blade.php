@@ -5,15 +5,37 @@
  * @var \App\Models\Accessory[] $accessories
  * @var \App\Models\Emblem[] $emblems
  */
-
-// TODO in JS get colors by tariff
-
-$innerColors = $tariffs[0]->colors->filter(fn ($color) => $color->type === \App\Models\Color::INNER)->all();
-$borderColors = $tariffs[0]->colors->filter(fn ($color) => $color->type === \App\Models\Color::BORDER)->all();
-
 ?>
 
 @extends('layout')
+
+@section('scripts')
+    <script>
+        function toggleTariffOptions(tariffId) {
+            const tariffOptions = document.getElementsByClassName('tariff-options');
+            for (const tariffOptionBlock of tariffOptions) {
+                tariffOptionBlock.classList.remove('d-block');
+                tariffOptionBlock.classList.add('d-none');
+            }
+
+            const id = `tariff-options-${tariffId}`;
+            const targetBlock = document.getElementById(id);
+            targetBlock.classList.remove('d-none');
+            targetBlock.classList.add('d-block');
+
+            const inpBlocks = document.getElementsByClassName('tariff-input');
+            for (const tariffOptionBlock of inpBlocks) {
+                tariffOptionBlock.style.removeProperty('background-color');
+                tariffOptionBlock.style.removeProperty('color');
+            }
+
+            const inpId = `tariff-input-${tariffId}`;
+            const inpBlock = document.getElementById(inpId);
+            inpBlock.style.backgroundColor = '#ff3600';
+            inpBlock.style.color = 'white';
+        }
+    </script>
+@endsection
 
 @section('content')
     <section class="product">
@@ -34,88 +56,99 @@ $borderColors = $tariffs[0]->colors->filter(fn ($color) => $color->type === \App
                 </div>
                 <div class="product-info">
                     <div class="product-type">
-                        <label>
-                            <input class="product-type_item button-text button" type="button" name="position"
-                                   value="лайт"/>
-                        </label>
-                        <label>
-                            <input class="product-type_item button-text button" type="button" name="position"
-                                   value="классик"/>
-                        </label>
-                        <label>
-                            <input class="product-type_item button-text button" type="button" name="position"
-                                   value="премиум"/>
-                        </label>
+                        @foreach($tariffs as $tariff)
+                            <label>
+                                <input class="tariff-input product-type_item button-text button" type="button" name="position"
+                                       value="{{$tariff->name}}"
+                                       @if ($tariff->id === $tariffs[0]->id)
+                                            style="background-color: #ff3600; color: white"
+                                       @endif
+                                       id="tariff-input-{{$tariff->id}}"
+                                       onclick="toggleTariffOptions(<?= $tariff->id ?>)"/>
+                            </label>
+                        @endforeach
                     </div>
+
                     <p class="option-title">Комплектация ковриков</p>
                     <div class="product-option">
-                        <div class="product-option_one product-option_item">
-                            <label>
-                                <input class="product-option_all button-text button" type="button" name="option"
-                                       value="комплект" id="All"/>
-                            </label>
-                            <label>
-                                <input class="product-info_option_single button-text button" type="button" name="option"
-                                       id="single" value="По отдельности" />
-                            </label>
-                        </div>
-                        <div class="product-option_two product-option_item">
-                            <div class="product-option_zone-image">
-                                <input type="button" class="button product-option_btn-img" id="zone1" value=""/>
-                                <input type="button" class="button product-option_btn-img" id="zone2" value=""/>
-                                <input type="button" class="button product-option_btn-img" id="zone3" value=""/>
-                                <input type="button" class="button product-option_btn-img" id="zone4" value=""/>
-                                <input type="button" class="button product-option_btn-img" id="zone55" value=""/>
-                            </div>
-                            <div class="product-option_zone-name">
-                                <input type="button" class="button product-option_btn-text button-text" id="zone5"
-                                       value="Водительский"/>
-                                <input type="button" class="button product-option_btn-text button-text" id="zone6"
-                                       value="Пассажирский"/>
-                                <input type="button" class="button product-option_btn-text button-text" id="zone7"
-                                       value="Задний левый"/>
-                                <input type="button" class="button product-option_btn-text button-text" id="zone8"
-                                       value="Задний правый"/>
-                                <div class="product-option_btn-info-text">
-                                    <input type="button"
-                                           class="button product-option_btn-text product-option_btn-bag button-text"
-                                           id="zone9" value="багажник"/>
+                        @foreach($tariffs as $tariff)
+                            <?php
+                                $innerColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::INNER)->all();
+                                $borderColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::BORDER)->all();
+                            ?>
+                            <div class="tariff-options {{ $tariff->id === $tariffs[0]->id ? 'd-block' : 'd-none'}}"
+                                 id="tariff-options-{{$tariff->id}}">
+                                <div class="product-option_one product-option_item">
+                                    <label>
+                                        <input class="product-option_all button-text button" type="button" name="option"
+                                               value="комплект" id="All"/>
+                                    </label>
+                                    <label>
+                                        <input class="product-info_option_single button-text button" type="button"
+                                               name="option"
+                                               id="single" value="По отдельности"/>
+                                    </label>
+                                </div>
+                                <div class="product-option_two product-option_item">
+                                    <div class="product-option_zone-image">
+                                        <input type="button" class="button product-option_btn-img" id="zone1" value=""/>
+                                        <input type="button" class="button product-option_btn-img" id="zone2" value=""/>
+                                        <input type="button" class="button product-option_btn-img" id="zone3" value=""/>
+                                        <input type="button" class="button product-option_btn-img" id="zone4" value=""/>
+                                        <input type="button" class="button product-option_btn-img" id="zone55" value=""/>
+                                    </div>
+                                    <div class="product-option_zone-name">
+                                        <input type="button" class="button product-option_btn-text button-text" id="zone5"
+                                               value="Водительский"/>
+                                        <input type="button" class="button product-option_btn-text button-text" id="zone6"
+                                               value="Пассажирский"/>
+                                        <input type="button" class="button product-option_btn-text button-text" id="zone7"
+                                               value="Задний левый"/>
+                                        <input type="button" class="button product-option_btn-text button-text" id="zone8"
+                                               value="Задний правый"/>
+                                        <div class="product-option_btn-info-text">
+                                            <input type="button"
+                                                   class="button product-option_btn-text product-option_btn-bag button-text"
+                                                   id="zone9" value="багажник"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="option-title">Материал коврика</p>
+                                <div class="product-option_three product-option_item">
+                                    @foreach($tariff->materials as $material)
+                                        <input type="button" class="button product-option_btn-text button-text"
+                                               value="{{ $material->name }}"/>
+                                    @endforeach
+                                </div>
+                                <p class="option-title">цвет коврика</p>
+                                <div class="product-option_four product-option_item d-flex">
+                                    <div class="product-option_color-main d-flex">
+                                        @foreach($innerColors as $color)
+                                            <input type="button"
+                                                   class="button product-option_btn-color button-text"
+                                                   style="background-color: {{ $color->hex }}"
+                                                   value=""/>
+                                        @endforeach
+                                        {{--                                <input type="button" class="button product-option_carpet-color-btn button-text"--}}
+                                        {{--                                       id="zone77" value="Синий"/>--}}
+                                    </div>
+                                </div>
+                                <p class="option-title">цвет окантовки</p>
+                                <div class="product-option_five product-option_item d-flex">
+                                    <div class="product-option_border-color d-flex">
+                                        @foreach($borderColors as $color)
+                                            <input type="button"
+                                                   class="button product-option_btn-color button-text"
+                                                   style="background-color:  {{ $color->hex }}"
+                                                   value=""/>
+                                        @endforeach
+                                        {{--                                <input type="button" class="button product-option_carpet-border-color-btn button-text"--}}
+                                        {{--                                       id="zone77" value="Синий"/>--}}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <p class="option-title">Материал коврика</p>
-                        <div class="product-option_three product-option_item">
-                            @foreach($tariffs[0]->materials as $material)
-                                <input type="button" class="button product-option_btn-text button-text"
-                                       value="{{ $material->name }}"/>
-                            @endforeach
-                        </div>
-                        <p class="option-title">цвет коврика</p>
-                        <div class="product-option_four product-option_item d-flex">
-                            <div class="product-option_color-main d-flex">
-                                @foreach($innerColors as $color)
-                                    <input type="button"
-                                           class="button product-option_btn-color button-text"
-                                           style="background-color: {{ $color->hex }}"
-                                           value=""/>
-                                @endforeach
-{{--                                <input type="button" class="button product-option_carpet-color-btn button-text"--}}
-{{--                                       id="zone77" value="Синий"/>--}}
-                            </div>
-                        </div>
-                        <p class="option-title">цвет окантовки</p>
-                        <div class="product-option_five product-option_item d-flex">
-                            <div class="product-option_border-color d-flex">
-                                @foreach($borderColors as $color)
-                                    <input type="button"
-                                           class="button product-option_btn-color button-text"
-                                           style="background-color:  {{ $color->hex }}"
-                                           value=""/>
-                                @endforeach
-{{--                                <input type="button" class="button product-option_carpet-border-color-btn button-text"--}}
-{{--                                       id="zone77" value="Синий"/>--}}
-                            </div>
-                        </div>
+                        @endforeach
+
                         <p class="option-title">аксессуары</p>
                         <div class="product-option_six">
                             <div class="product-option_accs">
@@ -124,9 +157,11 @@ $borderColors = $tariffs[0]->colors->filter(fn ($color) => $color->type === \App
                                         <div class="product-option_accs-item button-text">
                                             <div class="product-option_accs-item-name">{{ $accessory->name }}</div>
                                             <div class="product-option_accs-item-wr">
-                                                <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
+                                                <img class="product-option_accs-item-btn" src="/img/minus.svg"
+                                                     alt="minus"/>
                                                 <div class="product-option_accs-item-number">0</div>
-                                                <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
+                                                <img class="product-option_accs-item-btn" src="/img/plus.svg"
+                                                     alt="minus"/>
                                             </div>
                                         </div>
                                     @else

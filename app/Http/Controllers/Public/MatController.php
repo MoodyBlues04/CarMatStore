@@ -19,6 +19,7 @@ class MatController extends Controller
         private readonly AccessoryRepository $accessoryRepository,
         private readonly EmblemRepository $emblemRepository
     ) {
+//        $this->middleware('auth');
     }
 
     public function show(Mat $mat): View
