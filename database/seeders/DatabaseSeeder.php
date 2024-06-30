@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             MatMaterialSeeder::class,
             ColorSeeder::class,
             AccessorySeeder::class,
+            EmblemSeeder::class,
         ]);
     }
 }

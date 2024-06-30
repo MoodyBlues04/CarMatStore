@@ -3,6 +3,7 @@
  * @var \App\Models\MatTariff[] $tariffs
  * @var \App\Models\Mat $mat
  * @var \App\Models\Accessory[] $accessories
+ * @var \App\Models\Emblem[] $emblems
  */
 
 // TODO in JS get colors by tariff
@@ -147,96 +148,13 @@ $borderColors = $tariffs[0]->colors->filter(fn ($color) => $color->type === \App
                                 </div>
                             </div>
                             <div class="product-option_logo-images">
-                                <div class="product-option_logo-image">
-                                    <svg width="24" height="9">
-                                        <use href="/img/emblems.svg#audi"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="18" height="18">
-                                        <use href="/img/emblems.svg#bmw2"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="24" height="7">
-                                        <use href="/img/emblems.svg#chevrolet"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="24" height="7">
-                                        <use href="/img/emblems.svg#haval"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="18" height="15">
-                                        <use href="/img/emblems.svg#honda"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="22" height="11">
-                                        <use href="/img/emblems.svg#Hyundai"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="24" height="7">
-                                        <use href="/img/emblems.svg#kia"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="22" height="10">
-                                        <use href="/img/emblems.svg#lada"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="22" height="16">
-                                        <use href="/img/emblems.svg#mazda"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="18" height="14">
-                                        <use href="/img/emblems.svg#lexus"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="18" height="19">
-                                        <use href="/img/emblems.svg#mercedes"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="18" height="15">
-                                        <use href="/img/emblems.svg#mitsubishi"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="24" height="20">
-                                        <use href="/img/emblems.svg#nissan"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="24" height="13">
-                                        <use href="/img/emblems.svg#landRover"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="18" height="18">
-                                        <use href="/img/emblems.svg#skoda"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="18" height="17">
-                                        <use href="/img/emblems.svg#tesla"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="21" height="13">
-                                        <use href="/img/emblems.svg#Toyota"></use>
-                                    </svg>
-                                </div>
-                                <div class="product-option_logo-image">
-                                    <svg width="18" height="19">
-                                        <use href="/img/emblems.svg#volkswagen"></use>
-                                    </svg>
-                                </div>
+                                @foreach($emblems as $emblem)
+                                    <div class="product-option_logo-image">
+                                        <svg width="24" height="9">
+                                            <use href="{{$emblem->image->path}}"></use>
+                                        </svg>
+                                    </div>
+                                @endforeach
                             </div>
                             <div class="product-option_logo-qty-mob">
                                 <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
