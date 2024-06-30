@@ -12,11 +12,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $id
  * @property string $name
  * @property string $type
- * @property int $image_id
+ * @property string $hex
  * @property string $created_at
  * @property string $updated_at
  *
- * @property Image $image
  * @property Collection $tariffs
  */
 class Color extends Model
@@ -30,13 +29,8 @@ class Color extends Model
     protected $fillable = [
         'name',
         'type',
-        'image_id',
+        'hex',
     ];
-
-    public function image(): BelongsTo
-    {
-        return $this->belongsTo(Image::class, 'image_id');
-    }
 
     public function tariffs(): BelongsToMany
     {

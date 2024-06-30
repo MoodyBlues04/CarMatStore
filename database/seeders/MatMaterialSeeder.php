@@ -20,11 +20,11 @@ class MatMaterialSeeder extends Seeder
         $defaultMaterials = [
             [
                 'name' => 'EVA ромб',
-                'tariffs' => ['light', 'classic'],
+                'tariffs' => ['light', 'classic', 'premium-basic', 'premium-pro'],
             ],
             [
                 'name' => 'EVA соты',
-                'tariffs' => ['light', 'classic', 'premium-basic', 'premium-pro'],
+                'tariffs' => ['premium-basic', 'premium-pro'],
             ],
         ];
 

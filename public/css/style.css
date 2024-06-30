@@ -571,66 +571,6 @@ main {
   border: transparent;
 }
 
-.product-option_btn-color:nth-child(1) {
-  background-color: #b79764;
-}
-
-.product-option_btn-color:nth-child(2) {
-  background-color: #f1f1f1;
-}
-
-.product-option_btn-color:nth-child(3) {
-  background-color: #643c44;
-}
-.product-option_btn-color:nth-child(4) {
-  background-color: #393939;
-}
-.product-option_btn-color:nth-child(5) {
-  background-color: #8739b4;
-}
-.product-option_btn-color:nth-child(6) {
-  background-color: #7f634c;
-}
-.product-option_btn-color:nth-child(7) {
-  background-color: #dd503a;
-}
-.product-option_btn-color:nth-child(8) {
-  background-color: #de6f30;
-}
-.product-option_btn-color:nth-child(9) {
-  background-color: #fb79af;
-}
-.product-option_btn-color:nth-child(10) {
-  background-color: #4a4a4a;
-}
-.product-option_btn-color:nth-child(11) {
-  background-color: #fff455;
-}
-.product-option_btn-color:nth-child(12) {
-  background-color: #3d5cbc;
-}
-.product-option_btn-color:nth-child(13) {
-  background-color: #daa65b;
-}
-.product-option_btn-color:nth-child(14) {
-  background-color: #11463c;
-}
-.product-option_btn-color:nth-child(15) {
-  background-color: #77ae3e;
-}
-.product-option_btn-color:nth-child(16) {
-  background-color: #efe9dc;
-}
-.product-option_btn-color:nth-child(17) {
-  background-color: #635041;
-}
-.product-option_btn-color:nth-child(18) {
-  background-color: #c04f3a;
-}
-.product-option_btn-color:nth-child(19) {
-  background-color: #363b51;
-}
-
 .product-option_btn-color {
   width: 2.125rem;
   height: 2.125rem;

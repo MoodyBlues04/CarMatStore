@@ -20,7 +20,9 @@ abstract class Repository
 
     public function query(): Builder
     {
-        return $this->query;
+        $res = $this->query;
+        $this->updateQueryInstance();
+        return $res;
     }
 
     public function firstOrCreate(array $attributes): Builder|Model

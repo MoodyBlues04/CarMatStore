@@ -15,11 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->enum('type', \App\Models\Color::TYPES);
-            $table->foreignId('image_id');
-            $table->foreign('image_id')
-                ->references('id')
-                ->on('images')
-                ->onDelete('cascade');
+            $table->string('hex');
             $table->timestamps();
         });
 

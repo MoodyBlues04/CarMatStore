@@ -1,3 +1,16 @@
+<?php
+/**
+ * @var \App\Models\MatTariff[] $tariffs
+ * @var \App\Models\Mat $mat
+ */
+
+// TODO in JS get colors by tariff
+
+$innerColors = $tariffs[0]->colors->filter(fn ($color) => $color->type === \App\Models\Color::INNER)->all();
+$borderColors = $tariffs[0]->colors->filter(fn ($color) => $color->type === \App\Models\Color::BORDER)->all();
+
+?>
+
 @extends('layout')
 
 @section('content')
@@ -6,7 +19,7 @@
             <div class="crumbs">
                 <a href="/" class="crumb">Главная</a>
                 <svg width="5" height="10">
-                    <use href="img/sprite.svg#arrow"></use>
+                    <use href="/img/sprite.svg#arrow"></use>
                 </svg>
 
                 <a href="#" class="crumb">Покупка ковриков</a>
@@ -70,52 +83,35 @@
                         </div>
                         <p class="option-title">Материал коврика</p>
                         <div class="product-option_three product-option_item">
-                            <input type="button" class="button product-option_btn-text button-text" id="zone77"
-                                   value="Eva ромб"/>
-                            <input type="button" class="button product-option_btn-text button-text" id="zone3-1"
-                                   value="eva соты"/>
+                            @foreach($tariffs[0]->materials as $material)
+                                <input type="button" class="button product-option_btn-text button-text"
+                                       value="{{ $material->name }}"/>
+                            @endforeach
                         </div>
                         <p class="option-title">цвет коврика</p>
-                        <div class="product-option_four product-option_item">
-                            <div class="product-option_color-main">
-                                <input type="button" class="button product-option_btn-color button-text" id="zone77" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                            </div>
-                            <div class="product-option_carpet-color">
-                                <input type="button" class="button product-option_carpet-color-btn button-text"
-                                       id="zone77" value="Синий"/>
+                        <div class="product-option_four product-option_item d-flex">
+                            <div class="product-option_color-main d-flex">
+                                @foreach($innerColors as $color)
+                                    <input type="button"
+                                           class="button product-option_btn-color button-text"
+                                           style="background-color: {{ $color->hex }}"
+                                           value=""/>
+                                @endforeach
+{{--                                <input type="button" class="button product-option_carpet-color-btn button-text"--}}
+{{--                                       id="zone77" value="Синий"/>--}}
                             </div>
                         </div>
                         <p class="option-title">цвет окантовки</p>
-                        <div class="product-option_five product-option_item">
-                            <div class="product-option_border-color">
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                                <input type="button" class="button product-option_btn-color button-text" id="zone3-1" value=""/>
-                            </div>
-                            <div class="product-option_carpet-border-color">
-                                <input type="button" class="button product-option_carpet-border-color-btn button-text"
-                                       id="zone77" value="Синий"/>
+                        <div class="product-option_five product-option_item d-flex">
+                            <div class="product-option_border-color d-flex">
+                                @foreach($borderColors as $color)
+                                    <input type="button"
+                                           class="button product-option_btn-color button-text"
+                                           style="background-color:  {{ $color->hex }}"
+                                           value=""/>
+                                @endforeach
+{{--                                <input type="button" class="button product-option_carpet-border-color-btn button-text"--}}
+{{--                                       id="zone77" value="Синий"/>--}}
                             </div>
                         </div>
                         <p class="option-title">аксессуары</p>
@@ -157,92 +153,92 @@
                             <div class="product-option_logo-images">
                                 <div class="product-option_logo-image">
                                     <svg width="24" height="9">
-                                        <use href="img/emblems.svg#audi"></use>
+                                        <use href="/img/emblems.svg#audi"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="18" height="18">
-                                        <use href="img/emblems.svg#bmw2"></use>
+                                        <use href="/img/emblems.svg#bmw2"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="24" height="7">
-                                        <use href="img/emblems.svg#chevrolet"></use>
+                                        <use href="/img/emblems.svg#chevrolet"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="24" height="7">
-                                        <use href="img/emblems.svg#haval"></use>
+                                        <use href="/img/emblems.svg#haval"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="18" height="15">
-                                        <use href="img/emblems.svg#honda"></use>
+                                        <use href="/img/emblems.svg#honda"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="22" height="11">
-                                        <use href="img/emblems.svg#Hyundai"></use>
+                                        <use href="/img/emblems.svg#Hyundai"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="24" height="7">
-                                        <use href="img/emblems.svg#kia"></use>
+                                        <use href="/img/emblems.svg#kia"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="22" height="10">
-                                        <use href="img/emblems.svg#lada"></use>
+                                        <use href="/img/emblems.svg#lada"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="22" height="16">
-                                        <use href="img/emblems.svg#mazda"></use>
+                                        <use href="/img/emblems.svg#mazda"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="18" height="14">
-                                        <use href="img/emblems.svg#lexus"></use>
+                                        <use href="/img/emblems.svg#lexus"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="18" height="19">
-                                        <use href="img/emblems.svg#mercedes"></use>
+                                        <use href="/img/emblems.svg#mercedes"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="18" height="15">
-                                        <use href="img/emblems.svg#mitsubishi"></use>
+                                        <use href="/img/emblems.svg#mitsubishi"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="24" height="20">
-                                        <use href="img/emblems.svg#nissan"></use>
+                                        <use href="/img/emblems.svg#nissan"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="24" height="13">
-                                        <use href="img/emblems.svg#landRover"></use>
+                                        <use href="/img/emblems.svg#landRover"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="18" height="18">
-                                        <use href="img/emblems.svg#skoda"></use>
+                                        <use href="/img/emblems.svg#skoda"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="18" height="17">
-                                        <use href="img/emblems.svg#tesla"></use>
+                                        <use href="/img/emblems.svg#tesla"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="21" height="13">
-                                        <use href="img/emblems.svg#Toyota"></use>
+                                        <use href="/img/emblems.svg#Toyota"></use>
                                     </svg>
                                 </div>
                                 <div class="product-option_logo-image">
                                     <svg width="18" height="19">
-                                        <use href="img/emblems.svg#volkswagen"></use>
+                                        <use href="/img/emblems.svg#volkswagen"></use>
                                     </svg>
                                 </div>
                             </div>
