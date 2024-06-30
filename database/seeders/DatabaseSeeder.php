@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             MatTariffSeeder::class,
             MatMaterialSeeder::class,
             ColorSeeder::class,
+            AccessorySeeder::class,
         ]);
     }
 }

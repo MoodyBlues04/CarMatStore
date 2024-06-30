@@ -2,6 +2,7 @@
 /**
  * @var \App\Models\MatTariff[] $tariffs
  * @var \App\Models\Mat $mat
+ * @var \App\Models\Accessory[] $accessories
  */
 
 // TODO in JS get colors by tariff
@@ -117,27 +118,22 @@ $borderColors = $tariffs[0]->colors->filter(fn ($color) => $color->type === \App
                         <p class="option-title">аксессуары</p>
                         <div class="product-option_six">
                             <div class="product-option_accs">
-                                <div class="product-option_accs-item button-text">
-                                    <div class="product-option_accs-item-name">клипсы</div>
-                                    <div class="product-option_accs-item-wr">
-                                        <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
-                                        <div class="product-option_accs-item-number">0</div>
-                                        <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
-                                    </div>
-                                </div>
-                                <div class="product-option_accs-item button-text">
-                                    <div class="product-option_accs-item-name">
-                                        клипсы универсаьные
-                                    </div>
-                                    <div class="product-option_accs-item-wr">
-                                        <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
-                                        <div class="product-option_accs-item-number">0</div>
-                                        <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
-                                    </div>
-                                </div>
-                                <div class="product-option_accs-item button-text">
-                                    <div class="product-option_accs-item-name">Подпятник</div>
-                                </div>
+                                @foreach($accessories as $accessory)
+                                    @if ($accessory->max_count > 1)
+                                        <div class="product-option_accs-item button-text">
+                                            <div class="product-option_accs-item-name">{{ $accessory->name }}</div>
+                                            <div class="product-option_accs-item-wr">
+                                                <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
+                                                <div class="product-option_accs-item-number">0</div>
+                                                <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="product-option_accs-item button-text">
+                                            <div class="product-option_accs-item-name">{{ $accessory->name }}</div>
+                                        </div>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                         <div class="product-option_seven">
