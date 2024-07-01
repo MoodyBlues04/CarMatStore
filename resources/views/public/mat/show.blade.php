@@ -15,6 +15,8 @@
         const defaultMaterial = "<?= $tariffs[0]->materials[0]->name ?>";
         const route = "<?= route('public.mat.calc', $mat) ?>";
         let requestData = {
+            'color': null,
+            'border_color': null,
             'material': defaultMaterial,
             'tariff': defaultTariff,
             'places': new Set()
@@ -49,15 +51,22 @@
             }
         }
 
-        // todo reset all ab materials and colors on tariff change
-        function toggleTariffOptions(tariffId) {
+        function toggleTariffOptions(tariffName) {
+            if (requestData['tariff'] === tariffName) {
+                return;
+            }
+            requestData['tariff'] = tariffName;
+            requestData['color'] = null;
+            requestData['border_color'] = null;
+            requestData['material'] = defaultMaterial;
+
             const tariffOptions = document.getElementsByClassName('tariff-options');
             for (const tariffOptionBlock of tariffOptions) {
                 tariffOptionBlock.classList.remove('d-block');
                 tariffOptionBlock.classList.add('d-none');
             }
 
-            const id = `tariff-options-${tariffId}`;
+            const id = `tariff-options-${tariffName}`;
             const targetBlock = document.getElementById(id);
             targetBlock.classList.remove('d-none');
             targetBlock.classList.add('d-block');
@@ -68,7 +77,7 @@
                 tariffOptionBlock.classList.add('button-text');
             }
 
-            const inpId = `tariff-input-${tariffId}`;
+            const inpId = `tariff-input-${tariffName}`;
             const inpBlock = document.getElementById(inpId);
             inpBlock.classList.remove('button-text');
             inpBlock.classList.add('button-text--orange');
@@ -137,6 +146,17 @@
             console.log('material', requestData);
         }
 
+        function toggleColor(colorName) {
+            const colorId = `chosen_color-${requestData['tariff']}`
+            document.getElementById(colorId).value = colorName;
+            requestData['color'] = colorName;
+        }
+        function toggleBorderColor(colorName) {
+            const colorId = `chosen_border_color-${requestData['tariff']}`
+            document.getElementById(colorId).value = colorName;
+            requestData['border_color'] = colorName;
+        }
+
         function calcCost() {
             $.ajax({
                 type: "GET",
@@ -173,11 +193,11 @@
                             <label>
                                 <input class="tariff-input product-type_item
                                             button-text{{ $tariff->id === $tariffs[0]->id ? '--orange' : '' }}
-                                            button button-input" type="button"
+                                            button" type="button"
                                        name="tariff"
                                        value="{{$tariff->name}}"
-                                       id="tariff-input-{{$tariff->id}}"
-                                       onclick="toggleTariffOptions(<?= $tariff->id ?>)"/>
+                                       id="tariff-input-{{$tariff->name}}"
+                                       onclick="toggleTariffOptions('<?= $tariff->name ?>')"/>
                             </label>
                         @endforeach
                     </div>
@@ -227,14 +247,13 @@
                             </div>
                         </div>
 
-
                         @foreach($tariffs as $tariff)
-                                <?php
-                                $innerColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::INNER)->all();
-                                $borderColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::BORDER)->all();
-                                ?>
+                            <?php
+                            $innerColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::INNER)->all();
+                            $borderColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::BORDER)->all();
+                            ?>
                             <div class="tariff-options {{ $tariff->id === $tariffs[0]->id ? 'd-block' : 'd-none'}}"
-                                 id="tariff-options-{{$tariff->id}}">
+                                 id="tariff-options-{{$tariff->name}}">
                                 <p class="option-title">Материал коврика</p>
                                 <div class="product-option_three product-option_item">
                                     @foreach($tariff->materials as $material)
@@ -251,10 +270,10 @@
                                             <input type="button"
                                                    class="button product-option_btn-color button-text"
                                                    style="background-color: {{ $color->hex }}"
-                                                   value=""/>
+                                                   onclick="toggleColor('<?=$color->name?>')"/>
                                         @endforeach
-                                        {{--                                <input type="button" class="button product-option_carpet-color-btn button-text"--}}
-                                        {{--                                       id="zone77" value="Синий"/>--}}
+                                        <input type="button" class="button product-option_carpet-color-btn button-text"
+                                               id="chosen_color-{{$tariff->name}}" value="not chosen"/>
                                     </div>
                                 </div>
                                 <p class="option-title">цвет окантовки</p>
@@ -264,10 +283,10 @@
                                             <input type="button"
                                                    class="button product-option_btn-color button-text"
                                                    style="background-color:  {{ $color->hex }}"
-                                                   value=""/>
+                                                   onclick="toggleBorderColor('<?=$color->name?>')"/>
                                         @endforeach
-                                        {{--                                <input type="button" class="button product-option_carpet-border-color-btn button-text"--}}
-                                        {{--                                       id="zone77" value="Синий"/>--}}
+                                            <input type="button" class="button product-option_carpet-color-btn button-text"
+                                                   id="chosen_border_color-{{$tariff->name}}" value="not chosen"/>
                                     </div>
                                 </div>
                             </div>
