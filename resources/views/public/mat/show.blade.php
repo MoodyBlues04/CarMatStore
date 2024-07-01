@@ -46,11 +46,11 @@
                     <use href="/img/sprite.svg#arrow"></use>
                 </svg>
 
-                <a href="#" class="crumb">Покупка ковриков</a>
+                <a href="#" class="crumb" style="pointer-events: none">Покупка ковриков</a href="#">
             </div>
             <div class="product_wrap">
                 <div class="product_media">
-                    <h1 class="product_title">Chevrolet spark</h1>
+                    <h1 class="product_title">{{$mat->model}}</h1>
                     <img class="product_gallery" src="/img/gallery.png" alt="auto mat"/>
                     <img class="product_gallery-mob" src="/img/prodict-image-mob.png" alt="auto mat"/>
                 </div>
@@ -91,25 +91,19 @@
                                 </div>
                                 <div class="product-option_two product-option_item">
                                     <div class="product-option_zone-image">
-                                        <input type="button" class="button product-option_btn-img" id="zone1" value=""/>
-                                        <input type="button" class="button product-option_btn-img" id="zone2" value=""/>
-                                        <input type="button" class="button product-option_btn-img" id="zone3" value=""/>
-                                        <input type="button" class="button product-option_btn-img" id="zone4" value=""/>
-                                        <input type="button" class="button product-option_btn-img" id="zone55" value=""/>
+                                        <input type="button" class="button product-option_btn-img" value=""/>
+                                        <input type="button" class="button product-option_btn-img" value=""/>
+                                        <input type="button" class="button product-option_btn-img" value=""/>
+                                        <input type="button" class="button product-option_btn-img" value=""/>
+                                        <input type="button" class="button product-option_btn-img" value=""/>
                                     </div>
                                     <div class="product-option_zone-name">
-                                        <input type="button" class="button product-option_btn-text button-text" id="zone5"
-                                               value="Водительский"/>
-                                        <input type="button" class="button product-option_btn-text button-text" id="zone6"
-                                               value="Пассажирский"/>
-                                        <input type="button" class="button product-option_btn-text button-text" id="zone7"
-                                               value="Задний левый"/>
-                                        <input type="button" class="button product-option_btn-text button-text" id="zone8"
-                                               value="Задний правый"/>
+                                        <input type="button" class="button product-option_btn-text button-text" value="Водительский"/>
+                                        <input type="button" class="button product-option_btn-text button-text" value="Пассажирский"/>
+                                        <input type="button" class="button product-option_btn-text button-text" value="Задний левый"/>
+                                        <input type="button" class="button product-option_btn-text button-text" value="Задний правый"/>
                                         <div class="product-option_btn-info-text">
-                                            <input type="button"
-                                                   class="button product-option_btn-text product-option_btn-bag button-text"
-                                                   id="zone9" value="багажник"/>
+                                            <input type="button" class="button product-option_btn-text product-option_btn-bag button-text" value="багажник"/>
                                         </div>
                                     </div>
                                 </div>

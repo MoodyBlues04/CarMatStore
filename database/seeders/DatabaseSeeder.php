@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             ColorSeeder::class,
             AccessorySeeder::class,
             EmblemSeeder::class,
+            TemplateInfoSeeder::class,
         ]);
     }
 }

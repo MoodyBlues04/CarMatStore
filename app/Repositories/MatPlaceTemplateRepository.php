@@ -21,6 +21,6 @@ class MatPlaceTemplateRepository extends Repository
         if (is_null($templateInfo)) {
             throw new \InvalidArgumentException('Incorrect template info');
         }
-        return $this->create(['mat_place_template_info_id' => $templateInfo->id]);
+        return $this->firstOrCreate(['mat_place_template_info_id' => $templateInfo->id]);
     }
 }

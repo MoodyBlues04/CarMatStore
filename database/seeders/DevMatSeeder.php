@@ -24,12 +24,13 @@ class DevMatSeeder extends Seeder
      */
     public function run(): void
     {
-        /** @var MatPlaceTemplateInfo $templateInfo */
-        $templateInfo = $this->matPlaceTemplateInfoRepository->firstOrCreate(['name' => 'test_templ']);
-        $template = $this->matPlaceTemplateRepository->createFromTemplateInfo($templateInfo);
+        /** @var MatPlaceTemplateInfo[] $templateInfos */
+        $templateInfos = $this->matPlaceTemplateInfoRepository->getAll();
         $brands = $this->brandRepository->getAll();
 
         foreach ($brands as $idx => $brand) {
+            $templateIdx = random_int(0, sizeof($templateInfos) - 1);
+            $template = $this->matPlaceTemplateRepository->createFromTemplateInfo($templateInfos[$templateIdx]);
             $this->matRepository->create([
                 'model' => "test_{$idx}",
                 'car_image_id' => 1, // random img

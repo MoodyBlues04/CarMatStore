@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id
  * @property string $name
  * @property int $mat_place_template_info_id
+ * @property int $row
+ * @property int $order
  * @property string $created_at
  * @property string $updated_at
  *
@@ -25,6 +27,8 @@ class MatPlaceInfo extends Model
     protected $fillable = [
         'name',
         'mat_place_template_info_id',
+        'row',
+        'order',
     ];
 
     public function templateInfo(): BelongsTo
