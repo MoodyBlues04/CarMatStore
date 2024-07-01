@@ -5,12 +5,17 @@
  * @var \App\Models\Accessory[] $accessories
  * @var \App\Models\Emblem[] $emblems
  */
+$accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories));
 ?>
 
 @extends('layout')
 
 @section('scripts')
     <script>
+        const accessoriesNames = <?= $accessoryNames ?>;
+        let accessory = {};
+        for (const accessoryName of accessoriesNames) accessory[accessoryName] = 0;
+
         const defaultTariff = "<?= $tariffs[0]->name ?>";
         const defaultMaterial = "<?= $tariffs[0]->materials[0]->name ?>";
         const route = "<?= route('public.mat.calc', $mat) ?>";
@@ -19,7 +24,8 @@
             'border_color': null,
             'material': defaultMaterial,
             'tariff': defaultTariff,
-            'places': new Set()
+            'places': new Set(),
+            'accessory': accessory,
         };
 
         document.addEventListener("DOMContentLoaded", function (event) {
@@ -151,10 +157,21 @@
             document.getElementById(colorId).value = colorName;
             requestData['color'] = colorName;
         }
+
         function toggleBorderColor(colorName) {
             const colorId = `chosen_border_color-${requestData['tariff']}`
             document.getElementById(colorId).value = colorName;
             requestData['border_color'] = colorName;
+        }
+
+        function changeAccessory(accessoryName, toAdd) {
+            const target = document.getElementById(`accessory_cnt_${accessoryName}`);
+            const maxCnt = target.getAttribute('data-max-count');
+            let toSet = requestData['accessory'][accessoryName] + toAdd;
+            if (0 <= toSet && toSet <= maxCnt) {
+                requestData['accessory'][accessoryName] = toSet;
+                target.textContent = toSet;
+            }
         }
 
         function calcCost() {
@@ -248,10 +265,10 @@
                         </div>
 
                         @foreach($tariffs as $tariff)
-                            <?php
-                            $innerColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::INNER)->all();
-                            $borderColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::BORDER)->all();
-                            ?>
+                                <?php
+                                $innerColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::INNER)->all();
+                                $borderColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::BORDER)->all();
+                                ?>
                             <div class="tariff-options {{ $tariff->id === $tariffs[0]->id ? 'd-block' : 'd-none'}}"
                                  id="tariff-options-{{$tariff->name}}">
                                 <p class="option-title">Материал коврика</p>
@@ -260,7 +277,8 @@
                                         <input type="button"
                                                class="material-inp button product-option_btn-text button-text {{ $material->id === $tariff->materials[0]->id ? 'button-text--orange' : '' }}"
                                                id="material-inp-{{$tariff->name}}-{{$material->name}}"
-                                               value="{{ $material->name }}" onclick="toggleMaterial('<?=$material->name?>')"/>
+                                               value="{{ $material->name }}"
+                                               onclick="toggleMaterial('<?=$material->name?>')"/>
                                     @endforeach
                                 </div>
                                 <p class="option-title">цвет коврика</p>
@@ -285,8 +303,8 @@
                                                    style="background-color:  {{ $color->hex }}"
                                                    onclick="toggleBorderColor('<?=$color->name?>')"/>
                                         @endforeach
-                                            <input type="button" class="button product-option_carpet-color-btn button-text"
-                                                   id="chosen_border_color-{{$tariff->name}}" value="not chosen"/>
+                                        <input type="button" class="button product-option_carpet-color-btn button-text"
+                                               id="chosen_border_color-{{$tariff->name}}" value="not chosen"/>
                                     </div>
                                 </div>
                             </div>
@@ -296,24 +314,22 @@
                         <div class="product-option_six">
                             <div class="product-option_accs">
                                 @foreach($accessories as $accessory)
-                                    @if ($accessory->max_count > 1)
-                                        <div class="product-option_accs-item button-text">
-                                            <div
-                                                class="product-option_accs-item-name">{{ $accessory->name }}</div>
-                                            <div class="product-option_accs-item-wr">
-                                                <img class="product-option_accs-item-btn" src="/img/minus.svg"
-                                                     alt="minus"/>
-                                                <div class="product-option_accs-item-number">0</div>
-                                                <img class="product-option_accs-item-btn" src="/img/plus.svg"
-                                                     alt="minus"/>
+                                    <div class="product-option_accs-item button-text">
+                                        <div class="product-option_accs-item-name">{{ $accessory->name }}</div>
+                                        <div class="product-option_accs-item-wr">
+                                            <img class="product-option_accs-item-btn" src="/img/minus.svg"
+                                                 alt="minus" onclick="changeAccessory('<?=$accessory->name?>', -1)"
+                                                 style="cursor:pointer;"/>
+                                            <div id="accessory_cnt_{{$accessory->name}}"
+                                                 class="product-option_accs-item-number"
+                                                 data-max-count="{{$accessory->max_count}}">
+                                                0
                                             </div>
+                                            <img class="product-option_accs-item-btn" src="/img/plus.svg"
+                                                 alt="minus" onclick="changeAccessory('<?=$accessory->name?>', 1)"
+                                                 style="cursor:pointer;"/>
                                         </div>
-                                    @else
-                                        <div class="product-option_accs-item button-text">
-                                            <div
-                                                class="product-option_accs-item-name">{{ $accessory->name }}</div>
-                                        </div>
-                                    @endif
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
