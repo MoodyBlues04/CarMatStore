@@ -20,6 +20,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
         const defaultMaterial = "<?= $tariffs[0]->materials[0]->name ?>";
         const route = "<?= route('public.mat.calc', $mat) ?>";
         let requestData = {
+            'emblem': null,
             'color': null,
             'border_color': null,
             'material': defaultMaterial,
@@ -28,21 +29,19 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
             'accessory': accessory,
         };
 
+//     todo recalc on any requestData change (middleware)
+
         document.addEventListener("DOMContentLoaded", function (event) {
             resizeSvg();
 
+            // for contact data
             const inputs = document.querySelectorAll('.text-input');
-            const buttonInputs = document.querySelectorAll('.button-input');
-
             for (const inp of inputs) {
                 inp.addEventListener('change', function (event) {
                     requestData[event.target.name] = event.target.value;
-                    console.log('input', event.target.name, event.target.value, requestData);
-                    //     todo recalc on any requestData change (middleware)
                 });
             }
         });
-
         document.addEventListener('click', function (event) {
             resizeSvg();
         });
@@ -172,6 +171,28 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                 requestData['accessory'][accessoryName] = toSet;
                 target.textContent = toSet;
             }
+        }
+
+        function toggleEmblem(empblemName) {
+            const target = document.getElementById(`emblem-inp-${empblemName}`),
+                emblemInputs = document.querySelectorAll('.emblem-inp'),
+                emblemCounter = document.getElementById('embl-cnt');
+
+            for (const emblemInp of emblemInputs) {
+                emblemInp.style.backgroundColor = '';
+                emblemInp.style.borderColor = '';
+            }
+
+            if (empblemName === requestData['emblem']) {
+                requestData['emblem'] = null;
+                emblemCounter.textContent = 0;
+            } else {
+                target.style.backgroundColor = '#ff3600';
+                target.style.borderColor = '#ff3600';
+                emblemCounter.textContent = +(requestData['emblem'] === null);
+                requestData['emblem'] = empblemName;
+            }
+
         }
 
         function calcCost() {
@@ -339,13 +360,13 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                                 <p class="option-title product-option_logo-title">Эмблема</p>
                                 <div class="product-option_logo-qty">
                                     <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
-                                    <div class="product-option_logo-number">0</div>
+                                    <div class="product-option_logo-number" id="embl-cnt">0</div>
                                     <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
                                 </div>
                             </div>
                             <div class="product-option_logo-images">
                                 @foreach($emblems as $emblem)
-                                    <div class="product-option_logo-image">
+                                    <div id="emblem-inp-{{$emblem->name}}" class="emblem-inp product-option_logo-image" onclick="toggleEmblem('<?=$emblem->name?>')">
                                         <svg width="24" height="9">
                                             <use href="{{$emblem->image->path}}"></use>
                                         </svg>
