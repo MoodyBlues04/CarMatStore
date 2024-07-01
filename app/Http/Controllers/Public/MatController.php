@@ -40,7 +40,7 @@ class MatController extends Controller
 //        TODO ajax request to calc cost of mat e t c
         return response()->json(['status' => true, 'data' => [
             'model' => $mat,
-            'request' => $request,
+            'request' => $request->query(),
         ]]);
     }
 

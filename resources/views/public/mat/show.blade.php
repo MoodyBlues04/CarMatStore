@@ -20,13 +20,13 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
         const defaultMaterial = "<?= $tariffs[0]->materials[0]->name ?>";
         const route = "<?= route('public.mat.calc', $mat) ?>";
         let requestData = {
+            'tariff': defaultTariff,
+            'material': defaultMaterial,
+            'accessory': accessory,
+            'places': new Set(),
             'emblem': null,
             'color': null,
             'border_color': null,
-            'material': defaultMaterial,
-            'tariff': defaultTariff,
-            'places': new Set(),
-            'accessory': accessory,
         };
 
 //     todo recalc on any requestData change (middleware)
@@ -86,6 +86,8 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
             const inpBlock = document.getElementById(inpId);
             inpBlock.classList.remove('button-text');
             inpBlock.classList.add('button-text--orange');
+
+            calcCost();
         }
 
         function toggleDelivery(isDelivery) {
@@ -102,6 +104,8 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                 selfDelivery.classList.add('checkout_option--active');
                 selfDeliveryList.classList.remove('d-none');
             }
+
+            calcCost();
         }
 
         function togglePlaces(isComplect) {
@@ -124,7 +128,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                 requestData['places'].clear();
                 for (const placeInp of placeInputs) placeInp.classList.remove('button-text--orange');
             }
-            console.log('toggle places', requestData);
+            calcCost();
         }
 
         function togglePlace(placeName) {
@@ -136,7 +140,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                 btn.classList.add('button-text--orange');
                 requestData['places'].add(placeName);
             }
-            console.log('toggle place', requestData);
+            calcCost();
         }
 
         function toggleMaterial(materialName) {
@@ -148,29 +152,33 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
 
             requestData['material'] = materialName;
 
-            console.log('material', requestData);
+            calcCost();
         }
 
         function toggleColor(colorName) {
             const colorId = `chosen_color-${requestData['tariff']}`
             document.getElementById(colorId).value = colorName;
             requestData['color'] = colorName;
+            calcCost();
         }
 
         function toggleBorderColor(colorName) {
             const colorId = `chosen_border_color-${requestData['tariff']}`
             document.getElementById(colorId).value = colorName;
             requestData['border_color'] = colorName;
+            calcCost();
         }
 
         function changeAccessory(accessoryName, toAdd) {
             const target = document.getElementById(`accessory_cnt_${accessoryName}`);
             const maxCnt = target.getAttribute('data-max-count');
             let toSet = requestData['accessory'][accessoryName] + toAdd;
-            if (0 <= toSet && toSet <= maxCnt) {
-                requestData['accessory'][accessoryName] = toSet;
-                target.textContent = toSet;
+            if (0 > toSet || toSet > maxCnt) {
+                return;
             }
+            requestData['accessory'][accessoryName] = toSet;
+            target.textContent = toSet;
+            calcCost();
         }
 
         function toggleEmblem(empblemName) {
@@ -192,7 +200,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                 emblemCounter.textContent = +(requestData['emblem'] === null);
                 requestData['emblem'] = empblemName;
             }
-
+            calcCost();
         }
 
         function calcCost() {
