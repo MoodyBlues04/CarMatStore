@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Image;
 use App\Repositories\MatPlaceInfoRepository;
 use App\Repositories\TemplateInfoRepository;
 use Illuminate\Database\Seeder;
@@ -25,25 +26,25 @@ class TemplateInfoSeeder extends Seeder
                 'places' => [
                     [
                         'name' => 'Водительский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#left_1',
                         'row' => 1,
                         'order' => 1,
                     ],
                     [
                         'name' => 'Пассажирский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#right_1',
                         'row' => 1,
                         'order' => 2,
                     ],
                     [
                         'name' => 'Задний левый',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#left_2',
                         'row' => 2,
                         'order' => 1,
                     ],
                     [
                         'name' => 'Задний правый',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#right_2',
                         'row' => 2,
                         'order' => 2,
                     ],
@@ -54,31 +55,31 @@ class TemplateInfoSeeder extends Seeder
                 'places' => [
                     [
                         'name' => 'Водительский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#left_1',
                         'row' => 1,
                         'order' => 1,
                     ],
                     [
                         'name' => 'Пассажирский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#right_1',
                         'row' => 1,
                         'order' => 2,
                     ],
                     [
                         'name' => 'Задний левый',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#left_2',
                         'row' => 2,
                         'order' => 1,
                     ],
                     [
                         'name' => 'Перемычка',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#small_2',
                         'row' => 2,
                         'order' => 2,
                     ],
                     [
                         'name' => 'Задний правый',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#right_2',
                         'row' => 2,
                         'order' => 3,
                     ],
@@ -89,19 +90,19 @@ class TemplateInfoSeeder extends Seeder
                 'places' => [
                     [
                         'name' => 'Водительский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#left_1',
                         'row' => 1,
                         'order' => 1,
                     ],
                     [
                         'name' => 'Пассажирский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#right_1',
                         'row' => 1,
                         'order' => 2,
                     ],
                     [
                         'name' => 'Задний сплошной',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#full_2',
                         'row' => 2,
                         'order' => 1,
                     ],
@@ -112,31 +113,31 @@ class TemplateInfoSeeder extends Seeder
                 'places' => [
                     [
                         'name' => 'Водительский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#left_1',
                         'row' => 1,
                         'order' => 1,
                     ],
                     [
                         'name' => 'Пассажирский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#right_1',
                         'row' => 1,
                         'order' => 2,
                     ],
                     [
                         'name' => 'Задний левый',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#left_2',
                         'row' => 2,
                         'order' => 1,
                     ],
                     [
                         'name' => 'Задний правый',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#right_2',
                         'row' => 2,
                         'order' => 2,
                     ],
                     [
                         'name' => '3 ряд',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#full_3',
                         'row' => 3,
                         'order' => 1,
                     ],
@@ -147,37 +148,37 @@ class TemplateInfoSeeder extends Seeder
                 'places' => [
                     [
                         'name' => 'Водительский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#left_1',
                         'row' => 1,
                         'order' => 1,
                     ],
                     [
                         'name' => 'Пассажирский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#right_1',
                         'row' => 1,
                         'order' => 2,
                     ],
                     [
                         'name' => 'Задний левый',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#left_2',
                         'row' => 2,
                         'order' => 1,
                     ],
                     [
                         'name' => 'Перемычка',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#small_2',
                         'row' => 2,
                         'order' => 2,
                     ],
                     [
                         'name' => 'Задний правый',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#right_2',
                         'row' => 2,
                         'order' => 3,
                     ],
                     [
                         'name' => '3 ряд',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#full_3',
                         'row' => 3,
                         'order' => 1,
                     ],
@@ -188,25 +189,25 @@ class TemplateInfoSeeder extends Seeder
                 'places' => [
                     [
                         'name' => 'Водительский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#left_1',
                         'row' => 1,
                         'order' => 1,
                     ],
                     [
                         'name' => 'Пассажирский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#left_1',
                         'row' => 1,
                         'order' => 2,
                     ],
                     [
                         'name' => 'Задний сплошной',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#full_2',
                         'row' => 2,
                         'order' => 1,
                     ],
                     [
                         'name' => '3 ряд',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#full_3',
                         'row' => 3,
                         'order' => 1,
                     ],
@@ -217,13 +218,13 @@ class TemplateInfoSeeder extends Seeder
                 'places' => [
                     [
                         'name' => 'Водительский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#left_big_1',
                         'row' => 1,
                         'order' => 1,
                     ],
                     [
                         'name' => 'Пассажирский',
-                        'image' => '',
+                        'image' => '/img/mat_place.svg#right_big_1',
                         'row' => 1,
                         'order' => 2,
                     ],
@@ -236,11 +237,13 @@ class TemplateInfoSeeder extends Seeder
             $templateInfo = $this->templateInfoRepository->firstOrCreate(['name' => $templateData['name']]);
             if ($templateInfo->wasRecentlyCreated) {
                 foreach ($templateData['places'] as $placeData) {
+                    $image = Image::createFromPath($placeData['image']);
                     $this->matPlaceInfoRepository->create([
                         'name' => $placeData['name'],
                         'mat_place_template_info_id' => $templateInfo->id,
                         'row' => $placeData['row'],
                         'order' => $placeData['order'],
+                        'image_id' => $image->id,
                     ]);
                 }
             }

@@ -32,4 +32,23 @@ class MatPlaceTemplateInfo extends Model
     {
         return $this->hasMany(MatPlaceInfo::class, 'mat_place_template_info_id');
     }
+
+    /**
+     * Sorts mat places firstly by row, secondly by order in row
+     * @return MatPlaceInfo[]
+     */
+    public function getPlaceInfosSorted(): array
+    {
+        return $this->placeInfos->sortBy(function (MatPlaceInfo $placeInfo) {
+            return $placeInfo->row * 100 + $placeInfo->order;
+        })->all();
+    }
+
+    /**
+     * @return array<int, MatPlaceInfo[]>
+     */
+    public function getPlaceInfosByRow(): array
+    {
+        return $this->placeInfos->groupBy('row')->all();
+    }
 }

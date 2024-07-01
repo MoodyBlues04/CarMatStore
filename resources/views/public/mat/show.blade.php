@@ -11,6 +11,17 @@
 
 @section('scripts')
     <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            const matPlaceSvgs = document.querySelectorAll('.mat-place-svg');
+            const matPlaceSvgsUse = document.querySelectorAll('.mat-place-svg use');
+            for (let i = 0; i < matPlaceSvgs.length; i++) {
+                let bbox = matPlaceSvgsUse[i].getBBox();
+                console.log(bbox);
+                matPlaceSvgs[i].style.width = bbox.width;
+                matPlaceSvgs[i].style.height = bbox.height;
+            }
+        });
+
         function toggleTariffOptions(tariffId) {
             const tariffOptions = document.getElementsByClassName('tariff-options');
             for (const tariffOptionBlock of tariffOptions) {
@@ -58,10 +69,11 @@
                     <div class="product-type">
                         @foreach($tariffs as $tariff)
                             <label>
-                                <input class="tariff-input product-type_item button-text button" type="button" name="position"
+                                <input class="tariff-input product-type_item button-text button" type="button"
+                                       name="position"
                                        value="{{$tariff->name}}"
                                        @if ($tariff->id === $tariffs[0]->id)
-                                            style="background-color: #ff3600; color: white"
+                                           style="background-color: #ff3600; color: white"
                                        @endif
                                        id="tariff-input-{{$tariff->id}}"
                                        onclick="toggleTariffOptions(<?= $tariff->id ?>)"/>
@@ -72,10 +84,10 @@
                     <p class="option-title">Комплектация ковриков</p>
                     <div class="product-option">
                         @foreach($tariffs as $tariff)
-                            <?php
+                                <?php
                                 $innerColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::INNER)->all();
                                 $borderColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::BORDER)->all();
-                            ?>
+                                ?>
                             <div class="tariff-options {{ $tariff->id === $tariffs[0]->id ? 'd-block' : 'd-none'}}"
                                  id="tariff-options-{{$tariff->id}}">
                                 <div class="product-option_one product-option_item">
@@ -90,20 +102,27 @@
                                     </label>
                                 </div>
                                 <div class="product-option_two product-option_item">
-                                    <div class="product-option_zone-image">
-                                        <input type="button" class="button product-option_btn-img" value=""/>
-                                        <input type="button" class="button product-option_btn-img" value=""/>
-                                        <input type="button" class="button product-option_btn-img" value=""/>
-                                        <input type="button" class="button product-option_btn-img" value=""/>
-                                        <input type="button" class="button product-option_btn-img" value=""/>
+                                    <div class="product-option_zone-image" style="width: 130px">
+                                        @foreach($mat->template->templateInfo->getPlaceInfosByRow() as $row => $infos)
+                                            <div class="d-flex align-items-end justify-content-center" style="width: 100%">
+                                                @foreach($infos as $info)
+                                                    <svg class="mat-place-svg d-flex" style="margin-right: 2px; margin-left: 2px">
+                                                        <use href="{{ $info->image->path }}"></use>
+                                                    </svg>
+                                                @endforeach
+                                            </div>
+                                        @endforeach
                                     </div>
                                     <div class="product-option_zone-name">
-                                        <input type="button" class="button product-option_btn-text button-text" value="Водительский"/>
-                                        <input type="button" class="button product-option_btn-text button-text" value="Пассажирский"/>
-                                        <input type="button" class="button product-option_btn-text button-text" value="Задний левый"/>
-                                        <input type="button" class="button product-option_btn-text button-text" value="Задний правый"/>
+                                        @foreach($mat->template->templateInfo->getPlaceInfosSorted() as $placeInfo)
+                                            <input type="button" class="button product-option_btn-text button-text"
+                                                   value="{{$placeInfo->name}}"/>
+                                        @endforeach
+                                        {{--                                        TODO bag_template --}}
                                         <div class="product-option_btn-info-text">
-                                            <input type="button" class="button product-option_btn-text product-option_btn-bag button-text" value="багажник"/>
+                                            <input type="button"
+                                                   class="button product-option_btn-text product-option_btn-bag button-text"
+                                                   value="багажник"/>
                                         </div>
                                     </div>
                                 </div>

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id
  * @property string $name
  * @property int $mat_place_template_info_id
+ * @property int $image_id
  * @property int $row
  * @property int $order
  * @property string $created_at
@@ -29,6 +30,7 @@ class MatPlaceInfo extends Model
         'mat_place_template_info_id',
         'row',
         'order',
+        'image_id',
     ];
 
     public function templateInfo(): BelongsTo
@@ -39,5 +41,10 @@ class MatPlaceInfo extends Model
     public function matPlaces(): HasMany
     {
         return $this->hasMany(MatPlace::class, 'mat_place_info_id');
+    }
+
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Image::class, 'image_id');
     }
 }

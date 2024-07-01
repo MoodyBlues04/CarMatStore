@@ -21,6 +21,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('mat_place_template_infos')
                 ->onDelete('cascade');
+            $table->foreignId('image_id');
+            $table->foreign('image_id')
+                ->references('id')
+                ->on('images')
+                ->onDelete('cascade');
 
             $table->timestamps();
 
