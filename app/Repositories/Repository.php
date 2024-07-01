@@ -25,6 +25,11 @@ abstract class Repository
         return $res;
     }
 
+    public function getById(int $id): Model
+    {
+        return $this->firstBy(['id' => $id]);
+    }
+
     public function firstOrCreate(array $attributes): Builder|Model
     {
         return $this->query->firstOrCreate($attributes);

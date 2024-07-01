@@ -204,14 +204,59 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
         }
 
         function calcCost() {
+            let req = {...requestData};
+            req['places'] = Array.from(req['places']);
+
             $.ajax({
                 type: "GET",
                 url: route,
-                data: requestData,
+                data: req,
                 success: function (data) {
-                    console.log(data);
+                    if (!data['status']) {
+                        console.error(data);
+                    }
+                    updateBill(data['data']);
                 }
             });
+        }
+
+        function updateBill(bill) {
+            const target = document.getElementById('bill');
+            target.innerHTML = '';
+            let totalPrice = 0;
+            for (const billRow of bill) {
+                if (billRow['price']) {
+                    totalPrice += billRow['price'];
+                }
+                target.appendChild(makeDomEl(
+                    '<div class="item item-white">' +
+                        '<div class="item_mob-wr">' +
+                            `<p class="item_title">${billRow['name']}</p>` +
+                        '</div>' +
+                        '<div class="item_qty">' +
+                            (billRow['count'] ? '<div class="item_qty-control">' +
+                                                    '<img class="item_btn" src="/img/minus.svg" alt="minus"/>' +
+                                                    `<div class="item_number">${billRow['count']}</div>` +
+                                                    '<img class="item_btn" src="/img/plus.svg" alt="minus"/>' +
+                                                '</div>'
+                                : '') +
+                            (billRow['price'] ? `<div class="item_price">${billRow['price']} сум</div>` : '') +
+                        '</div>' +
+                    '</div>'
+                ));
+            }
+
+            const billPriceEls = document.querySelectorAll('.bill-price');
+            for (const priceEl of billPriceEls) {
+                priceEl.innerHTML = '';
+                priceEl.innerText = totalPrice;
+            }
+        }
+
+        function makeDomEl(htmlString) {
+            let div = document.createElement('div');
+            div.innerHTML = htmlString.trim();
+            return div.firstChild;
         }
     </script>
 @endsection
@@ -392,21 +437,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
             </div>
             <div class="price">
                 <p class="price_title title">чек</p>
-                <div class="items">
-                    <div class="item item-white">
-                        <div class="item_mob-wr">
-                            <p class="item_title">Комплектация ковриков</p>
-                            <div class="item_price-mob">100.000 сум</div>
-                        </div>
-                        <div class="item_qty">
-                            <div class="item_qty-control">
-                                <img class="item_btn" src="/img/minus.svg" alt="minus"/>
-                                <div class="item_number">7</div>
-                                <img class="item_btn" src="/img/plus.svg" alt="minus"/>
-                            </div>
-                            <div class="item_price">100.000 сум</div>
-                        </div>
-                    </div>
+                <div class="items" id="bill">
                 </div>
                 <div class="price_total">
                     <p class="price_total-text title">Итог</p>
@@ -414,7 +445,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                         <p class="price_total-hint">
                             Перейдите ниже для оформления заказа
                         </p>
-                        <p class="price_total-number"><span>785</span>000 сум</p>
+                        <p class="price_total-number bill-price">0 сум</p>
                     </div>
                 </div>
                 <span class="price_total-hint-mob">
@@ -479,7 +510,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                 <div class="payment_total">
                     <h3 class="payment_total-title title">Итоговая цена заказа</h3>
                     <div class="payment_total-wr">
-                        <p class="payment_total-price"><span>785</span>000 сум</p>
+                        <p class="payment_total-price bill-price">0 сум</p>
                         <button class="payment_button">подтвердить</button>
                     </div>
                 </div>

@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Public\BuyMatRequest;
+use App\Http\Requests\Public\CalcMatPriceRequest;
 use App\Models\Mat;
 use App\Repositories\AccessoryRepository;
 use App\Repositories\EmblemRepository;
 use App\Repositories\MatRepository;
 use App\Repositories\MatTariffRepository;
+use App\Services\MatCartService;
 use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,7 +22,8 @@ class MatController extends Controller
         private readonly MatRepository $matRepository,
         private readonly MatTariffRepository $matTariffRepository,
         private readonly AccessoryRepository $accessoryRepository,
-        private readonly EmblemRepository $emblemRepository
+        private readonly EmblemRepository $emblemRepository,
+        private readonly MatCartService $matCartService
     ) {
 //        $this->middleware('auth');
     }
@@ -35,13 +38,12 @@ class MatController extends Controller
         return view('public.mat.show', compact('mat', 'tariffs', 'accessories', 'emblems'));
     }
 
-    public function calc(Mat $mat, Request $request): JsonResponse
+    public function calc(Mat $mat, CalcMatPriceRequest $request): JsonResponse
     {
-//        TODO ajax request to calc cost of mat e t c
-        return response()->json(['status' => true, 'data' => [
-            'model' => $mat,
-            'request' => $request->query(),
-        ]]);
+        return response()->json([
+            'status' => true,
+            'data' => $this->matCartService->makeBill($mat, $request)
+        ]);
     }
 
     public function buy(Mat $mat, BuyMatRequest $request): JsonResponse
