@@ -11,12 +11,11 @@
 
 @section('scripts')
     <script>
-        document.addEventListener("DOMContentLoaded", function(event) {
+        document.addEventListener("DOMContentLoaded", function (event) {
             const matPlaceSvgs = document.querySelectorAll('.mat-place-svg');
             const matPlaceSvgsUse = document.querySelectorAll('.mat-place-svg use');
             for (let i = 0; i < matPlaceSvgs.length; i++) {
                 let bbox = matPlaceSvgsUse[i].getBBox();
-                console.log(bbox);
                 matPlaceSvgs[i].style.width = bbox.width;
                 matPlaceSvgs[i].style.height = bbox.height;
             }
@@ -83,50 +82,53 @@
 
                     <p class="option-title">Комплектация ковриков</p>
                     <div class="product-option">
+
+                        <div class="product-option_one product-option_item">
+                            <label>
+                                <input class="product-option_all button-text button" type="button" name="option"
+                                       value="комплект" id="All"/>
+                            </label>
+                            <label>
+                                <input class="product-info_option_single button-text button" type="button"
+                                       name="option"
+                                       id="single" value="По отдельности"/>
+                            </label>
+                        </div>
+                        <div class="product-option_two product-option_item">
+                            <div class="product-option_zone-image" style="width: 130px">
+                                @foreach($mat->template->templateInfo->getPlaceInfosByRow() as $row => $infos)
+                                    <div class="d-flex align-items-end justify-content-center" style="width: 100%">
+                                        @foreach($infos as $info)
+                                            <svg class="mat-place-svg d-flex"
+                                                 style="margin-right: 2px; margin-left: 2px">
+                                                <use href="{{ $info->image->path }}"></use>
+                                            </svg>
+                                        @endforeach
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="product-option_zone-name">
+                                @foreach($mat->template->templateInfo->getPlaceInfosSorted() as $placeInfo)
+                                    <input type="button" class="button product-option_btn-text button-text"
+                                           value="{{$placeInfo->name}}"/>
+                                @endforeach
+                                {{--                                        TODO bag_template --}}
+                                <div class="product-option_btn-info-text">
+                                    <input type="button"
+                                           class="button product-option_btn-text product-option_btn-bag button-text"
+                                           value="багажник"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="option-title">Материал коврика</p>
                         @foreach($tariffs as $tariff)
-                                <?php
+                            <?php
                                 $innerColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::INNER)->all();
                                 $borderColors = $tariff->colors->filter(fn($color) => $color->type === \App\Models\Color::BORDER)->all();
-                                ?>
+                            ?>
                             <div class="tariff-options {{ $tariff->id === $tariffs[0]->id ? 'd-block' : 'd-none'}}"
                                  id="tariff-options-{{$tariff->id}}">
-                                <div class="product-option_one product-option_item">
-                                    <label>
-                                        <input class="product-option_all button-text button" type="button" name="option"
-                                               value="комплект" id="All"/>
-                                    </label>
-                                    <label>
-                                        <input class="product-info_option_single button-text button" type="button"
-                                               name="option"
-                                               id="single" value="По отдельности"/>
-                                    </label>
-                                </div>
-                                <div class="product-option_two product-option_item">
-                                    <div class="product-option_zone-image" style="width: 130px">
-                                        @foreach($mat->template->templateInfo->getPlaceInfosByRow() as $row => $infos)
-                                            <div class="d-flex align-items-end justify-content-center" style="width: 100%">
-                                                @foreach($infos as $info)
-                                                    <svg class="mat-place-svg d-flex" style="margin-right: 2px; margin-left: 2px">
-                                                        <use href="{{ $info->image->path }}"></use>
-                                                    </svg>
-                                                @endforeach
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                    <div class="product-option_zone-name">
-                                        @foreach($mat->template->templateInfo->getPlaceInfosSorted() as $placeInfo)
-                                            <input type="button" class="button product-option_btn-text button-text"
-                                                   value="{{$placeInfo->name}}"/>
-                                        @endforeach
-                                        {{--                                        TODO bag_template --}}
-                                        <div class="product-option_btn-info-text">
-                                            <input type="button"
-                                                   class="button product-option_btn-text product-option_btn-bag button-text"
-                                                   value="багажник"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="option-title">Материал коврика</p>
                                 <div class="product-option_three product-option_item">
                                     @foreach($tariff->materials as $material)
                                         <input type="button" class="button product-option_btn-text button-text"
@@ -159,57 +161,57 @@
                                         {{--                                       id="zone77" value="Синий"/>--}}
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
 
-                        <p class="option-title">аксессуары</p>
-                        <div class="product-option_six">
-                            <div class="product-option_accs">
-                                @foreach($accessories as $accessory)
-                                    @if ($accessory->max_count > 1)
-                                        <div class="product-option_accs-item button-text">
-                                            <div class="product-option_accs-item-name">{{ $accessory->name }}</div>
-                                            <div class="product-option_accs-item-wr">
-                                                <img class="product-option_accs-item-btn" src="/img/minus.svg"
-                                                     alt="minus"/>
-                                                <div class="product-option_accs-item-number">0</div>
-                                                <img class="product-option_accs-item-btn" src="/img/plus.svg"
-                                                     alt="minus"/>
+                                <p class="option-title">аксессуары</p>
+                                <div class="product-option_six">
+                                    <div class="product-option_accs">
+                                        @foreach($accessories as $accessory)
+                                            @if ($accessory->max_count > 1)
+                                                <div class="product-option_accs-item button-text">
+                                                    <div class="product-option_accs-item-name">{{ $accessory->name }}</div>
+                                                    <div class="product-option_accs-item-wr">
+                                                        <img class="product-option_accs-item-btn" src="/img/minus.svg"
+                                                             alt="minus"/>
+                                                        <div class="product-option_accs-item-number">0</div>
+                                                        <img class="product-option_accs-item-btn" src="/img/plus.svg"
+                                                             alt="minus"/>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="product-option_accs-item button-text">
+                                                    <div class="product-option_accs-item-name">{{ $accessory->name }}</div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="product-option_seven">
+                                    <div class="product-option_logo">
+                                        <div class="product-option_logo-text">Эмблема</div>
+                                        <p class="option-title product-option_logo-title">Эмблема</p>
+                                        <div class="product-option_logo-qty">
+                                            <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
+                                            <div class="product-option_logo-number">0</div>
+                                            <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
+                                        </div>
+                                    </div>
+                                    <div class="product-option_logo-images">
+                                        @foreach($emblems as $emblem)
+                                            <div class="product-option_logo-image">
+                                                <svg width="24" height="9">
+                                                    <use href="{{$emblem->image->path}}"></use>
+                                                </svg>
                                             </div>
-                                        </div>
-                                    @else
-                                        <div class="product-option_accs-item button-text">
-                                            <div class="product-option_accs-item-name">{{ $accessory->name }}</div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="product-option_seven">
-                            <div class="product-option_logo">
-                                <div class="product-option_logo-text">Эмблема</div>
-                                <p class="option-title product-option_logo-title">Эмблема</p>
-                                <div class="product-option_logo-qty">
-                                    <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
-                                    <div class="product-option_logo-number">0</div>
-                                    <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
+                                        @endforeach
+                                    </div>
+                                    <div class="product-option_logo-qty-mob">
+                                        <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
+                                        <div class="product-option_logo-number">12</div>
+                                        <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="product-option_logo-images">
-                                @foreach($emblems as $emblem)
-                                    <div class="product-option_logo-image">
-                                        <svg width="24" height="9">
-                                            <use href="{{$emblem->image->path}}"></use>
-                                        </svg>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <div class="product-option_logo-qty-mob">
-                                <img class="product-option_accs-item-btn" src="/img/minus.svg" alt="minus"/>
-                                <div class="product-option_logo-number">12</div>
-                                <img class="product-option_accs-item-btn" src="/img/plus.svg" alt="minus"/>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
