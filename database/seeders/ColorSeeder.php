@@ -154,8 +154,7 @@ class ColorSeeder extends Seeder
             ],
         ];
 
-        $tariffs = $this->matTariffRepository->query()
-            ->get()->map(fn (MatTariff $tariff) => $tariff->id)->all();
+        $tariffs = $this->matTariffRepository->getAllIds();
         $premiumTariffs = $this->matTariffRepository->query()
             ->whereIn('name', ['classic', 'premium-basic', 'premium-pro'])
             ->get()->map(fn (MatTariff $tariff) => $tariff->id)->all();

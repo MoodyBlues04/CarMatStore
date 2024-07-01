@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property MatPlaceTemplateInfo $templateInfo
  * @property Mat $mat
  * @property Collection $tariffs
+ * @property Collection $places
  */
 class MatPlaceTemplate extends Model
 {
@@ -42,5 +43,10 @@ class MatPlaceTemplate extends Model
     {
         return $this->belongsToMany(MatTariff::class, 'template_prices', 'mat_place_template_id', 'mat_tariff_id')
             ->withPivot('price');
+    }
+
+    public function places(): HasMany
+    {
+        return $this->hasMany(MatPlace::class, 'mat_place_template_id');
     }
 }

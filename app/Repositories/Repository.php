@@ -58,6 +58,11 @@ abstract class Repository
         return $this->query->get()->all();
     }
 
+    public function mapAll(callable $callback): array
+    {
+        return $this->query->get()->map($callback)->all();
+    }
+
     public function exists(array $conditions): bool
     {
         return $this->getBy($conditions)->exists();
