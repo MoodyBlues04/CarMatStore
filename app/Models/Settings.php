@@ -33,7 +33,7 @@ class Settings extends Model
 
     public static function get(string $key, ?string $default = null): ?string
     {
-        return self::query()->where('key', $key)->first() ?? $default;
+        return self::query()->where('key', $key)->first()->value ?? $default;
     }
 
     public static function set(string $key, string $value): bool

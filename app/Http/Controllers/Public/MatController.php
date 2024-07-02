@@ -37,6 +37,7 @@ class MatController extends Controller
         $tariffs = $this->matTariffRepository->query()
             ->with(['colors', 'materials'])
             ->get()->all();
+
         return view('public.mat.show', compact('mat', 'tariffs', 'accessories', 'emblems'));
     }
 

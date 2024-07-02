@@ -4,6 +4,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Public\IndexController;
 use App\Http\Controllers\Public\MatController;
 
+Route::get('/test', function () {
+    $api = new \App\Modules\Api\Tg\Api();
+    $resp = $api->sendMessage(
+//        \App\Models\Settings::get(\App\Models\Settings::TG_CHAT_ID),
+        '@test_channel_1231412',
+        'test'
+    );
+    dd($resp);
+});
+
 Route::get('/', IndexController::class . '@index')->name('index');
 Route::get('/search', IndexController::class . '@search')->name('search');
 

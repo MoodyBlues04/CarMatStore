@@ -39,6 +39,7 @@ class DevMatSeeder extends Seeder
         foreach ($brands as $idx => $brand) {
             $templateIdx = random_int(0, sizeof($templateInfos) - 1);
             $templateInfo = $templateInfos[$templateIdx];
+
             /** @var MatPlaceTemplate $template */
             $template = $this->matPlaceTemplateRepository->createFromTemplateInfo($templateInfo);
             foreach ($tariffIds as $tariffId) {
