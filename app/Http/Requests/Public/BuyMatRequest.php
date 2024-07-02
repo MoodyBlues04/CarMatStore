@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Public;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class BuyMatRequest extends FormRequest
 {
@@ -22,17 +23,25 @@ class BuyMatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'accessories' => 'required|array', // id, count
-            'material' => 'required|int', // id
-            'mat_places' => 'required|array', // id
-            'delivery' => 'required|string',
+            'tariff' => 'required|string|' . Rule::exists('mat_tariffs', 'name'),
+            'material' => 'required|string', // name
+            'accessory' => 'required|array',
+            'places' => 'required|array', // names
+            'emblem' => 'nullable|string',
+            'color' => 'nullable|string',
+            'border_color' => 'nullable|string',
+
+            'delivery' => 'required',
+            'delivery.type' => 'required|string|' . Rule::in(['delivery', 'self_delivery']),
+            'delivery.where' => 'nullable|string',
+
             'client_data' => 'required',
             'client_data.name' => 'required|string',
             'client_data.surname' => 'required|string',
             'client_data.phone' => 'required|string',
             'client_data.email' => 'required|email',
             'client_data.address' => 'required|string',
-            'client_data.geo' => 'required|string',
+            'client_data.geo' => 'nullable|string',
             'client_data.comment' => 'nullable|string',
         ];
     }

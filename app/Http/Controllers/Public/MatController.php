@@ -10,6 +10,7 @@ use App\Repositories\AccessoryRepository;
 use App\Repositories\EmblemRepository;
 use App\Repositories\MatRepository;
 use App\Repositories\MatTariffRepository;
+use App\Services\MatBuyService;
 use App\Services\MatCartService;
 use http\Env\Response;
 use Illuminate\Http\JsonResponse;
@@ -23,7 +24,8 @@ class MatController extends Controller
         private readonly MatTariffRepository $matTariffRepository,
         private readonly AccessoryRepository $accessoryRepository,
         private readonly EmblemRepository $emblemRepository,
-        private readonly MatCartService $matCartService
+        private readonly MatCartService $matCartService,
+        private readonly MatBuyService $matBuyService
     ) {
 //        $this->middleware('auth');
     }
@@ -48,7 +50,11 @@ class MatController extends Controller
 
     public function buy(Mat $mat, BuyMatRequest $request): JsonResponse
     {
-//        TODO buy request to send to tg
-        dd($request);
+        $r = $this->matBuyService->buy($mat, $request);
+
+        return response()->json([
+            'status' => true,
+            'data' => $request->post(),
+        ]);
     }
 }

@@ -12,13 +12,14 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
 
 @section('scripts')
     <script>
+        const CALC_ROUTE = "<?= route('public.mat.calc', $mat) ?>";
+        const BUY_ROUTE = "<?= route('public.mat.buy', $mat) ?>";
+
         const accessoriesNames = <?= $accessoryNames ?>;
         let accessory = {};
         for (const accessoryName of accessoriesNames) accessory[accessoryName] = 0;
-
         const defaultTariff = "<?= $tariffs[0]->name ?>";
         const defaultMaterial = "<?= $tariffs[0]->materials[0]->name ?>";
-        const route = "<?= route('public.mat.calc', $mat) ?>";
         let requestData = {
             'tariff': defaultTariff,
             'material': defaultMaterial,
@@ -27,18 +28,18 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
             'emblem': null,
             'color': null,
             'border_color': null,
+            // for buy request
+            'client_data': {},
+            'delivery': {},
         };
-
-//     todo recalc on any requestData change (middleware)
 
         document.addEventListener("DOMContentLoaded", function (event) {
             resizeSvg();
 
-            // for contact data
             const inputs = document.querySelectorAll('.text-input');
             for (const inp of inputs) {
                 inp.addEventListener('change', function (event) {
-                    requestData[event.target.name] = event.target.value;
+                    requestData['client_data'][event.target.name] = event.target.value;
                 });
             }
         });
@@ -95,10 +96,16 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                 selfDelivery = document.getElementById('self-delivery'),
                 selfDeliveryList = document.getElementById('self-delivery-list');
 
+            requestData['delivery']['type'] = isDelivery ? 'delivery' : 'self_delivery';
+            if (isDelivery) {
+                requestData['delivery']['where'] = null;
+            }
+
             if (isDelivery) {
                 delivery.classList.add('checkout_option--active');
                 selfDelivery.classList.remove('checkout_option--active');
                 selfDeliveryList.classList.add('d-none');
+                removeSelectedSelfDelivery();
             } else {
                 delivery.classList.remove('checkout_option--active');
                 selfDelivery.classList.add('checkout_option--active');
@@ -106,6 +113,18 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
             }
 
             calcCost();
+        }
+
+        function choseSelfDeliveryFrom(target) {
+            removeSelectedSelfDelivery();
+            target.classList.add('checkout_option--active');
+        }
+
+        function removeSelectedSelfDelivery() {
+            const blocks = document.querySelectorAll('.delivery_option');
+            for (const block of blocks) {
+                block.classList.remove('checkout_option--active');
+            }
         }
 
         function togglePlaces(isComplect) {
@@ -204,18 +223,32 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
         }
 
         function calcCost() {
-            let req = {...requestData};
-            req['places'] = Array.from(req['places']);
-
             $.ajax({
                 type: "GET",
-                url: route,
-                data: req,
+                url: CALC_ROUTE,
+                data: makeCalcRequest(),
                 success: function (data) {
                     if (!data['status']) {
                         console.error(data);
                     }
                     updateBill(data['data']);
+                }
+            });
+        }
+
+        function buy() {
+            $.ajax({
+                type: "POST",
+                url: BUY_ROUTE,
+                data: makeCalcRequest(),
+                success: function (data) {
+                    if (!data['status']) {
+                        console.error(data);
+                    }
+                },
+                error: function (data) {
+                    console.error(data);
+                    alert('Incorrect input. Errors:\n' + data['responseJSON']['message']);
                 }
             });
         }
@@ -249,8 +282,14 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
             const billPriceEls = document.querySelectorAll('.bill-price');
             for (const priceEl of billPriceEls) {
                 priceEl.innerHTML = '';
-                priceEl.innerText = totalPrice;
+                priceEl.innerText = totalPrice + ' сум';
             }
+        }
+
+        function makeCalcRequest() {
+            let req = {...requestData};
+            req['places'] = Array.from(req['places'])
+            return req;
         }
 
         function makeDomEl(htmlString) {
@@ -472,13 +511,19 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                 <div id="self-delivery-list" class="d-none">
                     <h3 class="checkout_title title">Самовывоз</h3>
                     <div class="delivery_wr">
-                        <p class="delivery_option checkout_option">
+                        <p class="delivery_option checkout_option"
+                           onclick="choseSelfDeliveryFrom(this)"
+                           style="cursor:pointer;">
                             ателье в юнусабадском районе
                         </p>
-                        <p class="delivery_option checkout_option">
+                        <p class="delivery_option checkout_option"
+                           onclick="choseSelfDeliveryFrom(this)"
+                           style="cursor:pointer;">
                             ателье в шойхантаурском районе
                         </p>
-                        <p class="delivery_option checkout_option">
+                        <p class="delivery_option checkout_option"
+                           onclick="choseSelfDeliveryFrom(this)"
+                           style="cursor:pointer;">
                             ателье в яккасарайском районе
                         </p>
                     </div>
@@ -487,18 +532,41 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
             <div class="order-info checkout_box">
                 <h3 class="checkout_title title">Контактные данные</h3>
                 <div class="order-info_wr checkout_wr">
-                    <input class="order-info_option checkout_option text-input" type="text" name="name" required
-                           placeholder="Имя" aria-label=""/>
-                    <input class="order-info_option checkout_option text-input" type="text" name="surname" required
-                           placeholder="Фамилия" aria-label=""/>
-                    <input class="order-info_option checkout_option text-input" type="text" name="phone" required
-                           placeholder="Номер телефона" aria-label=""/>
-                    <input class="order-info_option checkout_option text-input" type="text" name="email" required
-                           placeholder="Почта" aria-label=""/>
-                    <input class="order-info_option checkout_option text-input" type="text" name="address" required
-                           placeholder="Адрес" aria-label=""/>
-                    <input class="order-info_option checkout_option text-input" type="text" name="geo" required
-                           placeholder="Отправить геопозицию" aria-label=""/>
+                    <input class="order-info_option checkout_option text-input"
+                           type="text"
+                           name="name"
+                           required
+                           placeholder="Имя"
+                           aria-label=""/>
+                    <input class="order-info_option checkout_option text-input"
+                           type="text"
+                           name="surname"
+                           required
+                           placeholder="Фамилия"
+                           aria-label=""/>
+                    <input class="order-info_option checkout_option text-input"
+                           type="text"
+                           name="phone"
+                           required
+                           placeholder="Номер телефона"
+                           aria-label=""/>
+                    <input class="order-info_option checkout_option text-input"
+                           type="text"
+                           name="email"
+                           required
+                           placeholder="Почта"
+                           aria-label=""/>
+                    <input class="order-info_option checkout_option text-input"
+                           type="text"
+                           name="address"
+                           required
+                           placeholder="Адрес"
+                           aria-label=""/>
+                    <input class="order-info_option checkout_option text-input"
+                           type="text"
+                           name="geo"
+                           placeholder="Отправить геопозицию"
+                           aria-label=""/>
                 </div>
                 <h3 class="checkout_title title">Комментарий к заказу</h3>
                 <div class="order-info_wr">
@@ -511,7 +579,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                     <h3 class="payment_total-title title">Итоговая цена заказа</h3>
                     <div class="payment_total-wr">
                         <p class="payment_total-price bill-price">0 сум</p>
-                        <button class="payment_button">подтвердить</button>
+                        <button class="payment_button" onclick="buy()">подтвердить</button>
                     </div>
                 </div>
             </div>
