@@ -59,7 +59,7 @@ class MatCartService
 
     private function isComplectPLaces(Mat $mat, CalcMatPriceRequest $request): bool
     {
-        return sizeof($request->query('places')) === $mat->places->count();
+        return sizeof($request->query('places')) === $mat->template->places->count();
     }
 
     private function addComplectPrice(Mat $mat, CalcMatPriceRequest $request): void
@@ -90,7 +90,7 @@ class MatCartService
             $placeTariff = $place->tariffs()
                 ->where('name', $request->query('tariff'))
                 ->first();
-            
+
             $this->bill []= [
                 'name' => $place->matPlaceInfo->name,
                 'price' => $placeTariff->pivot->price,
