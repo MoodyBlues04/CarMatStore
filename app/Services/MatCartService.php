@@ -12,6 +12,8 @@ use App\Repositories\MatPlaceInfoRepository;
 
 class MatCartService
 {
+    private array $bill;
+
     public function __construct(
         private readonly AccessoryRepository $accessoryRepository,
         private readonly MatPlaceInfoRepository $matPlaceInfoRepository
@@ -20,67 +22,87 @@ class MatCartService
 
     public function makeBill(Mat $mat, CalcMatPriceRequest $request): array
     {
-//        TODO refactor this shit
-
-        $bill = [
-            ['name' => "Тариф: $request->tariff"],
-            ['name' => "Материал: $request->material"],
+        $this->bill = [
+            ['name' => "Тариф: {$request->query('tariff')}"],
+            ['name' => "Материал: {$request->query('material')}"],
         ];
-        $this->addIfExist($bill, $request, 'emblem', 'Эмблема');
-        $this->addIfExist($bill, $request, 'color', 'Цвет');
-        $this->addIfExist($bill, $request, 'border_color', 'Цвет окантовки');
+        $this->addIfExist($request, 'emblem', 'Эмблема');
+        $this->addIfExist($request, 'color', 'Цвет');
+        $this->addIfExist($request, 'border_color', 'Цвет окантовки');
 
-        foreach ($request->accessory as $accessoryName => $accessoryCount) {
+        $this->addAccessory($request);
+
+        if ($this->isComplectPLaces($mat, $request)) {
+            $this->addComplectPrice($mat, $request);
+        } else {
+            $this->addPlacesPrices($mat, $request);
+        }
+
+        return $this->bill;
+    }
+
+    private function addAccessory(CalcMatPriceRequest $request): void
+    {
+        foreach ($request->query('accessory') as $accessoryName => $accessoryCount) {
             /** @var ?Accessory $accessory */
             $accessory = $this->accessoryRepository->firstBy(['name' => $accessoryName]);
             if ($accessoryCount <= 0 || is_null($accessory)) {
                 continue;
             }
-            $bill []= [
+            $this->bill []= [
                 'name' => $accessoryName,
                 'price' => $accessory->price * $accessoryCount,
                 'count' => $accessoryCount,
             ];
         }
-
-        $places = $mat->template->places;
-
-        if (sizeof($request->places) === $places->count()) {
-            $templateTariff = $mat->template->tariffs()
-                ->where('name', $request->tariff)->first();
-            $bill []= [
-                'name' => 'Комплект',
-                'price' => $templateTariff->pivot->price,
-                'count' => 1,
-            ];
-        } else {
-            $placeInfosIds = $this->matPlaceInfoRepository->query()
-                ->whereIn('name', $request->places)
-                ->get()->map(fn (MatPlaceInfo $info) => $info->id)->all();
-
-            /** @var MatPlace[] $places */
-            $places = $mat->template->places()
-                ->whereIn('mat_place_info_id', $placeInfosIds)
-                ->get()->all();
-
-            foreach ($places as $place) {
-                $placeTariff = $place->tariffs()
-                    ->where('name', $request->tariff)->first();
-                $bill []= [
-                    'name' => $place->matPlaceInfo->name,
-                    'price' => $placeTariff->pivot->price,
-                    'count' => 1,
-                ];
-            }
-        }
-
-        return $bill;
     }
 
-    private function addIfExist(array &$bill, CalcMatPriceRequest $request, string $key, string $name): void
+    private function isComplectPLaces(Mat $mat, CalcMatPriceRequest $request): bool
+    {
+        return sizeof($request->query('places')) === $mat->places->count();
+    }
+
+    private function addComplectPrice(Mat $mat, CalcMatPriceRequest $request): void
+    {
+        $templateTariff = $mat->template->tariffs()
+            ->where('name', $request->query('tariff'))
+            ->first();
+
+        $this->bill []= [
+            'name' => 'Комплект',
+            'price' => $templateTariff->pivot->price,
+            'count' => 1,
+        ];
+    }
+
+    private function addPlacesPrices(Mat $mat, CalcMatPriceRequest $request): void
+    {
+        $placeInfosIds = $this->matPlaceInfoRepository->query()
+            ->whereIn('name', $request->query('places'))
+            ->get()->map(fn (MatPlaceInfo $info) => $info->id)->all();
+
+        /** @var MatPlace[] $places */
+        $places = $mat->template->places()
+            ->whereIn('mat_place_info_id', $placeInfosIds)
+            ->get()->all();
+
+        foreach ($places as $place) {
+            $placeTariff = $place->tariffs()
+                ->where('name', $request->query('tariff'))
+                ->first();
+            
+            $this->bill []= [
+                'name' => $place->matPlaceInfo->name,
+                'price' => $placeTariff->pivot->price,
+                'count' => 1,
+            ];
+        }
+    }
+
+    private function addIfExist(CalcMatPriceRequest $request, string $key, string $name): void
     {
         if ($request->query($key)) {
-            $bill []= ['name' => "$name: {$request->query($key)}"];
+            $this->bill []= ['name' => "$name: {$request->query($key)}"];
         }
     }
 }
