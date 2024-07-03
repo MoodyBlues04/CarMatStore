@@ -33,6 +33,7 @@ jobs:
         run: |
           php artisan migrate
           php artisan db:seed
+          php artisan db:seed --class=DevMatSeeder
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
         env:
