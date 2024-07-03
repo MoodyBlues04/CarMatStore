@@ -25,6 +25,9 @@ class MatPlaceInfo extends Model
 {
     use HasFactory;
 
+    public const MAX_ROW = 4;
+    public const LINTEL_MAT_PLACE_NAME = 'Перемычка';
+
     protected $fillable = [
         'name',
         'mat_place_template_info_id',

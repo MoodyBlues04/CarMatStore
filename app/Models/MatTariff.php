@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
+ * @property int $quality
  * @property string $name
  * @property string $created_at
  * @property string $updated_at
@@ -24,6 +25,7 @@ class MatTariff extends Model
 
     protected $fillable = [
         'name',
+        'quality',
     ];
 
     public function colors(): BelongsToMany

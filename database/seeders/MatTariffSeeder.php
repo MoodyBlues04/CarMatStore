@@ -23,8 +23,8 @@ class MatTariffSeeder extends Seeder
             'premium-pro',
         ];
 
-        foreach ($defaultTariffs as $tariffName) {
-            $this->matTariffRepository->firstOrCreate(['name' => $tariffName]);
+        foreach ($defaultTariffs as $idx => $tariffName) {
+            $this->matTariffRepository->firstOrCreate(['name' => $tariffName, 'quality' => $idx]);
         }
     }
 }

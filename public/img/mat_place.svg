@@ -26,4 +26,7 @@
     <symbol id="right_big_1" width="50" height="119" viewBox="0 0 50 119" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M49.5 15C49.5 6.99187 43.0081 0.5 35 0.5H3C1.61929 0.5 0.5 1.61929 0.5 3V116C0.5 117.381 1.61929 118.5 3 118.5H47C48.3807 118.5 49.5 117.381 49.5 116V15Z" stroke="#2E3548" stroke-opacity="0.2"/>
     </symbol>
+    <symbol id="bag" width="106" height="50" viewBox="0 0 106 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M106 15C106 6.71573 99.2843 0 91 0H15C6.71573 0 0 6.71573 0 15V47C0 48.6569 1.34315 50 3 50H103C104.657 50 106 48.6569 106 47V15Z" fill="#FF3600"/>
+    </symbol>
 </svg>

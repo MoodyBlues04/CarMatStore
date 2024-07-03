@@ -13,7 +13,7 @@ class MatPlaceTemplateRepository extends Repository
         parent::__construct(MatPlaceTemplate::class);
     }
 
-    public function createFromTemplateInfo(int|MatPlaceTemplateInfo $templateInfo): Model
+    public function createFromTemplateInfo(int|MatPlaceTemplateInfo $templateInfo): MatPlaceTemplate
     {
         if (is_int($templateInfo)) {
             $templateInfo = MatPlaceTemplateInfo::where('id', $templateInfo)->first();

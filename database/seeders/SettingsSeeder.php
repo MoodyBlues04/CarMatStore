@@ -19,9 +19,9 @@ class SettingsSeeder extends Seeder
     {
         $defaultSettingsList = [
             [
-                'key' => Settings::GSHEETS_URL,
+                'key' => Settings::GSHEETS_ID,
                 'title' => 'URL гугл таблиц',
-                'value' => null,
+                'value' => env('DEFAULT_SHEET_ID'),
             ],
             [
                 'key' => Settings::TG_CHAT_ID,

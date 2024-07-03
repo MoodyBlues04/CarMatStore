@@ -18,7 +18,7 @@ class Settings extends Model
 {
     use HasFactory;
 
-    public const GSHEETS_URL = 'gsheets_url';
+    public const GSHEETS_ID = 'gsheets_url';
     public const TG_CHAT_ID = 'tg_chat_id';
     public const TG_CHAT_TOKEN = 'tg_chat_token';
     public const TG_CONSULTATION_CHAT_ID = 'tg_consultation_chat_id';

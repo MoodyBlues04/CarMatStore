@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Image;
+use App\Models\MatPlaceInfo;
 use App\Repositories\MatPlaceInfoRepository;
 use App\Repositories\TemplateInfoRepository;
 use Illuminate\Database\Seeder;
@@ -22,7 +23,7 @@ class TemplateInfoSeeder extends Seeder
     {
         $defaultTemplates = [
             [
-                'name' => 'Обычный',
+                'name' => '4 местный обычный',
                 'places' => [
                     [
                         'name' => 'Водительский',
@@ -48,10 +49,16 @@ class TemplateInfoSeeder extends Seeder
                         'row' => 2,
                         'order' => 2,
                     ],
+                    [
+                        'name' => 'Багажник',
+                        'image' => '/img/mat_place.svg#bag',
+                        'row' => 4,
+                        'order' => 1,
+                    ],
                 ],
             ],
             [
-                'name' => 'Обычный с перемычкой',
+                'name' => '4 местный с перемычкой',
                 'places' => [
                     [
                         'name' => 'Водительский',
@@ -72,7 +79,7 @@ class TemplateInfoSeeder extends Seeder
                         'order' => 1,
                     ],
                     [
-                        'name' => 'Перемычка',
+                        'name' => MatPlaceInfo::LINTEL_MAT_PLACE_NAME,
                         'image' => '/img/mat_place.svg#small_2',
                         'row' => 2,
                         'order' => 2,
@@ -83,10 +90,16 @@ class TemplateInfoSeeder extends Seeder
                         'row' => 2,
                         'order' => 3,
                     ],
+                    [
+                        'name' => 'Багажник',
+                        'image' => '/img/mat_place.svg#bag',
+                        'row' => 4,
+                        'order' => 1,
+                    ],
                 ],
             ],
             [
-                'name' => 'Обычный сплошной',
+                'name' => '4 местный сплошной',
                 'places' => [
                     [
                         'name' => 'Водительский',
@@ -106,10 +119,16 @@ class TemplateInfoSeeder extends Seeder
                         'row' => 2,
                         'order' => 1,
                     ],
+                    [
+                        'name' => 'Багажник',
+                        'image' => '/img/mat_place.svg#bag',
+                        'row' => 4,
+                        'order' => 1,
+                    ],
                 ],
             ],
             [
-                'name' => '6-местный обычный',
+                'name' => '6 местный обычный',
                 'places' => [
                     [
                         'name' => 'Водительский',
@@ -141,10 +160,16 @@ class TemplateInfoSeeder extends Seeder
                         'row' => 3,
                         'order' => 1,
                     ],
+                    [
+                        'name' => 'Багажник',
+                        'image' => '/img/mat_place.svg#bag',
+                        'row' => 4,
+                        'order' => 1,
+                    ],
                 ],
             ],
             [
-                'name' => '6-местный с перемычкой',
+                'name' => '6 местный с перемычкой',
                 'places' => [
                     [
                         'name' => 'Водительский',
@@ -165,7 +190,7 @@ class TemplateInfoSeeder extends Seeder
                         'order' => 1,
                     ],
                     [
-                        'name' => 'Перемычка',
+                        'name' => MatPlaceInfo::LINTEL_MAT_PLACE_NAME,
                         'image' => '/img/mat_place.svg#small_2',
                         'row' => 2,
                         'order' => 2,
@@ -182,10 +207,16 @@ class TemplateInfoSeeder extends Seeder
                         'row' => 3,
                         'order' => 1,
                     ],
+                    [
+                        'name' => 'Багажник',
+                        'image' => '/img/mat_place.svg#bag',
+                        'row' => 4,
+                        'order' => 1,
+                    ],
                 ],
             ],
             [
-                'name' => '6-местный сплошной',
+                'name' => '6 местный сплошной',
                 'places' => [
                     [
                         'name' => 'Водительский',
@@ -211,10 +242,16 @@ class TemplateInfoSeeder extends Seeder
                         'row' => 3,
                         'order' => 1,
                     ],
+                    [
+                        'name' => 'Багажник',
+                        'image' => '/img/mat_place.svg#bag',
+                        'row' => 4,
+                        'order' => 1,
+                    ],
                 ],
             ],
             [
-                'name' => '2-местный',
+                'name' => '2 местный',
                 'places' => [
                     [
                         'name' => 'Водительский',
@@ -227,6 +264,12 @@ class TemplateInfoSeeder extends Seeder
                         'image' => '/img/mat_place.svg#right_big_1',
                         'row' => 1,
                         'order' => 2,
+                    ],
+                    [
+                        'name' => 'Багажник',
+                        'image' => '/img/mat_place.svg#bag',
+                        'row' => 4,
+                        'order' => 1,
                     ],
                 ],
             ],

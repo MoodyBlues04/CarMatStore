@@ -368,12 +368,6 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                                            value="{{$placeInfo->name}}" id="place-input-{{$placeInfo->name}}"
                                            onclick="togglePlace('<?=$placeInfo->name?>')"/>
                                 @endforeach
-                                {{--                                        TODO bag_template --}}
-                                <div class="product-option_btn-info-text">
-                                    <input type="button"
-                                           class="button product-option_btn-text product-option_btn-bag button-text"
-                                           value="багажник"/>
-                                </div>
                             </div>
                         </div>
 
