@@ -53,4 +53,10 @@ class Mat extends Model
     {
         return $this->belongsToMany(Image::class, 'mat_has_images', 'mat_id', 'image_id');
     }
+
+    public function getPrice(string $tariffName = 'light'): ?int
+    {
+        $tariff = $this->template->tariffs()->where('name', $tariffName)->first();
+        return $tariff->pivot->price ?? null;
+    }
 }

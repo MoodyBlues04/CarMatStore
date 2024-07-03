@@ -129,6 +129,7 @@
                         </button>
                     </div>
                     <div class="pop-up_main">
+                        <?php /** @var \App\Models\Mat $mat */ ?>
                         @foreach($brand->mats as $mat)
                             <a href="{{ route('public.mat.show', $mat) }}" class="model">
                                 <div class="model_main">
@@ -137,7 +138,7 @@
                                 <div class="model_bottom">
                                     <div class="model_info">
                                         <p class="model_name">{{ $mat->model }}</p>
-                                        <p class="model_price">TODO<span>сум</span></p>
+                                        <p class="model_price">{{ $mat->getPrice() }}<span>сум</span></p>
                                     </div>
                                     <div class="model_button button">
                                         Купить
