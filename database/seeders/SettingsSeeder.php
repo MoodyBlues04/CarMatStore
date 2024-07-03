@@ -21,22 +21,27 @@ class SettingsSeeder extends Seeder
             [
                 'key' => Settings::GSHEETS_URL,
                 'title' => 'URL гугл таблиц',
+                'value' => null,
             ],
             [
                 'key' => Settings::TG_CHAT_ID,
                 'title' => 'ID ТГ канала для отправки данных',
+                'value' => env('DEFAULT_TG_CHAT_ID')
             ],
             [
                 'key' => Settings::TG_CHAT_TOKEN,
                 'title' => 'Токен для ТГ канала отправки данных',
+                'value' => env('DEFAULT_TG_CHAT_TOKEN'),
             ],
             [
                 'key' => Settings::TG_CONSULTATION_CHAT_TOKEN,
                 'title' => 'Токен для ТГ канала кончультаций',
+                'value' => env('DEFAULT_TG_CONSULTATION_CHAT_TOKEN'),
             ],
             [
                 'key' => Settings::TG_CONSULTATION_CHAT_ID,
                 'title' => 'ID ТГ канала консультаций',
+                'value' => env('DEFAULT_TG_CONSULTATION_CHAT_ID'),
             ],
         ];
 

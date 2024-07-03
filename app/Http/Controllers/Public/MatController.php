@@ -51,7 +51,7 @@ class MatController extends Controller
 
     public function buy(Mat $mat, BuyMatRequest $request): JsonResponse
     {
-        $r = $this->matBuyService->buy($mat, $request);
+        $this->matBuyService->buy($mat, $request);
 
         return response()->json([
             'status' => true,

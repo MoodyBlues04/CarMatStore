@@ -11,6 +11,7 @@ use App\Repositories\ArticleRepository;
 use App\Repositories\BrandRepository;
 use App\Repositories\GalleryRepository;
 use App\Repositories\MatRepository;
+use App\Services\ConsultationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
@@ -22,7 +23,8 @@ class IndexController extends Controller
         private readonly ArticleRepository $articleRepository,
         private readonly GalleryRepository $galleryRepository,
         private readonly BrandRepository $brandRepository,
-        private readonly MatRepository $matRepository
+        private readonly MatRepository $matRepository,
+        private readonly ConsultationService $consultationService
     ) {
     }
 
@@ -79,8 +81,10 @@ class IndexController extends Controller
 
     public function consultation(ConsultationRequest $request): View|RedirectResponse
     {
+        $this->consultationService->run($request);
+
         return redirect()->route('public.index')
-            ->with('error', 'Consultation not implemented yet');
+            ->with('success', 'Consultation requested');
     }
 
     public function contacts(): View

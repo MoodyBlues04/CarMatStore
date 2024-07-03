@@ -2,37 +2,48 @@
 
 namespace App\Modules\Api\Tg;
 
-use App\Models\Settings;
 use GuzzleHttp\Client as HttpClient;
 
 class Client
 {
-    private const HOST = '';
+    private const HOST = 'https://api.telegram.org/bot';
 
     private string $botToken;
     private HttpClient $client;
 
-    public function __construct()
+    public function __construct(string $botToken)
     {
-        $this->botToken = Settings::get(Settings::TG_CHAT_TOKEN);
         $this->client = new HttpClient();
+        $this->botToken = $botToken;
     }
 
-    public function get(string $url, array $query = [], array $headers = [])
+    public function setToken(string $botToken): void
     {
-        return $this->client->get($this->getBaseUrl() . $url, [
+        $this->botToken = $botToken;
+    }
+
+    public function get(string $url, array $query = [], array $headers = []): array
+    {
+        return $this->request('GET', $url, $query, $headers);
+    }
+
+    public function post(string $url, array $query = [], array $headers = []): array
+    {
+        return $this->request('POST', $url, $query, $headers);
+    }
+
+    private function request(string $method, string $url, array $query = [], array $headers = []): array
+    {
+        $response = $this->client->request($method, $this->getBaseUrl() . $url, [
             'query' => $query,
             'headers' => $headers
         ])->getBody()->getContents();
-    }
 
-//    public function post(string $url, array $data = [], array $headers = [])
-//    {
-//
-//    }
+        return json_decode($response, true);
+    }
 
     private function getBaseUrl(): string
     {
-        return "https://api.telegram.org/bot{$this->botToken}";
+        return self::HOST . $this->botToken;
     }
 }
