@@ -58,7 +58,7 @@ class Image extends Model
             $search = 'public';
             $replacement = 'storage';
         } else {
-            $search = 'publi/public';
+            $search = 'public/public';
             $replacement = 'storage/app/public';
         }
         return str_replace($search, $replacement, asset($this->path));
