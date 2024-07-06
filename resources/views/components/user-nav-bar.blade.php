@@ -20,7 +20,7 @@
                         $("#searchRes").empty();
                         if (data['data'].length) {
                             for (const matData of data['data']) {
-                                $(`<li><a class="dropdown-item" href='/mat/${matData.id}'>${matData.model}</a></li>`)
+                                $(`<li><a class="dropdown-item" href='${matData['url']}'>${matData.model}</a></li>`)
                                     .appendTo("#searchRes");
                             }
                             $("#searchRes").css("display", "block");

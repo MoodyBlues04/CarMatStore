@@ -63,7 +63,7 @@ class IndexController extends Controller
                 ->where('model', 'like', "%$request->search%")
                 ->limit(10)
                 ->get()
-                ->map(fn (Mat $mat) => ['model' => $mat->model, 'id' => $mat->id])
+                ->map(fn (Mat $mat) => ['model' => $mat->model, 'id' => $mat->id, 'url' => route('mat.show', $mat)])
                 ->all();
         }
         return response()->json(['status' => true, 'data' => $mats]);
