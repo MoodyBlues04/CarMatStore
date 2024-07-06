@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::group([], __DIR__ . '/web/auth.php');
 Route::prefix('admin')
     ->as('admin.')
@@ -24,3 +25,7 @@ Route::prefix('user')
     ->group(__DIR__ . '/web/user.php');
 Route::as('public.')
     ->group(__DIR__ . '/web/public.php');
+
+Route::get('/', function () {
+    return redirect()->route('public.index');
+});
