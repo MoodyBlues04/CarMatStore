@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\MatTariffController;
 
-Route::view('/', 'admin.index')->name('index');
+Route::view('/home', 'admin.index')->name('index');
 
 Route::get('/settings', SettingsController::class . '@index')
     ->name('settings.index');

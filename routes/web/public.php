@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Public\IndexController;
 use App\Http\Controllers\Public\MatController;
 
-Route::get('/', IndexController::class . '@index')->name('index');
+Route::get('/home', IndexController::class . '@index')->name('index');
 Route::get('/search', IndexController::class . '@search')->name('search');
 
 Route::get('/about', IndexController::class . '@about')->name('about');
