@@ -54,6 +54,7 @@ class Image extends Model
 
     public function getPublicUrl(): string
     {
-        return str_replace('public', 'storage', asset($this->path));
+        $replacement = env('APP_ENV') == 'local' ? 'storage' : 'storage/app/public';
+        return str_replace('public', $replacement, asset($this->path));
     }
 }
