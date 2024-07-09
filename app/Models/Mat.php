@@ -14,11 +14,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $model
  * @property int $car_image_id
  * @property int $mat_place_template_id
+ * @property int $bag_template_id
  * @property int $brand_id
  * @property string $created_at
  * @property string $updated_at
  *
  * @property MatPlaceTemplate $template
+ * @property MatPlaceTemplate $bagTemplate
  * @property Brand $brand
  * @property Image $carImage
  * @property Collection $images
@@ -30,6 +32,7 @@ class Mat extends Model
     protected $fillable = [
         'model',
         'mat_place_template_id',
+        'bag_template_id',
         'car_image_id',
         'brand_id',
     ];
@@ -37,6 +40,11 @@ class Mat extends Model
     public function template(): BelongsTo
     {
         return $this->belongsTo(MatPlaceTemplate::class, 'mat_place_template_id');
+    }
+
+    public function bagTemplate(): BelongsTo
+    {
+        return $this->belongsTo(MatPlaceTemplate::class, 'bag_template_id');
     }
 
     public function brand(): BelongsTo

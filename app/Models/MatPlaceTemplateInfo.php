@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property string $name
+ * @property string $type
  * @property string $created_at
  * @property string $updated_at
  *
@@ -17,10 +18,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class MatPlaceTemplateInfo extends Model
 {
+    public const TYPE_SALON = 'salon';
+    public const TYPE_BAG = 'bag';
+    
     protected $table = 'mat_place_template_infos';
 
     protected $fillable = [
         'name',
+        'type',
     ];
 
     public function templates(): HasMany

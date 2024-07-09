@@ -20,11 +20,9 @@ use Illuminate\View\View;
 class MatController extends Controller
 {
     public function __construct(
-        private readonly MatRepository $matRepository,
         private readonly MatTariffRepository $matTariffRepository,
         private readonly AccessoryRepository $accessoryRepository,
         private readonly EmblemRepository $emblemRepository,
-        private readonly MatCartService $matCartService,
         private readonly MatBuyService $matBuyService
     ) {
 //        $this->middleware('auth');
@@ -43,9 +41,10 @@ class MatController extends Controller
 
     public function calc(Mat $mat, CalcMatPriceRequest $request): JsonResponse
     {
+        $matCartService = new MatCartService($mat, $request);
         return response()->json([
             'status' => true,
-            'data' => $this->matCartService->makeBill($mat, $request)
+            'data' => $matCartService->makeBill($mat, $request)
         ]);
     }
 

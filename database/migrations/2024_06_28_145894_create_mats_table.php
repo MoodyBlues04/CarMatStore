@@ -19,6 +19,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('mat_place_templates')
                 ->onDelete('cascade');
+            $table->foreignId('bag_template_id');
+            $table->foreign('bag_template_id')
+                ->references('id')
+                ->on('mat_place_templates')
+                ->onDelete('cascade');
             $table->foreignId('brand_id');
             $table->foreign('brand_id')
                 ->references('id')

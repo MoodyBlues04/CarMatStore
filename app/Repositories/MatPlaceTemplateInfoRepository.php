@@ -10,4 +10,9 @@ class MatPlaceTemplateInfoRepository extends Repository
     {
         parent::__construct(MatPlaceTemplateInfo::class);
     }
+
+    public function getAllByType(string $type): array
+    {
+        return $this->getBy(['type' => $type])->get()->all();
+    }
 }

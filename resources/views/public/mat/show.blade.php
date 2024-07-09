@@ -223,6 +223,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
         }
 
         function calcCost() {
+            console.log(requestData);
             $.ajax({
                 type: "GET",
                 url: CALC_ROUTE,
@@ -350,24 +351,42 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                         </div>
                         <div class="product-option_two product-option_item">
                             <div class="product-option_zone-image" style="width: 130px">
-                                @foreach($mat->template->templateInfo->getPlaceInfosByRow() as $row => $infos)
-                                    <div class="d-flex align-items-end justify-content-center" style="width: 100%">
-                                        @foreach($infos as $info)
-                                            <svg class="mat-place-svg d-flex"
-                                                 onclick="togglePlace('<?=$info->name?>')"
-                                                 style="margin-right: 2px; margin-left: 2px">
-                                                <use href="{{ $info->image->path }}"></use>
-                                            </svg>
-                                        @endforeach
-                                    </div>
-                                @endforeach
+                                <?php
+                                    function makeTemplateImagesBlock(array $templateInfos): string
+                                    {
+                                        $res = '';
+                                        foreach($templateInfos as $row => $infos) {
+                                            $res .= '<div class="d-flex align-items-end justify-content-center" style="width: 100%">';
+                                            foreach($infos as $info) {
+                                                $res .= '<svg class="mat-place-svg d-flex"
+                                                     onclick="togglePlace(\'' . $info->name . '\')"
+                                                     style="margin-right: 2px; margin-left: 2px">
+                                                    <use href="' . $info->image->path . '"></use>
+                                                </svg>';
+                                            }
+                                            $res .= '</div>';
+                                        }
+                                        return $res;
+                                    }
+                                ?>
+                                <?= makeTemplateImagesBlock($mat->template->templateInfo->getPlaceInfosByRow()) ?>
+                                <?= makeTemplateImagesBlock($mat->bagTemplate->templateInfo->getPlaceInfosByRow()) ?>
                             </div>
                             <div class="product-option_zone-name">
-                                @foreach($mat->template->templateInfo->getPlaceInfosSorted() as $placeInfo)
-                                    <input type="button" class="place-input button product-option_btn-text button-text"
-                                           value="{{$placeInfo->name}}" id="place-input-{{$placeInfo->name}}"
-                                           onclick="togglePlace('<?=$placeInfo->name?>')"/>
-                                @endforeach
+                                <?php
+                                function makeTemplateLabelBlock(array $templateInfos): string
+                                {
+                                    $res = '';
+                                    foreach($templateInfos as $placeInfo) {
+                                        $res .= '<input type="button" class="place-input button product-option_btn-text button-text"
+                                           value="' . $placeInfo->name . '" id="place-input-' . $placeInfo->name . '"
+                                           onclick="togglePlace(\'' . $placeInfo->name . '\')"/>';
+                                    }
+                                    return $res;
+                                }
+                                ?>
+                                <?= makeTemplateLabelBlock($mat->template->templateInfo->getPlaceInfosSorted()); ?>
+                                <?= makeTemplateLabelBlock($mat->bagTemplate->templateInfo->getPlaceInfosSorted()); ?>
                             </div>
                         </div>
 

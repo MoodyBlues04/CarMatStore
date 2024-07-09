@@ -29,4 +29,10 @@
     <symbol id="bag" width="106" height="50" viewBox="0 0 106 50" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M106 15C106 6.71573 99.2843 0 91 0H15C6.71573 0 0 6.71573 0 15V47C0 48.6569 1.34315 50 3 50H103C104.657 50 106 48.6569 106 47V15Z" fill="#FF3600"/>
     </symbol>
+    <symbol id="bag_2" width="106" height="50" viewBox="0 0 106 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M106 15C106 6.71573 99.2843 0 91 0H15C6.71573 0 0 6.71573 0 15V47C0 48.6569 1.34315 50 3 50H103C104.657 50 106 48.6569 106 47V15Z" fill="#FF3600"/>
+    </symbol>
+    <symbol id="bag_1" width="106" height="50" viewBox="0 0 106 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M105.5 15C105.5 6.99187 99.0081 0.5 91 0.5H15C6.99187 0.5 0.5 6.99187 0.5 15V47C0.5 48.3807 1.61929 49.5 3 49.5H103C104.381 49.5 105.5 48.3807 105.5 47V15Z" stroke="#2E3548" stroke-opacity="0.2"/>
+    </symbol>
 </svg>
