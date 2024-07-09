@@ -116,36 +116,37 @@
             </div>
         </div>
         @foreach($brands as $brand)
-            <div id="overlay-{{ $brand->id }}" onclick="closePopup({{ $brand->id }})"></div>
-            <div id="pop-up-{{ $brand->id }}" class="pop-up">
-                <div class="pop-up__wr">
-                    <div class="pop-up_top">
-                        <svg class="pop-up_logo" width="128" height="30">
-                            <use href="{{ $brand->image->path }}"></use>
-                        </svg>
-                        <p class="pop-up_text">{{ $brand->name }}</p>
-                        <button id="closePopupButton" onclick="handleClose(event, {{$brand->id}})">
-                            <img src="/img/close-pop-up.svg" alt="close">
-                        </button>
-                    </div>
-                    <div class="pop-up_main">
-                        <?php /** @var \App\Models\Mat $mat */ ?>
-                        @foreach($brand->mats as $mat)
-                            <a href="{{ route('public.mat.show', $mat) }}" class="model">
-                                <div class="model_main">
-                                    <img class="model_image" src="{{ $mat->carImage->getPublicUrl() }}" loading="lazy" alt="spark"/>
-                                </div>
-                                <div class="model_bottom">
-                                    <div class="model_info">
-                                        <p class="model_name">{{ $mat->model }}</p>
-                                        <p class="model_price">{{ $mat->getPrice() }}<span>сум</span></p>
+            <div id="overlay-{{ $brand->id }}" onclick="closePopup({{ $brand->id }})">
+                <div id="pop-up-{{ $brand->id }}" class="pop-up">
+                    <div class="pop-up__wr">
+                        <div class="pop-up_top">
+                            <svg class="pop-up_logo" width="128" height="30">
+                                <use href="{{ $brand->image->path }}"></use>
+                            </svg>
+                            <p class="pop-up_text">{{ $brand->name }}</p>
+                            <button id="closePopupButton" onclick="handleClose(event, {{$brand->id}})">
+                                <img src="/img/close-pop-up.svg" alt="close">
+                            </button>
+                        </div>
+                        <div class="pop-up_main">
+                                <?php /** @var \App\Models\Mat $mat */ ?>
+                            @foreach($brand->mats as $mat)
+                                <a href="{{ route('public.mat.show', $mat) }}" class="model">
+                                    <div class="model_main">
+                                        <img class="model_image" src="{{ $mat->carImage->getPublicUrl() }}" loading="lazy" alt="spark"/>
                                     </div>
-                                    <div class="model_button button">
-                                        Купить
+                                    <div class="model_bottom">
+                                        <div class="model_info">
+                                            <p class="model_name">{{ $mat->model }}</p>
+                                            <p class="model_price">{{ $mat->getPrice() }}<span>сум</span></p>
+                                        </div>
+                                        <div class="model_button button">
+                                            Купить
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        @endforeach
+                                </a>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
