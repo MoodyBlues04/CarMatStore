@@ -9,7 +9,7 @@ class Client
     /**
      * @throws Exception
      */
-    public static function makeService()
+    public static function makeService(): \Google_Service_Sheets
     {
         $client = new \Google_Client();
         $client->setApplicationName('Google Sheets API');

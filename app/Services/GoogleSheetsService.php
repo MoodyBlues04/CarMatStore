@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Brand;
+use App\Models\Image;
 use App\Models\MatPlace;
 use App\Models\MatPlaceInfo;
 use App\Models\MatPlaceTemplate;
@@ -44,7 +45,6 @@ class GoogleSheetsService
     public function loadMatsFromSheet(string $sheetId): void
     {
         $rows = $this->api->getSheetData($sheetId, 'Упрощенная');
-        dd($rows);
         $tariffIds = $this->matTariffRepository->getAllIds();
         foreach ($rows as $row) {
             if ($this->isBadRow($row)) {
@@ -57,9 +57,10 @@ class GoogleSheetsService
 
                 $modelName = $this->parseValue($row, 2);
                 $brand = $this->getBrand($row);
+                $modelImage = $this->imageByUrl($row, 3);
                 $this->matRepository->create([
                     'model' => $modelName,
-                    'car_image_id' => 1, // todo
+                    'car_image_id' => $modelImage->id,
                     'mat_place_template_id' => $template->id,
                     'brand_id' => $brand->id,
                 ]);
@@ -76,19 +77,19 @@ class GoogleSheetsService
 
     private function getBrand(array $row): Brand
     {
-        $brandName = $this->strlower($row, 0);
+        $brandName = $this->strToLower($row, 0);
         /** @var Brand $brand */
         $brand = $this->brandRepository->firstBy(['name' => $brandName]);
         if (is_null($brand)) {
-//            todo logo
-            $brand = $this->brandRepository->create(['name' => $brandName, 'image_id' => 1]);
+            $image = $this->imageByUrl($row, 1);
+            $brand = $this->brandRepository->create(['name' => $brandName, 'image_id' => $image->id]);
         }
         return $brand;
     }
 
     private function getTemplateInfo(array $row): MatPlaceTemplateInfo
     {
-        $templateName = $this->strlower($row, 4);
+        $templateName = $this->strToLower($row, 4);
         /** @var ?MatPlaceTemplateInfo $templateInfo */
         $templateInfo = $this->matPlaceTemplateInfoRepository->firstBy(['name' => $templateName]);
         if (is_null($templateInfo)) {
@@ -136,12 +137,22 @@ class GoogleSheetsService
         }
     }
 
+    private function imageByUrl(array $row, int $idx): Image
+    {
+        $url = $this->parseValue($row, $idx);
+        $image = Image::getByPublicUrl($url);
+        if (is_null($image)) {
+            throw new \InvalidArgumentException("Expected image url from site, got: '{$url}'");
+        }
+        return $image;
+    }
+
     private function parsePrice(array $row, int $idx): int
     {
         return (int)str_replace(' ', '', $this->parseValue($row, $idx));
     }
 
-    private function strlower(array $row, int $idx): string
+    private function strToLower(array $row, int $idx): string
     {
         return strtolower($this->parseValue($row, $idx));
     }
