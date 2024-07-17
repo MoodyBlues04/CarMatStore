@@ -44,6 +44,7 @@ class GoogleSheetsService
     public function loadMatsFromSheet(string $sheetId): void
     {
         $rows = $this->api->getSheetData($sheetId, 'Упрощенная');
+        dd($rows);
         $tariffIds = $this->matTariffRepository->getAllIds();
         foreach ($rows as $row) {
             if ($this->isBadRow($row)) {
@@ -75,7 +76,7 @@ class GoogleSheetsService
 
     private function getBrand(array $row): Brand
     {
-        $brandName = $this->lowerVal($row, 0);
+        $brandName = $this->strlower($row, 0);
         /** @var Brand $brand */
         $brand = $this->brandRepository->firstBy(['name' => $brandName]);
         if (is_null($brand)) {
@@ -87,7 +88,7 @@ class GoogleSheetsService
 
     private function getTemplateInfo(array $row): MatPlaceTemplateInfo
     {
-        $templateName = $this->lowerVal($row, 4);
+        $templateName = $this->strlower($row, 4);
         /** @var ?MatPlaceTemplateInfo $templateInfo */
         $templateInfo = $this->matPlaceTemplateInfoRepository->firstBy(['name' => $templateName]);
         if (is_null($templateInfo)) {
@@ -140,7 +141,7 @@ class GoogleSheetsService
         return (int)str_replace(' ', '', $this->parseValue($row, $idx));
     }
 
-    private function lowerVal(array $row, int $idx): string
+    private function strlower(array $row, int $idx): string
     {
         return strtolower($this->parseValue($row, $idx));
     }
