@@ -58,8 +58,8 @@ class Image extends Model
             $search = '/storage';
             $replacement = 'public';
         } else {
-            $replacement = '/public/public';
-            $search = 'storage/app/public';
+            $search = '/storage/app/public';
+            $replacement = 'public/public';
         }
 
         $path = str_replace(url('/') . $search, $replacement, $url);
