@@ -45,15 +45,20 @@ class GoogleSheetsService
     public function loadMatsFromSheet(string $sheetId): void
     {
         $rows = $this->api->getSheetData($sheetId, 'Упрощенная');
+
+        dd($rows);
+        
         $tariffIds = $this->matTariffRepository->getAllIds();
         foreach ($rows as $row) {
             if ($this->isBadRow($row)) {
                 continue;
             }
             try {
-                $templateInfo = $this->getTemplateInfo($row); // todo bag template info && load bag costs
+                $templateInfo = $this->getSaloonTemplateInfo($row); // todo bag template info && load bag costs
                 $template = $this->makeTemplate($row, $templateInfo, $tariffIds);
                 $this->makePlaces($row, $template, $tariffIds);
+
+                $bagTemplateInfo = $this->getBagTemplateInfo($row);
 
                 $modelName = $this->parseValue($row, 2);
                 $brand = $this->getBrand($row);
@@ -87,9 +92,20 @@ class GoogleSheetsService
         return $brand;
     }
 
-    private function getTemplateInfo(array $row): MatPlaceTemplateInfo
+    private function getSaloonTemplateInfo(array $row): MatPlaceTemplateInfo
     {
         $templateName = $this->strToLower($row, 4);
+        return $this->getTemplateInfo($templateName);
+    }
+
+    private function getBagTemplateInfo(array $row): MatPlaceTemplateInfo
+    {
+        $templateName = $this->strToUpper($row, 25);
+        return $this->getTemplateInfo($templateName);
+    }
+
+    private function getTemplateInfo(string $templateName): MatPlaceTemplateInfo
+    {
         /** @var ?MatPlaceTemplateInfo $templateInfo */
         $templateInfo = $this->matPlaceTemplateInfoRepository->firstBy(['name' => $templateName]);
         if (is_null($templateInfo)) {
@@ -155,6 +171,11 @@ class GoogleSheetsService
     private function strToLower(array $row, int $idx): string
     {
         return strtolower($this->parseValue($row, $idx));
+    }
+
+    private function strToUpper(array $row, int $idx): string
+    {
+        return strtoupper($this->parseValue($row, $idx));
     }
 
     private function parseValue(array $row, int $idx): string
