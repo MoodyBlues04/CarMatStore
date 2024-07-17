@@ -42,7 +42,7 @@ class MatCartService
         } else {
             $this->addSalonPlacesPrices();
         }
-        $this->addBagPlacesPrices();
+        $this->addBagPrice();
 
         return $this->bill;
     }
@@ -87,10 +87,17 @@ class MatCartService
         $this->addPlacesPrices($places);
     }
 
-    private function addBagPlacesPrices(): void
+    private function addBagPrice(): void
     {
-        $places = $this->getTemplatePlaces($this->mat->bagTemplate);
-        $this->addPlacesPrices($places);
+        $bagTemplateTariff = $this->mat->bagTemplate->tariffs()
+            ->where('name', $this->request->query('tariff'))
+            ->first();
+
+        $this->bill [] = [
+            'name' => 'Багажник',
+            'price' => $bagTemplateTariff->pivot->price,
+            'count' => 1,
+        ];
     }
 
     /**

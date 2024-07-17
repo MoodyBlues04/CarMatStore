@@ -19,8 +19,10 @@ use Google\Service\Exception;
 
 class GoogleSheetsService
 {
+    private const WELL_FORMED_ROW_LEN = 30;
     private const TEMPLATE_PRICE_START_CELL = 5;
     private const LINTEL_PRICE_START_CELL = 17;
+    private const BAG_TEMPLATE_START_CELL = 25;
     private const ROW_TO_PRICE_START_CELL = [
         1 => 9,
         2 => 13,
@@ -28,14 +30,15 @@ class GoogleSheetsService
     ];
 
     public function __construct(
-        private readonly Api $api,
-        private readonly MatTariffRepository $matTariffRepository,
-        private readonly BrandRepository $brandRepository,
+        private readonly Api                            $api,
+        private readonly MatTariffRepository            $matTariffRepository,
+        private readonly BrandRepository                $brandRepository,
         private readonly MatPlaceTemplateInfoRepository $matPlaceTemplateInfoRepository,
-        private readonly MatPlaceTemplateRepository $matPlaceTemplateRepository,
-        private readonly MatPlaceRepository $matPlaceRepository,
-        private readonly MatRepository $matRepository
-    ) {
+        private readonly MatPlaceTemplateRepository     $matPlaceTemplateRepository,
+        private readonly MatPlaceRepository             $matPlaceRepository,
+        private readonly MatRepository                  $matRepository
+    )
+    {
     }
 
     /**
@@ -46,19 +49,19 @@ class GoogleSheetsService
     {
         $rows = $this->api->getSheetData($sheetId, 'Упрощенная');
 
-        dd($rows);
-        
         $tariffIds = $this->matTariffRepository->getAllIds();
         foreach ($rows as $row) {
             if ($this->isBadRow($row)) {
                 continue;
             }
             try {
-                $templateInfo = $this->getSaloonTemplateInfo($row); // todo bag template info && load bag costs
-                $template = $this->makeTemplate($row, $templateInfo, $tariffIds);
+                $templateInfo = $this->getSaloonTemplateInfo($row);
+                $template = $this->makeTemplate($row, $templateInfo, $tariffIds, self::TEMPLATE_PRICE_START_CELL);
                 $this->makePlaces($row, $template, $tariffIds);
 
                 $bagTemplateInfo = $this->getBagTemplateInfo($row);
+                $bagTemplate = $this->makeTemplate($row, $bagTemplateInfo, $tariffIds, 1 + self::BAG_TEMPLATE_START_CELL);
+                $this->makeBagPlaces($bagTemplate);
 
                 $modelName = $this->parseValue($row, 2);
                 $brand = $this->getBrand($row);
@@ -67,6 +70,7 @@ class GoogleSheetsService
                     'model' => $modelName,
                     'car_image_id' => $modelImage->id,
                     'mat_place_template_id' => $template->id,
+                    'bag_template_id' => $bagTemplate->id,
                     'brand_id' => $brand->id,
                 ]);
             } catch (\Exception $e) {
@@ -77,7 +81,7 @@ class GoogleSheetsService
 
     private function isBadRow(array $row): bool
     {
-        return empty($row) || sizeof($row) < 22 || empty($row[4]) ||  $this->parseValue($row, 0) === 'бренд';
+        return sizeof($row) < self::WELL_FORMED_ROW_LEN || $this->strToLower($row, 0) === 'бренд';
     }
 
     private function getBrand(array $row): Brand
@@ -100,7 +104,7 @@ class GoogleSheetsService
 
     private function getBagTemplateInfo(array $row): MatPlaceTemplateInfo
     {
-        $templateName = $this->strToUpper($row, 25);
+        $templateName = $this->strToUpper($row, self::BAG_TEMPLATE_START_CELL);
         return $this->getTemplateInfo($templateName);
     }
 
@@ -114,11 +118,11 @@ class GoogleSheetsService
         return $templateInfo;
     }
 
-    private function makeTemplate(array $row, MatPlaceTemplateInfo $templateInfo, array $tariffIds): MatPlaceTemplate
+    private function makeTemplate(array $row, MatPlaceTemplateInfo $templateInfo, array $tariffIds, int $priceStartCell): MatPlaceTemplate
     {
         $template = $this->matPlaceTemplateRepository->createFromTemplateInfo($templateInfo);
         foreach ($tariffIds as $idx => $tariffId) {
-            $price = $this->parsePrice($row, self::TEMPLATE_PRICE_START_CELL + $idx);
+            $price = $this->parsePrice($row, $priceStartCell + $idx);
             $template->tariffs()->attach($tariffId, ['price' => $price]);
         }
         return $template;
@@ -150,6 +154,15 @@ class GoogleSheetsService
                     $place->tariffs()->attach($tariffId, ['price' => $price]);
                 }
             }
+        }
+    }
+
+    private function makeBagPlaces(MatPlaceTemplate $template): void
+    {
+        /** @var MatPlaceInfo[] $placeInfos */
+        $placeInfos = $template->templateInfo->placeInfos()->get()->all();
+        foreach ($placeInfos as $placeInfo) {
+            $this->matPlaceRepository->createFromPlaceInfo($placeInfo, $template);
         }
     }
 
