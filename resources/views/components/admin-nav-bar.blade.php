@@ -15,6 +15,11 @@
         Галерея
     </a>
     <a class="nav__lang button-text"
+       href="{{ route('admin.image.create') }}"
+       style="text-decoration: none; color: black">
+        Загрузка фото
+    </a>
+    <a class="nav__lang button-text"
        href="{{ route('admin.settings.index') }}"
        style="text-decoration: none; color: black">
         Настройки
