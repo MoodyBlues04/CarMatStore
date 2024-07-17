@@ -50,7 +50,7 @@ class GoogleSheetsService
                 continue;
             }
             try {
-                $templateInfo = $this->getTemplateInfo($row);
+                $templateInfo = $this->getTemplateInfo($row); // todo bag template info && load bag costs
                 $template = $this->makeTemplate($row, $templateInfo, $tariffIds);
                 $this->makePlaces($row, $template, $tariffIds);
 
