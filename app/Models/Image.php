@@ -63,6 +63,7 @@ class Image extends Model
         }
 
         $path = str_replace(url('/') . $search, $replacement, $url);
+        dd($url, $search, $replacement, $path);
         /** @var ?self */
         return self::query()->where('path', 'like', "%$path%")->first();
     }
