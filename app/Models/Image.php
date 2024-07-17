@@ -55,15 +55,13 @@ class Image extends Model
     public static function getByPublicUrl(string $url): ?self
     {
         if (env('APP_ENV') == 'local') {
-            $search = '/storage';
-            $replacement = 'public';
+            $search = url() . '/storage';
         } else {
-            $search = '/storage/app/public';
-            $replacement = 'public/public';
+            $search = str_replace('/public', '', url('/')) . '/storage/app/public';
         }
+        $replacement = 'public';
 
-        $path = str_replace(url('/') . $search, $replacement, $url);
-        dd($url, url('/') . $search, $path);
+        $path = str_replace($search, $replacement, $url);
         /** @var ?self */
         return self::query()->where('path', 'like', "%$path%")->first();
     }
