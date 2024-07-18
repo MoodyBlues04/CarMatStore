@@ -16,6 +16,14 @@ class ImageController extends Controller
         $this->middleware('admin');
     }
 
+    public function index(): View
+    {
+        $images = Image::query()
+            ->whereNot('path', 'like', '%#%') // removes default svgs
+            ->get()->all();
+        return view('admin.image.index', compact('images'));
+    }
+
     public function create(): View
     {
         return view('admin.image.create');

@@ -18,7 +18,7 @@ Route::patch('/settings/{settings}', SettingsController::class . '@update')
 
 Route::resource('article', ArticleController::class)->except(['show']);
 Route::resource('gallery', GalleryController::class)->except(['show', 'edit', 'update']);
-Route::resource('image', ImageController::class)->only(['create', 'store']);
+Route::resource('image', ImageController::class)->only(['index', 'create', 'store']);
 Route::resource('brand', BrandController::class)->only(['index', 'destroy']);
 Route::resource('tariff', MatTariffController::class)->only(['index', 'create', 'store']);
 
