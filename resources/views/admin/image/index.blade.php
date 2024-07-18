@@ -21,7 +21,7 @@
                 @foreach($images as $image)
                     <tr>
                         <th scope="row">{{ $image->id }}</th>
-                        <td><img src="{{ $image->getPublicUrl() }}" style="max-width: 300px" alt="image"></td>
+                        <td><img src="{{ $image->getPublicUrl() }}" style="max-width: 500px" alt="image"></td>
                         <td>{{ $image->getPublicUrl() }}</td>
                     </tr>
                 @endforeach
