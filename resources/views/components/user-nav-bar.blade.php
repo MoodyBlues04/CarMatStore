@@ -46,19 +46,19 @@
         </ul>
     </div>
 
-    {{--    <div class="nav__lang button-text">Ру</div>--}}
+        <div class="nav__lang button-text">Ру</div>
 
     @if(auth()->guest())
-        <a href="{{ route('auth.login') }}"
-           class="nav__lang button-text"
-           style="text-decoration: none; color: black">
-            Log in
-        </a>
-        <a href="{{ route('auth.register') }}"
-           class="nav__lang button-text"
-           style="text-decoration: none; color: black">
-            Sign up
-        </a>
+{{--        <a href="{{ route('auth.login') }}"--}}
+{{--           class="nav__lang button-text"--}}
+{{--           style="text-decoration: none; color: black">--}}
+{{--            Log in--}}
+{{--        </a>--}}
+{{--        <a href="{{ route('auth.register') }}"--}}
+{{--           class="nav__lang button-text"--}}
+{{--           style="text-decoration: none; color: black">--}}
+{{--            Sign up--}}
+{{--        </a>--}}
     @else
         <a href="{{ route('auth.logout') }}"
            class="nav__lang button-text"
