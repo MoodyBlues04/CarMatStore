@@ -19,7 +19,7 @@ class ImageController extends Controller
     public function index(): View
     {
         $images = Image::query()
-            ->whereNot('path', 'like', '%#%') // removes default svgs
+            ->where('path', 'like', '%/images/%') // only from 'images' folder
             ->get()->all();
         return view('admin.image.index', compact('images'));
     }
