@@ -42,7 +42,10 @@ class MatCartService
         } else {
             $this->addSalonPlacesPrices();
         }
-        $this->addBagPrice();
+
+        if ($this->isBagMatChosen()) {
+            $this->addBagPrice();
+        }
 
         return $this->bill;
     }
@@ -87,6 +90,11 @@ class MatCartService
         $this->addPlacesPrices($places);
     }
 
+    private function isBagMatChosen(): bool
+    {
+        return sizeof($this->getTemplatePlaces($this->mat->bagTemplate)) > 0;
+    }
+    
     private function addBagPrice(): void
     {
         $bagTemplateTariff = $this->mat->bagTemplate->tariffs()
