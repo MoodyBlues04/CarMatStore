@@ -24,6 +24,13 @@ class Settings extends Model
     public const TG_CONSULTATION_CHAT_ID = 'tg_consultation_chat_id';
     public const TG_CONSULTATION_CHAT_TOKEN = 'tg_consultation_chat_token';
 
+    public const HEADER_TITLE = 'header_title';
+    public const HEADER_TEXT = 'header_text';
+    public const CONTACT_PHONE = 'contact_phone';
+    public const INST_LINK = 'inst_link';
+    public const TG_LINK = 'tg_link';
+    public const FACEBOOK_LINK = 'facebook_link';
+
     protected $table = 'settings';
 
     protected $fillable = [

@@ -1,4 +1,6 @@
 <?php
+use App\Models\Settings;
+
 /**
  * @var \App\Models\Brand[] $brands
  * @var \App\Models\Article[] $articles
@@ -85,8 +87,8 @@
     <div class="hero-section">
         <div class="container">
             <div class="hero-section__wrap">
-                <h1 class="title">Автомобильные<br/>Eva-коврики</h1>
-                <p class="subtitle">Большой выбор цвета и окантовки</p>
+                <h1 class="title"><?= Settings::get(Settings::HEADER_TITLE) ?></h1>
+                <p class="subtitle"><?= Settings::get(Settings::HEADER_TEXT) ?></p>
             </div>
         </div>
     </div>

@@ -43,6 +43,37 @@ class SettingsSeeder extends Seeder
                 'title' => 'ID ТГ канала консультаций',
                 'value' => env('DEFAULT_TG_CONSULTATION_CHAT_ID'),
             ],
+//            frontend stuff
+            [
+                'key' => Settings::HEADER_TITLE,
+                'title' => 'Главный заголовок страницы',
+                'value' => 'АВТОМОБИЛЬНЫЕ EVA-КОВРИКИ',
+            ],
+            [
+                'key' => Settings::HEADER_TEXT,
+                'title' => 'Текст заголовка страницы',
+                'value' => 'БОЛЬШОЙ ВЫБОР ЦВЕТА И ОКАНТОВКИ',
+            ],
+            [
+                'key' => Settings::CONTACT_PHONE,
+                'title' => 'Контактный телефон',
+                'value' => '99890126-22-66',
+            ],
+            [
+                'key' => Settings::INST_LINK,
+                'title' => 'Instagram',
+                'value' => '#',
+            ],
+            [
+                'key' => Settings::TG_LINK,
+                'title' => 'Telegram',
+                'value' => '#',
+            ],
+            [
+                'key' => Settings::FACEBOOK_LINK,
+                'title' => 'Facebook',
+                'value' => '#',
+            ],
         ];
 
         foreach ($defaultSettingsList as $settingData) {

@@ -1,3 +1,7 @@
+<?php
+use App\Models\Settings;
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -55,17 +59,17 @@
         <div class="footer__top footer__top-main">
             <div class="footer__contacts">
                 <div class="footer__title title-25">Контакты</div>
-                <a class="footer__phone" href="tel:998901262266">998 90 126-22-66</a>
+                <a class="footer__phone" href="tel:{{Settings::get(Settings::CONTACT_PHONE)}}">{{Settings::get(Settings::CONTACT_PHONE)}}</a>
                 <div class="social">
-                    <a href="#" class="social__group">
+                    <a href="{{Settings::get(Settings::INST_LINK)}}" class="social__group">
                         <img src="/img/instagram.svg" loading="lazy" alt="Instagram" class="social__icon"/>
                         <span class="social__name">Instagram</span>
                     </a>
-                    <a href="#" class="social__group">
+                    <a href="{{Settings::get(Settings::TG_LINK)}}" class="social__group">
                         <img src="/img/facebook.svg" loading="lazy" alt="Facebook" class="social__icon"/>
                         <span class="social__name">Facebook</span>
                     </a>
-                    <a href="#" class="social__group">
+                    <a href="{{Settings::get(Settings::FACEBOOK_LINK)}}" class="social__group">
                         <img src="/img/telegram.svg" loading="lazy" alt="Telegram" class="social__icon"/>
                         <span class="social__name">Telegram</span>
                     </a>
