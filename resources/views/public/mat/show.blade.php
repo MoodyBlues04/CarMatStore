@@ -257,15 +257,16 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
         function updateBill(bill) {
             const target = document.getElementById('bill');
             target.innerHTML = '';
-            let totalPrice = 0;
+            let totalPrice = 0, i = 0;
             for (const billRow of bill) {
+                i++;
                 if (billRow['price']) {
                     totalPrice += billRow['price'];
                 }
                 target.appendChild(makeDomEl(
-                    '<div class="item item-white">' +
-                        '<div class="item_mob-wr">' +
-                            `<p class="item_title">${billRow['name']}</p>` +
+                    '<div class="item ' + (i % 2 === 1 ? 'item-white' : '') + '">' +
+                        '<div class="item_mob-wr" style="font-weight: 600">' +
+                            `<p class="item_title" style="margin-bottom: -2px">${billRow['name']}</p>` +
                         '</div>' +
                         '<div class="item_qty">' +
                             (billRow['count'] ? '<div class="item_qty-control">' +

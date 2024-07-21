@@ -94,7 +94,7 @@ class MatCartService
     {
         return sizeof($this->getTemplatePlaces($this->mat->bagTemplate)) > 0;
     }
-    
+
     private function addBagPrice(): void
     {
         $bagTemplateTariff = $this->mat->bagTemplate->tariffs()
