@@ -314,7 +314,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
             </div>
             <div class="product_wrap">
                 <div class="product_media">
-                    <h1 class="product_title">{{$mat->model}}</h1>
+                    <h1 class="product_title">{{$mat->brand->name}} {{$mat->model}}</h1>
                     <img class="product_gallery" src="/img/gallery.png" alt="auto mat"/>
                     <img class="product_gallery-mob" src="/img/prodict-image-mob.png" alt="auto mat"/>
                 </div>
