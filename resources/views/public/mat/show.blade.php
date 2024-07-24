@@ -14,6 +14,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
     <script>
         const CALC_ROUTE = "<?= route('public.mat.calc', $mat) ?>";
         const BUY_ROUTE = "<?= route('public.mat.buy', $mat) ?>";
+        const IMAGE_ROUTE = "<?= route('public.mat.image') ?>";
 
         const accessoriesNames = <?= $accessoryNames ?>;
         let accessory = {};
@@ -45,6 +46,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
         });
         document.addEventListener('click', function (event) {
             resizeSvg();
+            updateMatImage();
         });
 
         function resizeSvg() {
@@ -55,6 +57,24 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
                 matPlaceSvgs[i].style.width = bbox.width;
                 matPlaceSvgs[i].style.height = bbox.height;
             }
+        }
+
+        function updateMatImage() {
+            const matImage = document.getElementById('mat-img');
+
+            console.log('get image url', requestData);
+            $.ajax({
+                type: "GET",
+                url: IMAGE_ROUTE,
+                data: requestData,
+                success: function (data) {
+                    console.log(data);
+                    if (!data['status']) {
+                        console.error(data);
+                    }
+                    matImage.src = data['data']['url'];
+                }
+            });
         }
 
         function toggleTariffOptions(tariffName) {
@@ -316,7 +336,7 @@ $accessoryNames = json_encode(array_map(fn ($item) => $item->name, $accessories)
             <div class="product_wrap">
                 <div class="product_media">
                     <h1 class="product_title">{{$mat->brand->name}} {{$mat->model}}</h1>
-                    <img class="product_gallery" src="/img/gallery.png" alt="auto mat"/>
+                    <img id="mat-img" class="product_gallery" src="/img/gallery.png" alt="auto mat"/>
                     <img class="product_gallery-mob" src="/img/prodict-image-mob.png" alt="auto mat"/>
                 </div>
                 <div class="product-info">

@@ -13,6 +13,7 @@ Route::post('/consultation', IndexController::class . '@consultation')->name('co
 Route::get('/contacts', IndexController::class . '@contacts')->name('contacts');
 Route::get('/privacy_policy', IndexController::class . '@privacyPolicy')->name('privacy_policy');
 
+Route::get('/mat/image', MatController::class . '@image')->name('mat.image');
 Route::get('/mat/{mat}', MatController::class . '@show')->name('mat.show');
 Route::get('/mat/{mat}/calc', MatController::class . '@calc')->name('mat.calc');
 Route::post('/mat/{mat}/buy', MatController::class . '@buy')->name('mat.buy');
