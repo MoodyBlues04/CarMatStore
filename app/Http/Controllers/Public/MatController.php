@@ -65,7 +65,9 @@ class MatController extends Controller
         $matImage = $this->matImageRepository->getByRequest($request);
         return response()->json([
             'status' => true,
-            'data' => ['url' => $matImage ? $matImage->image->getPublicUrl() : MatImage::DEFAULT_MAT_IMG_URL],
+            'data' => [
+                'url' => $matImage ? $matImage->image->getPublicUrl() : MatImage::DEFAULT_MAT_IMG_URL,
+            ],
         ]);
     }
 }

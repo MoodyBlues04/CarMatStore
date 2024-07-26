@@ -42,7 +42,7 @@ class MatImageSeeder extends Seeder
                     if (!Storage::exists($newPath)) {
                         Storage::copy($imagePath, $newPath);
                     }
-                    
+
                     $image = Image::createFromPath($newPath);
                     $this->matImageRepository->firstOrCreate([
                         'inner_color_id' => $innerColor->id,

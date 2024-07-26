@@ -16,8 +16,14 @@ class MatImageRepository extends Repository
 
     public function getByRequest(GetMatImageRequest $request): ?MatImage
     {
-        $innerColor = Color::query()->where('name', $request->color)->first();
-        $borderColor = Color::query()->where('name', $request->border_color)->first();
+        $innerColor = Color::query()
+            ->where('type', Color::INNER)
+            ->where('name', $request->color)
+            ->first();
+        $borderColor = Color::query()
+            ->where('type', Color::BORDER)
+            ->where('name', $request->border_color)
+            ->first();
         $material = MatMaterial::query()->where('name', $request->material)->first();
 
         /** @var ?MatImage */
