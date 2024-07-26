@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             AccessorySeeder::class,
             EmblemSeeder::class,
             TemplateInfoSeeder::class,
+            MatImageSeeder::class,
         ]);
     }
 }

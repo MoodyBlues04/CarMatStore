@@ -23,134 +23,129 @@ class ColorSeeder extends Seeder
     {
         $defaultColors = [
             [
-                'name' => 'ochre',
+                'name' => 'бежевый',
                 'hex' => '#b79764',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'white',
+                'name' => 'белый',
                 'hex' => '#f1f1f1',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'malin',
+                'name' => 'бордовый',
                 'hex' => '#643c44',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'grey',
+                'name' => 'черный',
                 'hex' => '#393939',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'purple',
+                'name' => 'фиолетовый',
                 'hex' => '#8739b4',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'light-brown',
+                'name' => 'коричневый',
                 'hex' => '#7f634c',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'red',
+                'name' => 'красный',
                 'hex' => '#dd503a',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'orange',
+                'name' => 'оранжевый',
                 'hex' => '#de6f30',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'pink',
+                'name' => 'розовый',
                 'hex' => '#fb79af',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'light-grey',
+                'name' => 'серый',
                 'hex' => '#4a4a4a',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'yellow',
+                'name' => 'серый',
+                'hex' => '#4a4a4a',
+                'type' => Color::BORDER,
+            ],
+            [
+                'name' => 'желтый',
                 'hex' => '#fff455',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'blue',
+                'name' => 'желтый',
+                'hex' => '#fff455',
+                'type' => Color::BORDER,
+            ],
+            [
+                'name' => 'синий',
                 'hex' => '#3d5cbc',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'light-orange',
+                'name' => 'синий',
+                'hex' => '#3d5cbc',
+                'type' => Color::BORDER,
+            ],
+            [
+                'name' => 'темно бежевый',
                 'hex' => '#daa65b',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'dark-green',
+                'name' => 'темно зеленый',
                 'hex' => '#11463c',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'light-green',
+                'name' => 'Зеленый',
                 'hex' => '#77ae3e',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'white-1',
+                'name' => 'слоновая кость',
                 'hex' => '#efe9dc',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'brown',
+                'name' => 'коричневый',
                 'hex' => '#635041',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'red-2',
+                'name' => 'коричневый',
+                'hex' => '#635041',
+                'type' => Color::BORDER,
+            ],
+            [
+                'name' => 'Теракотовый',
                 'hex' => '#c04f3a',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'dark-grey',
+                'name' => 'темно синий',
                 'hex' => '#363b51',
                 'type' => Color::INNER,
             ],
             [
-                'name' => 'ochre',
-                'hex' => '#b79764',
-                'type' => Color::BORDER,
-            ],
-            [
-                'name' => 'white',
-                'hex' => '#f1f1f1',
-                'type' => Color::BORDER,
-            ],
-            [
-                'name' => 'malin',
-                'hex' => '#643c44',
-                'type' => Color::BORDER,
-            ],
-            [
-                'name' => 'grey',
+                'name' => 'черный',
                 'hex' => '#393939',
                 'type' => Color::BORDER,
             ],
             [
-                'name' => 'purple',
-                'hex' => '#8739b4',
+                'name' => 'красный',
+                'hex' => '#dd503a',
                 'type' => Color::BORDER,
-            ],
-            [
-                'name' => 'light-brown',
-                'hex' => '#7f634c',
-                'type' => Color::BORDER,
-            ],
-            [
-                'name' => 'black',
-                'hex' => '#000000',
-                'type' => Color::INNER,
             ],
         ];
 
@@ -167,14 +162,10 @@ class ColorSeeder extends Seeder
                 continue;
             }
 
-            if ($color->type === Color::BORDER) {
+            if (in_array($color->name, ['черный', 'серый', 'синий'])) {
                 $color->tariffs()->attach($tariffs);
-            } else if ($color->type === Color::INNER) {
-                if (in_array($color->name, ['black', 'grey'])) {
-                    $color->tariffs()->attach($tariffs);
-                } else {
-                    $color->tariffs()->attach($premiumTariffs);
-                }
+            } else {
+                $color->tariffs()->attach($premiumTariffs);
             }
         }
     }
