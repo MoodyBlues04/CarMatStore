@@ -27,15 +27,15 @@ class MatCartService
 
     public function makeBill(): array
     {
-        $this->bill = [
-            ['name' => "Тариф: {$this->request->query('tariff')}"],
-            ['name' => "Материал: {$this->request->query('material')}"],
-        ];
-        $this->addIfExist('emblem', 'Эмблема');
-        $this->addIfExist('color', 'Цвет');
-        $this->addIfExist('border_color', 'Цвет окантовки');
+        foreach ($this->request::PREFIXES as $prefix => $label) {
+            $this->addIfExist("$prefix.tariff", "Тариф $label");
+            $this->addIfExist("$prefix.material", "Материал $label");
+            $this->addIfExist("$prefix.emblem", "Эмблема $label");
+            $this->addIfExist("$prefix.color", "Цвет $label");
+            $this->addIfExist("$prefix.border_color", "Цвет окантовки $label");
+            $this->addAccessory($prefix, $label);
+        }
 
-        $this->addAccessory();
 
         if ($this->isComplectPlaces()) {
             $this->addComplectPrice();
@@ -50,16 +50,16 @@ class MatCartService
         return $this->bill;
     }
 
-    private function addAccessory(): void
+    private function addAccessory(string $prefix, string $label): void
     {
-        foreach ($this->request->query('accessory') as $accessoryName => $accessoryCount) {
+        foreach ($this->request->query("$prefix.accessory", []) as $accessoryName => $accessoryCount) {
             /** @var ?Accessory $accessory */
             $accessory = $this->accessoryRepository->firstBy(['name' => $accessoryName]);
             if ($accessoryCount <= 0 || is_null($accessory)) {
                 continue;
             }
             $this->bill [] = [
-                'name' => $accessoryName,
+                'name' => "$label $accessoryName",
                 'price' => $accessory->price * $accessoryCount,
                 'count' => $accessoryCount,
             ];
@@ -74,7 +74,7 @@ class MatCartService
     private function addComplectPrice(): void
     {
         $templateTariff = $this->mat->template->tariffs()
-            ->where('name', $this->request->query('tariff'))
+            ->where('name', $this->request->query('saloon.tariff'))
             ->first();
 
         $this->bill [] = [
@@ -92,13 +92,13 @@ class MatCartService
 
     private function isBagMatChosen(): bool
     {
-        return sizeof($this->getTemplatePlaces($this->mat->bagTemplate)) > 0;
+        return sizeof($this->request->query('bag.places', [])) > 0;
     }
 
     private function addBagPrice(): void
     {
         $bagTemplateTariff = $this->mat->bagTemplate->tariffs()
-            ->where('name', $this->request->query('tariff'))
+            ->where('name', $this->request->query('bag.tariff'))
             ->first();
 
         $this->bill [] = [
@@ -113,24 +113,24 @@ class MatCartService
      */
     private function getSalonMatPlaces(): array
     {
-        return $this->getTemplatePlaces($this->mat->template);
+        return $this->getTemplatePlaces($this->mat->template, 'saloon');
     }
 
     /**
      * @return MatPlace[]
      */
-    private function getTemplatePlaces(MatPlaceTemplate $template): array
+    private function getTemplatePlaces(MatPlaceTemplate $template, string $type): array
     {
-        $placeInfosIds = $this->getPlaceInfosIds();
+        $placeInfosIds = $this->getPlaceInfosIds($type);
         return $template->places()
             ->whereIn('mat_place_info_id', $placeInfosIds)
             ->get()->all();
     }
 
-    private function getPlaceInfosIds(): array
+    private function getPlaceInfosIds(string $type): array
     {
         return $this->matPlaceInfoRepository->query()
-            ->whereIn('name', $this->request->query('places'))
+            ->whereIn('name', $this->request->query("$type.places", []))
             ->get()->map(fn(MatPlaceInfo $info) => $info->id)->all();
     }
 
@@ -141,7 +141,7 @@ class MatCartService
     {
         foreach ($places as $place) {
             $placeTariff = $place->tariffs()
-                ->where('name', $this->request->query('tariff'))
+                ->where('name', $this->request->query('saloon.tariff'))
                 ->first();
 
             $this->bill [] = [

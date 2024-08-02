@@ -23,13 +23,20 @@ class BuyMatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tariff' => 'required|string|' . Rule::exists('mat_tariffs', 'name'),
-            'material' => 'required|string', // name
-            'accessory' => 'required|array',
-            'places' => 'required|array', // names
-            'emblem' => 'nullable|string',
-            'color' => 'nullable|string',
-            'border_color' => 'nullable|string',
+            'saloon.tariff' => 'required|string|' . Rule::exists('mat_tariffs', 'name'),
+            'saloon.material' => 'required|string', // name
+            'saloon.accessory' => 'required|array',
+            'saloon.places' => 'required|array', // names
+            'saloon.emblem' => 'nullable|string',
+            'saloon.color' => 'nullable|string',
+            'saloon.border_color' => 'nullable|string',
+            'bag.tariff' => 'nullable|string|' . Rule::exists('mat_tariffs', 'name'),
+            'bag.material' => 'nullable|string', // name
+            'bag.accessory' => 'nullable|array',
+            'bag.places' => 'nullable|array', // names
+            'bag.emblem' => 'nullable|string',
+            'bag.color' => 'nullable|string',
+            'bag.border_color' => 'nullable|string',
 
             'delivery' => 'required',
             'delivery.type' => 'required|string|' . Rule::in(['delivery', 'self_delivery']),

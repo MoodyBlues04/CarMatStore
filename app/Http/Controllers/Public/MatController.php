@@ -42,11 +42,18 @@ class MatController extends Controller
 
     public function calc(Mat $mat, CalcMatPriceRequest $request): JsonResponse
     {
-        $matCartService = new MatCartService($mat, $request);
-        return response()->json([
-            'status' => true,
-            'data' => $matCartService->makeBill()
-        ]);
+        try {
+            $matCartService = new MatCartService($mat, $request);
+            return response()->json([
+                'status' => true,
+                'data' => $matCartService->makeBill()
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'data' => ['message' => $e->getMessage(), 'request' => $request->validated()],
+            ]);
+        }
     }
 
     public function buy(Mat $mat, BuyMatRequest $request): JsonResponse
