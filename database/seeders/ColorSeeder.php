@@ -149,24 +149,70 @@ class ColorSeeder extends Seeder
             ],
         ];
 
-        $tariffs = $this->matTariffRepository->getAllIds();
-        $premiumTariffs = $this->matTariffRepository->query()
-            ->whereIn('name', ['classic', 'premium-basic', 'premium-pro'])
-            ->get()->map(fn (MatTariff $tariff) => $tariff->id)->all();
-
-
+        $allTariffsIds = $this->matTariffRepository->getAllIds();
         foreach ($defaultColors as $colorData) {
             /** @var Color $color */
             $color = $this->colorRepository->firstOrCreate($colorData);
             if (!$color->wasRecentlyCreated) {
                 continue;
             }
-
-            if (in_array($color->name, ['черный', 'серый', 'синий'])) {
-                $color->tariffs()->attach($tariffs);
-            } else {
-                $color->tariffs()->attach($premiumTariffs);
+            if ($color->type === Color::BORDER) {
+                $color->tariffs()->attach($allTariffsIds);
             }
+        }
+
+        $tariffToColors = [
+            'light' => [
+                'черный',
+                'серый',
+            ],
+            'classic' => [
+                'бежевый',
+                'белый',
+                'бордовый',
+                'черный',
+                'фиолетовый',
+                'коричневый',
+                'красный',
+                'оранжевый',
+                'розовый',
+                'серый',
+                'желтый',
+                'синий',
+                'темно бежевый',
+                'темно зеленый',
+                'Зеленый',
+                'слоновая кость',
+                'коричневый',
+                'Теракотовый',
+                'темно синий',
+            ],
+            'premium-basic' => [
+                'черный',
+                'серый',
+            ],
+            'premium-pro' => [
+                'бордовый',
+                'фиолетовый',
+                'оранжевый',
+                'синий',
+                'темно зеленый',
+                'слоновая кость',
+                'коричневый',
+                'темно синий',
+            ],
+        ];
+
+        foreach ($tariffToColors as $tariffName => $colorsNames) {
+            /** @var MatTariff $tariff */
+            $tariff = $this->matTariffRepository->firstBy(['name' => $tariffName]);
+            $colorIds = $this->colorRepository->query()
+                ->where('type', Color::INNER)
+                ->whereIn('name', $colorsNames)
+                ->get()
+                ->map(fn (Color $color) => $color->id)
+                ->all();
+            $tariff->colors()->attach($colorIds);
         }
     }
 }
